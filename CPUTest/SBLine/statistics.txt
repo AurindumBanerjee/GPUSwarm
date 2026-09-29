@@ -1,0 +1,9 @@
+
+=== Threshold 0.05 ===
+BEST: {'method': 'solve', 'threshold': 0.05, 'time': 179.7965, 'caps': 9, 'best_minz': 0.049806, 'success': True, 'folder': 'SBLine/solve__THR__0.05/run_6'}
+
+=== Threshold 0.045 ===
+
+=== Threshold 0.04 ===
+
+=== Threshold 0.03 ===
