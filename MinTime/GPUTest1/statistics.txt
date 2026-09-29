@@ -1,0 +1,12 @@
+device=cuda  dtype=torch.complex128
+init breakdown (s): load=0.5163 cuda_ctx=0.1036 h2d=0.0205 base_inv=0.0834 warmup=0.0264
+gpu-vs-cpu verification: {"numpy": {"max_abs_err": 3.885780586188048e-16, "max_rel_err": 1.446191818745202e-15}, "solve": {"max_abs_err": 1.3322676295501878e-15, "max_rel_err": 4.0354533516997806e-15}, "sm": {"max_abs_err": 1.0547118733938987e-15, "max_rel_err": 3.1286985330688906e-15}, "iterative": {"max_abs_err": 0.012743640336287387, "max_rel_err": 0.07447850521636588}}
+
+=== Threshold 0.05 ===
+BEST: {'timestamp_utc': '2026-09-02T13:20:49Z', 'threshold': 0.05, 'method': 'sm', 'run_id': 4, 'seed': 12349, 'time_to_target_s': 11.80180929400376, 'total_wall_time_s': 11.8021174769965, 'init_time_s': 0.7237652059702668, 'total_incl_init_s': 12.525882682966767, 'caps_at_target': 12.0, 'best_minz_ohm': 0.04979287271885893, 'success': True, 'n_fitness_evals': 8630, 'n_nodes': 21, 'n_freqs': 1391, 'n_cap_models': 3348, 'device': 'cuda', 'dtype': 'torch.complex128', 'folder': 'MinTime/GPUTest1/sm_0.05/run_4'}
+
+=== Threshold 0.045 ===
+
+=== Threshold 0.04 ===
+
+=== Threshold 0.03 ===
