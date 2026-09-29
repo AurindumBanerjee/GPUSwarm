@@ -35,8 +35,16 @@
 #        Unchanged; frac_to_index/decode_particle below just centralise
 #        the mapping so FIX 2 only has to be fixed in one place.
 #
+# FIX 11/12/13  PORTED FROM CPUTest/SB.py (later than FIX 1-10):
+#        11 hybrid warm start (40% of particles carry prev_best, particle 0
+#        elite, jittered; rest random) replacing the degenerate
+#        all-identical seeding described under FIX 4 below;
+#        12 resolve_adjacent_ports now tries every offset (no duplicate
+#        ports); 13 prev_best reset when a stage yields no gbest.
+#
 # FIX 4  Warm-start between capacitor-count stages, per the paper's
-#        Section III-A -- ADDED HERE for the first time. The GPU version
+#        Section III-A -- ADDED HERE for the first time (original
+#        all-identical seeding; superseded by FIX 11). The GPU version
 #        previously fully re-randomised every stage (`particles =
 #        np.random.rand(N_PARTICLES, DIM)`), discarding all prior search
 #        progress every time n_caps incremented. seed_particles() now
@@ -114,7 +122,7 @@ import torch  # [GPU] PyTorch replaces NumPy on the timed fitness path
 # GLOBAL CONFIG
 # ============================================================
 
-ROOT_OUT = "MinTime/GPUTest2"
+ROOT_OUT = "MinTime/GPUTest3"
 os.makedirs(ROOT_OUT, exist_ok=True)
 
 TARGET_PORT = 0
@@ -169,6 +177,12 @@ if not REAL_DATA_AVAILABLE or args.quick:
     MAX_CAPS = 5
     N_PARTICLES = 8
     N_ITERATIONS = 4
+
+# FIX 11: warm-start swarm composition (see seed_particles). Derived after
+# the --quick override so it tracks the final N_PARTICLES.
+WARM_START_FRACTION = 0.4
+N_WARM_START = int(round(WARM_START_FRACTION * N_PARTICLES))
+WARM_START_JITTER = 0.02
 
 print(f"[GPU] device={DEVICE}  dtype={CDTYPE}")
 if DEVICE.type == "cuda":
@@ -395,19 +409,31 @@ def resolve_adjacent_ports(models, ports):
     # Defense in depth: TARGET_PORT is reserved as "already used" so that
     # even if a caller passes a raw port in [0, N_NODES), the collision
     # search below can never place (or leave) a capacitor on it.
+    #
+    # FIX 12: an explicit `placed` flag drives the outer break. The old
+    # `if ports[i] in used: break` was always true when neither candidate
+    # at the current offset was free (ports[i] still held its original
+    # duplicate value), so the search gave up after offset 1 and returned
+    # duplicate ports. Every offset is now tried in turn.
     used = {TARGET_PORT}
     for i in range(len(ports)):
         if ports[i] not in used:
             used.add(ports[i])
             continue
+        placed = False
         for offset in range(1, N_NODES):
-            for cand in [ports[i] + offset, ports[i] - offset]:
+            for cand in (ports[i] + offset, ports[i] - offset):
                 if 0 <= cand < N_NODES and cand not in used:
                     ports[i] = cand
                     used.add(cand)
+                    placed = True
                     break
-            if ports[i] in used:
+            if placed:
                 break
+        if not placed:
+            # No free node remains (n_caps > len(VALID_PORTS)); the
+            # collision is genuinely unavoidable, so keep the port as-is.
+            used.add(ports[i])
     return models, ports
 
 
@@ -741,30 +767,44 @@ def append_result_record(record):
 
 def seed_particles(n_caps, prev_best):
     """
-    Stage 1 (or no usable previous best): fully random swarm, as before.
-    Stage N+1 with a previous stage's global best available: every
-    particle's first 2N genes are seeded IDENTICALLY from prev_best (the
-    winning particle from stage N); only the two new genes for the
-    (N+1)-th capacitor are randomised per particle. Matches the paper's
-    Section III-A warm-start and the CPU corrected script exactly. Particle
-    bookkeeping stays on the CPU/NumPy (as documented in run_pso below),
-    so this needs no GPU-specific handling.
+    Stage 1 (or no usable previous best): fully random swarm.
+    Stage N+1 with a previous stage's global best available: a HYBRID
+    swarm (FIX 11, ported from CPUTest/SB.py). The first N_WARM_START
+    particles (40% of the swarm) carry prev_best in their first 2N genes;
+    the rest are uniformly random. Particle 0 is an exact copy of prev_best
+    (elitism); warm particles 1.. get clipped Gaussian jitter on the
+    carried genes only. Seeding every particle identically would zero both
+    PSO velocity terms in the carried dimensions and freeze them.
+    Particle bookkeeping stays on the CPU/NumPy, so no GPU handling needed.
     """
-    if prev_best is None or n_caps == 1:
+    n_warm = min(N_WARM_START, N_PARTICLES)
+
+    if prev_best is None or n_caps == 1 or n_warm == 0:
         return np.random.rand(N_PARTICLES, 2 * n_caps)
 
     prev_n = n_caps - 1
     prev_models = prev_best[:prev_n]
     prev_ports = prev_best[prev_n:]
 
-    new_model_gene = np.random.rand(N_PARTICLES, 1)
-    new_port_gene = np.random.rand(N_PARTICLES, 1)
-
-    particles = np.hstack([
-        np.tile(prev_models, (N_PARTICLES, 1)), new_model_gene,
-        np.tile(prev_ports, (N_PARTICLES, 1)), new_port_gene,
+    warm = np.hstack([
+        np.tile(prev_models, (n_warm, 1)), np.random.rand(n_warm, 1),
+        np.tile(prev_ports,  (n_warm, 1)), np.random.rand(n_warm, 1),
     ])
-    return particles
+
+    if WARM_START_JITTER > 0 and n_warm > 1:
+        carried = np.ones(2 * n_caps, dtype=bool)
+        carried[prev_n] = False       # new model gene, already uniform
+        carried[-1] = False           # new port gene, already uniform
+        noise = np.random.normal(0.0, WARM_START_JITTER, warm.shape)
+        noise[0, :] = 0.0             # particle 0 is elite, untouched
+        noise[:, ~carried] = 0.0      # never perturb the new genes
+        warm = np.clip(warm + noise, 0.0, 1.0)
+
+    n_rand = N_PARTICLES - n_warm
+    if n_rand > 0:
+        warm = np.vstack([warm, np.random.rand(n_rand, 2 * n_caps)])
+
+    return warm
 
 
 # ============================================================
@@ -788,8 +828,9 @@ def run_pso(method, threshold, out_folder, run_id):
 
     logger.info(
         "RUN_START | method=%s | threshold=%.6f | run=%d | particles=%d | "
-        "iterations=%d | device=%s | base_seed=%d",
-        method, threshold, run_id, N_PARTICLES, N_ITERATIONS, DEVICE.type, BASE_SEED
+        "iterations=%d | device=%s | base_seed=%d | warm_start=%d | jitter=%.4f",
+        method, threshold, run_id, N_PARTICLES, N_ITERATIONS, DEVICE.type, BASE_SEED,
+        N_WARM_START, WARM_START_JITTER
     )
 
     prev_best = None   # winning particle vector from the previous n_caps stage
@@ -871,6 +912,8 @@ def run_pso(method, threshold, out_folder, run_id):
         histories[n_caps] = history
 
         if gbest_particle is None:
+            # FIX 13: don't seed the next stage from a stale, wrong-width prev_best.
+            prev_best = None
             logger.info("n_caps=%d | iter=%d | minZ=inf | placement={}", n_caps, it + 1)
             continue
 
@@ -1045,6 +1088,7 @@ else:
     config_dict = dict(
         ROOT_OUT=ROOT_OUT, TARGET_PORT=TARGET_PORT, MAX_CAPS=MAX_CAPS,
         N_PARTICLES=N_PARTICLES, N_ITERATIONS=N_ITERATIONS,
+        N_WARM_START=N_WARM_START, WARM_START_JITTER=WARM_START_JITTER,
         W_MAX=W_MAX, W_MIN=W_MIN, C1=C1, C2=C2,
         NUM_RUNS=NUM_RUNS, TARGETS=TARGETS, METHODS=METHODS,
         BASELINE_METHOD=BASELINE_METHOD, BASE_SEED=BASE_SEED,
