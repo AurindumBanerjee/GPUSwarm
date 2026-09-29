@@ -1,0 +1,14 @@
+device=cuda  dtype=torch.complex128
+init breakdown (s): load=0.3992 cuda_ctx=0.1311 h2d=0.0215 base_inv=0.0868 warmup=0.0261
+gpu-vs-cpu verification: {"numpy": {"max_abs_err": 1.5543122344752192e-15, "max_rel_err": 4.690105014303816e-15}, "solve": {"max_abs_err": 2.4980018054066022e-15, "max_rel_err": 6.599877607823671e-15}, "sm": {"max_abs_err": 1.1102230246251565e-16, "max_rel_err": 7.415294780112952e-16}, "iterative": {"max_abs_err": 0.05188311274417268, "max_rel_err": 0.29643001418931275}}
+
+=== Threshold 0.05 ===
+BEST: {'timestamp_utc': '2026-09-03T04:48:01Z', 'threshold': 0.05, 'method': 'sm', 'run_id': 1, 'base_seed': 12345, 'time_to_target_s': 2.141270715976134, 'total_wall_time_s': 2.141599569004029, 'init_time_s': 0.6384913040092215, 'total_incl_init_s': 2.7800908730132505, 'caps_at_target': 5.0, 'best_minz_ohm': 0.049338712354839484, 'success': True, 'n_fitness_evals': 3002, 'n_nodes': 21, 'n_freqs': 1391, 'n_cap_models': 3348, 'device': 'cuda', 'dtype': 'torch.complex128', 'folder': 'MinTime/GPUBaseline/sm__THR__0.05/run_1'}
+
+=== Threshold 0.045 ===
+BEST: {'timestamp_utc': '2026-09-03T05:02:24Z', 'threshold': 0.045, 'method': 'sm', 'run_id': 17, 'base_seed': 12345, 'time_to_target_s': 3.300060123001458, 'total_wall_time_s': 3.300366159004625, 'init_time_s': 0.6384913040092215, 'total_incl_init_s': 3.9388574630138464, 'caps_at_target': 6.0, 'best_minz_ohm': 0.04461952170804936, 'success': True, 'n_fitness_evals': 3911, 'n_nodes': 21, 'n_freqs': 1391, 'n_cap_models': 3348, 'device': 'cuda', 'dtype': 'torch.complex128', 'folder': 'MinTime/GPUBaseline/sm__THR__0.045/run_17'}
+
+=== Threshold 0.04 ===
+BEST: {'timestamp_utc': '2026-09-03T05:27:11Z', 'threshold': 0.04, 'method': 'sm', 'run_id': 1, 'base_seed': 12345, 'time_to_target_s': 9.783500573015772, 'total_wall_time_s': 9.78420082401135, 'init_time_s': 0.6384913040092215, 'total_incl_init_s': 10.422692128020572, 'caps_at_target': 11.0, 'best_minz_ohm': 0.03996118378108046, 'success': True, 'n_fitness_evals': 7507, 'n_nodes': 21, 'n_freqs': 1391, 'n_cap_models': 3348, 'device': 'cuda', 'dtype': 'torch.complex128', 'folder': 'MinTime/GPUBaseline/sm__THR__0.04/run_1'}
+
+=== Threshold 0.03 ===
