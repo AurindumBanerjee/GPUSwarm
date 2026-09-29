@@ -1,0 +1,60 @@
+{
+  "ROOT_OUT": "MinTime/GPUTest2",
+  "TARGET_PORT": 0,
+  "MAX_CAPS": 20,
+  "N_PARTICLES": 50,
+  "N_ITERATIONS": 40,
+  "W_MAX": 0.9,
+  "W_MIN": 0.4,
+  "C1": 1.5,
+  "C2": 1.5,
+  "NUM_RUNS": 20,
+  "TARGETS": [
+    0.05,
+    0.045,
+    0.04,
+    0.03
+  ],
+  "METHODS": [
+    "numpy",
+    "solve",
+    "sm",
+    "iterative"
+  ],
+  "BASELINE_METHOD": "numpy",
+  "BASE_SEED": 12345,
+  "REAL_DATA_AVAILABLE": true,
+  "N_NODES": 21,
+  "N_FREQS": 1391,
+  "N_CAP_MODELS": 3348,
+  "device": "cuda",
+  "dtype": "torch.complex128",
+  "gpu_name": "NVIDIA RTX A5000",
+  "torch_version": "2.6.0+cu124",
+  "cuda_version": "12.4",
+  "load_time_s": 0.5507923139957711,
+  "cuda_init_time_s": 0.29118230199674144,
+  "h2d_transfer_time_s": 0.1607637959823478,
+  "base_inverse_time_s": 0.7555996529990807,
+  "warmup_time_s": 0.02603090400225483,
+  "init_time_total_s": 1.758338064973941,
+  "gpu_cpu_verification": {
+    "numpy": {
+      "max_abs_err": 1.5543122344752192e-15,
+      "max_rel_err": 4.690105014303816e-15
+    },
+    "solve": {
+      "max_abs_err": 2.4980018054066022e-15,
+      "max_rel_err": 6.599877607823671e-15
+    },
+    "sm": {
+      "max_abs_err": 1.1102230246251565e-16,
+      "max_rel_err": 7.415294780112952e-16
+    },
+    "iterative": {
+      "max_abs_err": 0.05188311274417268,
+      "max_rel_err": 0.29643001418931275
+    }
+  },
+  "generated_utc": "2026-09-06T02:26:10Z"
+}
