@@ -1,0 +1,7 @@
+2026-09-02 18:19:10,930 INFO: RUN_START | method=numpy | threshold=0.050000 | run=1 | particles=50 | iterations=15 | device=cuda
+2026-09-02 18:19:12,932 INFO: n_caps=1 | iter=15 | minZ=0.080251 | placement={0: 1014}
+2026-09-02 18:19:14,924 INFO: n_caps=2 | iter=15 | minZ=0.069247 | placement={0: 1317, 16: 744}
+2026-09-02 18:19:16,939 INFO: n_caps=3 | iter=15 | minZ=0.063069 | placement={16: 678, 7: 366, 0: 2186}
+2026-09-02 18:19:18,979 INFO: n_caps=4 | iter=15 | minZ=0.057731 | placement={0: 1354, 5: 2029, 9: 1360, 6: 864}
+2026-09-02 18:19:20,242 INFO: n_caps=5 | iter=10 | minZ=0.040865 | placement={15: 1380, 0: 1014, 9: 1364, 10: 1514, 14: 1251}
+2026-09-02 18:19:20,242 INFO: RESULT | time_to_target=9.3122 | caps=5 | best_minZ=0.040865 | total_wall_time=9.3124
