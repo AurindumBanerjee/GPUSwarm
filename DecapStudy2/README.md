@@ -49,9 +49,10 @@ recorded the first time any evaluated placement meets it.
 | A4 / A5 DDR3 | `ddr21` / `ddr_full` | raw peak \|Z11\| (ohm) | peak <= target |
 
 A3 has three observation ports, so "raw peak" is read as the largest raw peak among them, with the
-per-rail targets only deciding when to stop. Bands B1 (<=20 MHz), B2 (<=50 MHz), B3 (full) and B4 (full,
-weighted by how much the best single capacitor can move |Z_kk|) are as in Exp 1; every winning placement
-is re-scored on all four.
+per-rail targets only deciding when to stop. Bands: B1 (<=20 MHz), B2 (<=50 MHz), B3 (full). Exp 1's B4
+(full band, frequency-weighted) is dropped - it scored 1.04-1.11 against B2, which won - leaving 5 x 3 = 15
+cells; the weighting code is dormant and `BANDS` in `study_config.py` brings it back. Every winning placement
+is re-scored on all bands.
 
 ## Port rules
 
@@ -72,7 +73,7 @@ fields). Besides Exp 1's fields each record carries:
 * `levels`: per threshold level `hit`, `caps_needed`, `iter`, `n_evals`, `time_s`, `target_ohm`, and the
   `placement` of the first placement that met it.
 * `objective` (`raw` / `ratio`), `cost_unit`, `best_cost_own_band`, `curve_cost`, `histories`,
-  `rescored[B1..B4] = {peaks_ohm, ratio, met_levels}`.
+  `rescored[B1..B3] = {peaks_ohm, ratio, met_levels}`.
 
 ## Files
 

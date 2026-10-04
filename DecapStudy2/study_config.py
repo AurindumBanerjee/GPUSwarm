@@ -41,18 +41,19 @@ BASE_SEED = 12345
 
 # ---------------------------------------------------------------- bands
 # Upper edge in Hz of the optimisation band. None = full grid (99.66 MHz).
-#   B4 = full band, each frequency weighted by how much the best single
-#   capacitor can move |Z_kk| there (see study_core.movement_weights), so the
-#   optimiser is not scored on bins it cannot influence.
+# B4 (full band, frequencies weighted by how much the best single capacitor can move
+# |Z_kk|) is DROPPED in Exp 2: in Exp 1 it scored 1.04-1.11 against B2, B2 won, and
+# dropping it removes a quarter of the cells. The weighting code in study_core
+# (WEIGHTED / movement_weights / band_spec) stays dormant: add
+#   "B4": WEIGHTED   to BANDS and BAND_LABEL below to bring the band back.
 WEIGHTED = "weighted"
-BANDS = {"B1": 20e6, "B2": 50e6, "B3": None, "B4": WEIGHTED}
-BAND_LABEL = {"B1": "<=20 MHz", "B2": "<=50 MHz", "B3": "full (99.66 MHz)",
-              "B4": "full, movement-weighted"}
+BANDS = {"B1": 20e6, "B2": 50e6, "B3": None}
+BAND_LABEL = {"B1": "<=20 MHz", "B2": "<=50 MHz", "B3": "full (99.66 MHz)"}
 
 # Band used to COMPARE cells whose own objectives differ (Stage-1 screening,
 # winning-band choice, recommendation). Scoring is always reported on all
-# four bands; this only decides which column ranks the cells. Must be a
-# physical band (B1-B3): B4's weighted peak is not a real impedance.
+# bands; this only decides which column ranks the cells. Must be a physical
+# band (any weighted band's peak is not a real impedance).
 CARE_BAND = os.environ.get("CARE_BAND", "B2")
 
 # Threads used to evaluate the particles of one iteration in parallel (numpy
