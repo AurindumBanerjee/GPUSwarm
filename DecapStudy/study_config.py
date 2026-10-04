@@ -45,6 +45,13 @@ MAX_CAPS_CAP = {"ddr21": 20}
 # releases the GIL in LAPACK). Results are identical to serial. Grid 2 always
 # runs serially so its timings are clean.
 THREADS = int(os.environ.get("STUDY_THREADS", "1"))
+# MKL/OpenBLAS multithread every LAPACK call themselves; stacked on top of the
+# particle threads that oversubscribes the cores (measured on the server, N=73:
+# 1.1 s/eval with 32 threads vs 0.03 s once the BLAS layer is pinned to 1).
+# Must run before numpy is imported, so study_config has to be imported first.
+if THREADS > 1:
+    for _v in ("MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS"):
+        os.environ.setdefault(_v, "1")
 
 # ---------------------------------------------------------------- targets
 # Ztarget_k = V_k * RIPPLE / dI_k   (classic target-impedance rule).
