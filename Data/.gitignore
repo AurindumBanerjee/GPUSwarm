@@ -1,0 +1,7 @@
+# Large binary datasets: tracked by provenance (README.md) and rebuildable
+# from Dataset/Scripts, not by git.
+*.mat
+*.s7*p
+*.s8*p
+*.S7*P
+*.S8*P
