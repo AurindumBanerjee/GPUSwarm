@@ -94,9 +94,17 @@ IMPROVABLE_RAILS = ["mer2", "pll1v0", "mphyvdd"]      # README: MER1 / PLL1V8 ha
 # Targets live in targets.json (see derive_targets.py). One entry per rail
 # (mer1 ... mphyvdd) and per DDR3 PDN size (ddr21, ddr_full -- their capacitor
 # budgets differ, so their floors do too), one value per threshold level.
-# A level is a multiplier on the Exp 1 floor; levels are reported against, and
-# the run stops when the TIGHTEST level (smallest multiplier) is met.
-DEFAULT_MULTIPLIERS = [1.1, 1.25, 1.5]
+# A level is a multiplier on the Exp 1 floor OF A BAND: floors and targets are derived per band
+# (B1/B2/B3) from Exp 1 runs optimised on that band, and a cell is scored against the targets of the
+# band it optimised. Grid 1 only records the levels; Grid 2 stops at its stop level.
+# Where Exp 1 has no valid full-budget run for a (key, band) -- its B1 runs stopped after 1-7
+# capacitors on the old assumed target -- floor_pass.py supplies them (own code, own output).
+DEFAULT_MULTIPLIERS = [1.02, 1.05, 1.1, 1.25, 1.5]
+FLOOR_PASS_DIR = os.path.join(HERE, "floor_pass")
+FLOOR_PASS_FILE = os.path.join(FLOOR_PASS_DIR, "floor_runs.jsonl")
+_inside(FLOOR_PASS_DIR)
+FLOOR_PASS_RUNS = 10                  # runs per (key, band) floor-pass cell (Exp 1 stage 2 used 10)
+FLOOR_PASS_RUNS_BY_KEY = {"ddr_full": 6}   # N=79 is ~1000 s/run
 DDR_TARGET_KEYS = ["ddr21", "ddr_full"]
 EXP1_RESULTS = os.path.join(os.path.dirname(HERE), "DecapStudy", "results", "results_long.jsonl")  # read-only
 
@@ -126,6 +134,11 @@ STAGES = {
     2: dict(n_particles=50, n_iters=15, runs=10),     # full (matches SB.py)
 }
 SCREEN_FACTOR = 2.0          # Stage 1: drop cells with median > 2x row best
+
+# Grid 1 never stops on a target level: every cell runs its whole capacitor budget (1..max_caps)
+# and the levels are only RECORDED as they are passed, so every cell yields a quality-vs-count
+# curve and a real placement to re-score. (Grid 2 stops early: time-to-target is its metric.)
+GRID1_STOP_LEVEL = "none"
 
 # Optional stagnation stop: end a run when the best cost has not improved by
 # more than PATIENCE_TOL (relative) for PATIENCE consecutive capacitor

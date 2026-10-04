@@ -67,6 +67,8 @@ def log(msg):
 # ============================================================ Grid 1
 
 def _run_and_log(stage, scope, band, run_id, prob, rail, cfg, extra=None):
+    cfg = dict(cfg)
+    cfg.setdefault("stop_level", C.GRID1_STOP_LEVEL)    # Grid 1: full budget, levels only recorded
     res = S.run_pso(prob, band, run_id, cfg)
     rec = {
         "record_type": "run", "stage": stage, "scope": scope, "band": band,
@@ -75,8 +77,8 @@ def _run_and_log(stage, scope, band, run_id, prob, rail, cfg, extra=None):
         "n_particles": cfg["n_particles"], "n_iters": cfg["n_iters"],
         "N": prob.N, "n_obs": prob.n_obs, "n_pads": len(prob.pads),
         "rails": prob.rails, "target_keys": prob.target_keys,
-        "targets_ohm": prob.targets.tolist(),       # tightest level; all levels are in "levels"
-        "multipliers": [m for _, m, _ in prob.levels],
+        "targets_ohm": prob.targets_for(band).tolist(),   # tightest level of the OPTIMISED band
+        "multipliers": [m for _, m, _ in prob.levels_for(band)],
     }
     rec.update(extra or {})
     rec.update(res)
@@ -203,9 +205,9 @@ def run_grid2(band, overrides=None):
 
     for N, key in C.GRID2_SIZES.items():
         prob = S.build_problem(key)
-        stop_lab = prob.stop_label(C.GRID2_STOP_LEVEL)
+        stop_lab = prob.stop_label(C.GRID2_STOP_LEVEL, band)
         log(f"Grid 2 N={N} ({prob.name}): PSO stop level x{stop_lab}"
-            + (" (flagged: every level is inside the floor spread)" if prob.level_flagged[stop_lab] else ""))
+            + (" (flagged: every level is inside the floor spread)" if prob.flagged_for(band)[stop_lab] else ""))
         for method in order:
             if method == "pure_python" and N not in C.GRID2_PURE_SIZES:
                 continue

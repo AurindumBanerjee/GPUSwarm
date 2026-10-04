@@ -47,7 +47,8 @@ def per_rail_long():
             for b in BANDS:
                 pk = r["rescored"][b]["peaks_ohm"][k]
                 row[f"peak_{b}"] = pk
-                row[f"ratio_{b}"] = pk / r["targets_ohm"][k]
+                # each band is scored against ITS OWN target (derived from Exp 1 runs on that band)
+                row[f"ratio_{b}"] = pk / r["rescored"][b]["target_ohm"][k]
             rows.append(row)
     return pd.DataFrame(rows)
 
@@ -389,7 +390,7 @@ def plot_impedance(stage, band):
             zb = np.abs(S.diag_z(prob, len(f), []))
             zo = np.abs(S.diag_z(prob, len(f), cfg))
             for k, name in enumerate(prob.rails):
-                items.append((f"{scope} {name}", zb[:, k], zo[:, k], prob.targets[k], len(cfg)))
+                items.append((f"{scope} {name}", zb[:, k], zo[:, k], prob.targets_for(r["band"])[k], len(cfg)))
         n = len(items)
         cols = min(n, 3)
         fig, axes = plt.subplots((n + cols - 1) // cols, cols, figsize=(5.2 * cols, 3.8 * ((n + cols - 1) // cols)),
@@ -442,19 +443,26 @@ def build_report():
     care = C.CARE_BAND
     stage = _stage_for_plots()
     parts = ["# Decap placement study (Exp 2) -- report\n",
-             f"Ranking band (CARE_BAND): {care}. Targets come from targets.json (Exp 1 floors on "
-             "the <=50 MHz band x each multiplier); the run stops at the tightest level and "
-             "every level is reported (succ_x<m>, caps_x<m> columns). R_x / ratio = peak / "
-             "Ztarget at the tightest level, so <=1 means the tightest level is met.\n"]
+             f"Ranking band (CARE_BAND): {care}. Targets come from targets.json and are derived PER BAND "
+             "(Exp 1 floor of runs optimised on that band, scored on it, x each multiplier); a cell is "
+             "judged against the targets of the band it optimised, and the cross-band ranking re-scores "
+             f"every placement on {care} against the {care} targets. Grid 1 never stops on a level: every "
+             "cell runs its full capacitor budget and the levels are recorded as they are passed "
+             "(succ_x<m>, caps_x<m> columns; Grid 2 stops early because time-to-target is its metric). "
+             "R_x / ratio = peak / Ztarget (band x, tightest level), so <=1 means that level is met.\n"]
     try:
         import study_core as S
-        levels, table = S.load_targets()
-        flags = S.get_flags()
-        tt = pd.DataFrame([{"target key": k,
-                            **{f"x{lab} [ohm]": (f"{v[lab]:.5g}" + ("\u2020" if flags.get(k, {}).get(lab) else ""))
-                               for lab, _ in levels}}
-                           for k, v in table.items()])
-        parts.append("\n## Targets used\n" + md(tt) + NOISE_NOTE)
+        levels, tables = S.load_targets()
+        allflags = S.get_flags()
+        parts.append("\n## Targets used (per band)\n")
+        for band, table in tables.items():
+            flags = allflags.get(band, {})
+            tt = pd.DataFrame([{"target key": k,
+                                **{f"x{lab} [ohm]": (f"{v[lab]:.5g}" + ("\u2020" if flags.get(k, {}).get(lab) else ""))
+                                   for lab, _ in levels}}
+                               for k, v in table.items()])
+            parts.append(f"\n### Band {band} ({C.BAND_LABEL[band]})\n" + md(tt))
+        parts.append(NOISE_NOTE)
     except Exception as e:                      # report must still build from the JSONL
         parts.append(f"\n_(targets.json not readable here: {e})_\n")
     s1 = os.path.join(C.OUT_ROOT, "stage1_table.md")

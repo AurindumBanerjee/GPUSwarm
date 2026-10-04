@@ -15,9 +15,10 @@ Everything this study writes stays inside `DecapStudy2/`: `results/` (`results_l
 ./run_exp2.sh --validate
 
 # 1. after Exp 1 has finished (its results/report.md exists)
-python derive_targets.py                    # floors x [1.1, 1.25, 1.5] -> targets.json
-python derive_targets.py --multipliers 1.05 1.2 1.4     # other levels
-python derive_targets.py --floor-source any             # floors from every optimisation band
+python floor_pass.py --plan                 # which (key, band) floors Exp 1 cannot supply (B1, see Targets)
+python floor_pass.py                        # full-budget B1 runs for those (own code, floor_pass/floor_runs.jsonl)
+python derive_targets.py --dry-run          # per-band floor report
+python derive_targets.py --force            # floors x [1.02 1.05 1.1 1.25 1.5], PER BAND -> targets.json
 
 # 2. the study, detached under nohup (resumable; a reboot just needs the same command again)
 ./run_exp2.sh
@@ -29,27 +30,38 @@ The study **refuses to start** (exit code 2) while any target in `targets.json` 
 
 ## Targets
 
-`targets.json` holds, per key, one value per threshold level: `targets_ohm[key][level] = floor * level`.
+`targets.json` holds, **per band** (B1, B2, B3), per key, one value per threshold level:
+`bands[b].targets_ohm[key][level] = floor_b * level`.
 Keys: the five MPHY rails (`mer1 mer2 pll1v0 pll1v8 mphyvdd`), and the two DDR3 PDN sizes
 (`ddr21`, `ddr_full` - their capacitor budgets differ, so their floors do too).
 
-The **floor** is the lowest peak |Z11| on the <=50 MHz band (B2) that any Exp 1 stage-2 run reached while
-using its full capacitor budget (`max_caps == n_pads` and the search went through the last capacitor count).
-Rails come from the rail-wise A1 runs; `ddr21` from A4, `ddr_full` from A5. Each multiplier is a threshold
-level. A run stops when the **tightest** level (smallest multiplier) is met; every looser level is
-recorded the first time any evaluated placement meets it.
+The **floor of band b** is the lowest peak |Z11| on band b that any Exp 1 stage-2 numpy run *optimised on b* reached
+while using its full capacitor budget (`max_caps == n_pads` and the search went through the last capacitor count),
+scored on b. Rails come from the rail-wise A1 runs; `ddr21` from A4, `ddr_full` from A5. A cell is always judged against
+the targets of the band it optimised (a B1 cell against B1 targets), so no band is scored against another band's
+floor; the cross-band ranking is the CARE_BAND (B2) re-scoring of every placement against the B2 targets. If a band's
+spread (max-min)/min exceeds 10 % the floor is the median instead (B3: pll1v0, ddr21, ddr_full).
+
+Exp 1's B1 runs stopped after 1-7 capacitors on Exp 1's old assumed target (and ddr_full has no stage-2 B1 run), so for
+those five (key, B1) pairs Exp 1 has no floor. `floor_pass.py` supplies them: Exp 2 code, Exp 1's stage-2 PSO budget
+(50 x 15; 10 runs, 6 for ddr_full), full capacitor budget, no early stop. `targets.json` records the source of every
+floor (`exp1` | `floor_pass`).
+
+**Grid 1 never stops on a level**: every cell runs its whole capacitor budget 1..max_caps and the levels are recorded
+the first time any evaluated placement meets them (`levels[lvl]`), so every cell has a quality-versus-count curve and a
+real placement to re-score. **Grid 2 stops early** (time-to-target is its metric) at the tightest unflagged level.
 
 ## Objectives
 
-| scope | problem | objective | stop condition |
+| scope | problem | objective | level counted as met (Grid 1 records it; Grid 2 stops on it) |
 |---|---|---|---|
-| A1 rail-wise | each rail file | raw peak \|Z11\| (ohm) | peak <= rail target (tightest level) |
-| A2 whole package | `y_sp_mphy_full` (5 obs ports) | max_k \|Z_kk\| / Ztarget_k | every rail meets its target |
+| A1 rail-wise | each rail file | raw peak \|Z11\| (ohm) | peak <= rail target of the optimised band |
+| A2 whole package | `y_sp_mphy_full` (5 obs ports) | max_k \|Z_kk\| / Ztarget_k (optimised band's tightest target) | every rail meets its target |
 | A3 improvable only | mer2 + pll1v0 + mphyvdd sub-network | raw peak, max over its 3 obs ports (ohm) | every rail meets its target |
 | A4 / A5 DDR3 | `ddr21` / `ddr_full` | raw peak \|Z11\| (ohm) | peak <= target |
 
 A3 has three observation ports, so "raw peak" is read as the largest raw peak among them, with the
-per-rail targets only deciding when to stop. Bands: B1 (<=20 MHz), B2 (<=50 MHz), B3 (full). Exp 1's B4
+per-rail targets only deciding which levels count as met. Bands: B1 (<=20 MHz), B2 (<=50 MHz), B3 (full). Exp 1's B4
 (full band, frequency-weighted) is dropped - it scored 1.04-1.11 against B2, which won - leaving 5 x 3 = 15
 cells; the weighting code is dormant and `BANDS` in `study_config.py` brings it back. Every winning placement
 is re-scored on all bands.
@@ -58,7 +70,7 @@ is re-scored on all bands.
 
 A level whose target (floor x multiplier) lies **below the median** achieved peak of the Exp 1 runs is *inside
 the floor spread*: a typical run could not reach it. `derive_targets.py` writes these flags to `targets.json`
-(`flags[key][level]`); every run record carries them (`levels[lvl].inside_noise`, `inside_noise_rails`; a level of a
+(`bands[b].flags[key][level]`, per band); every run record carries them (`levels[lvl].inside_noise`, `inside_noise_rails`; a level of a
 multi-rail problem is flagged if any of its rails is), and the report marks flagged success rates with a dagger.
 A low success rate at a flagged level means "target inside measurement noise", not a difference between
 scopes or bands. Grid 2 stops its PSO runs at the tightest level that is *not* flagged.
@@ -107,6 +119,7 @@ fields). Besides Exp 1's fields each record carries:
 | `study_core.py` | data, targets loading (refuses nulls), fitness, PSO |
 | `experiments.py` | stage runners, Grid 2, consistency check, JSONL logging |
 | `analyze.py` | screening, matrices (per-level success), plots, report |
-| `derive_targets.py` | Exp 1 results -> `targets.json` |
+| `derive_targets.py` | Exp 1 results (+ floor pass) -> per-band `targets.json` |
+| `floor_pass.py` | full-budget runs for the (key, band) floors Exp 1 cannot supply |
 | `validate.py` | the `--validate` dry check |
 | `run_all.py`, `run_exp2.sh` | sequencer and nohup launcher |
