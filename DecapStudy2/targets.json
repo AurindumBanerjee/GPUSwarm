@@ -1,0 +1,23 @@
+{
+  "_comment": "PLACEHOLDER - every value is null on purpose. Fill with: python derive_targets.py (after Exp 1 has finished). targets_ohm[key][level] = floors_ohm[key] * level, in ohm of peak |Z_kk| on the <=50 MHz band. The study refuses to start while any target is null.",
+  "multipliers": [1.1, 1.25, 1.5],
+  "floors_ohm": {
+    "mer1": null,
+    "mer2": null,
+    "pll1v0": null,
+    "pll1v8": null,
+    "mphyvdd": null,
+    "ddr21": null,
+    "ddr_full": null
+  },
+  "targets_ohm": {
+    "mer1":     {"1.1": null, "1.25": null, "1.5": null},
+    "mer2":     {"1.1": null, "1.25": null, "1.5": null},
+    "pll1v0":   {"1.1": null, "1.25": null, "1.5": null},
+    "pll1v8":   {"1.1": null, "1.25": null, "1.5": null},
+    "mphyvdd":  {"1.1": null, "1.25": null, "1.5": null},
+    "ddr21":    {"1.1": null, "1.25": null, "1.5": null},
+    "ddr_full": {"1.1": null, "1.25": null, "1.5": null}
+  },
+  "source": null
+}
