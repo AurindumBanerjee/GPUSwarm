@@ -65,6 +65,9 @@ def main():
     import experiments as X
     import analyze as A
 
+    for d in (C.OUT_ROOT, C.FIG_DIR, C.LOG_DIR):       # everything the study writes lives under HERE
+        os.makedirs(d, exist_ok=True)
+
     want = lambda name: args.only in (None, name)
 
     if want("response"):
