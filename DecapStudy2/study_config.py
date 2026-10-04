@@ -134,20 +134,37 @@ PATIENCE = None
 PATIENCE_TOL = 1e-3
 
 # ---------------------------------------------------------------- Grid 2
-GRID2_METHODS = ["pure_python", "numpy", "solve", "sm", "iterative"]
+# PRIMARY metric: wall-time for a FIXED evaluation count -- FIXED_EVALS identical
+# (model, pad) configurations per size, evaluated by every method in the same per-frequency
+# loop mode. Equal-evaluation timing is the fair comparison; time-to-target is only a
+# secondary column, at sizes where PSO runs actually converge.
+#
+# `iterative` is an APPROXIMATION (second-order series + fallback to a full inverse), not a
+# method under test: it is timed per evaluation only, with its series fallback rate beside
+# it, and is excluded from placement-match claims and every achieved-impedance comparison.
+GRID2_PSO_METHODS = ["pure_python", "numpy", "solve", "sm"]              # exact methods: PSO runs
+GRID2_TIMING_METHODS = ["pure_python", "numpy", "solve", "sm", "iterative"]   # fixed-eval timing
+APPROXIMATE_METHODS = ["iterative"]
 GRID2_SIZES = {          # N -> problem key
-    16: "mer2",          # single-rail MPHY (improvable rail)
+    16: "mer1",          # single-rail MPHY (mer2 meets every level on the bare network -> empty runs)
     21: "ddr21",
     73: "mphy_full",     # whole package, 5 observation ports
     79: "ddr_full",
 }
 GRID2_RUNS = 5
 GRID2_PURE_RUNS = 2
-GRID2_PURE_SIZES = [16, 21]        # executed; N=73/79 extrapolated from n^3 scaling
-GRID2_TIME_LIMIT_S = 1800          # per-run wall-clock cap (flagged as timed_out)
+GRID2_PURE_SIZES = [16, 21]        # executed; N=73/79 extrapolated from the measured n^3 scaling
+GRID2_TIME_LIMIT_S = 1800          # per PSO run wall-clock cap (flagged as timed_out) -- unchanged
 GRID2_PSO = dict(n_particles=50, n_iters=15)
-EVAL_TIMING_N = 12                 # fitness evaluations timed per (method, size)
-EVAL_TIMING_CAPS = 10
+# PSO runs stop at the tightest level that is NOT noise-flagged (target inside the Exp 1 floor spread)
+GRID2_STOP_LEVEL = "tightest_unflagged"
+# If the first numpy PSO run at a size hits the cap without reaching its stop level, time-to-target
+# and placement matching are moot there: skip the remaining PSO runs of that size (recorded).
+GRID2_SKIP_UNCONVERGED = True
+FIXED_EVALS = 400                  # fixed evaluation count (pure_python at N=21: ~1400 s < the cap)
+FIXED_EVAL_CAPS = 20               # configurations cycle through 1..min(this, pads) capacitors
+FIXED_EVAL_SEED = 20261004
+FALLBACK_PROBE_CONFIGS = 20        # configurations used for the iterative series fallback rate
 
 # ---------------------------------------------------------------- consistency
 CONSISTENCY_TOL = 0.01             # <=1 % relative deviation of band peak => "matches"

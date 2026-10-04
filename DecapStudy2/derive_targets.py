@@ -22,6 +22,14 @@ The report printed before anything is written has three tables: the floor
 distribution per key (min / median / max / spread, the anchor chosen, the capacitor
 count of the floor run), and a probe of how many capacitors Exp 1's runs needed to get
 within m x floor for a range of m -- the evidence for choosing the multiplier list.
+Only numpy runs feed the floors (an explicit filter; Exp 1's Grid 1 is numpy-only and the
+approximate `iterative` method exists only in its Grid 2, which is never read here).
+
+Noise flags: a level whose target (floor x m) lies BELOW the median achieved peak of the Exp 1
+runs is "inside the Exp 1 floor spread": a typical run could not reach it, so a low success
+rate there reads as "target inside measurement noise", not as a method difference. The flags
+are written to targets.json and carried into every Exp 2 record and the report.
+
 Nothing is written with --dry-run; targets.json is the only file this script writes.
 
     python derive_targets.py --dry-run                      # report only
@@ -85,6 +93,9 @@ def eligible(runs, floor_source):
             continue
         key, k = tk
         seen[key] += 1
+        if r.get("method", "numpy") != "numpy":          # floors must come from exact numpy runs only
+            skipped[key]["non-numpy method"] += 1
+            continue
         if floor_source == "b2" and r["band"] != SCORE_BAND:
             skipped[key]["other optimisation band"] += 1
             continue
@@ -121,6 +132,12 @@ def anchor(elig, mode, thr_pct):
     return out
 
 
+def noise_flags(stats, mult):
+    """key -> level label -> True when floor*m < median achieved peak (strictly below)."""
+    return {k: {level_key(m): bool(s["floor"] * m < s["median"]) for m in mult}
+            for k, s in stats.items()}
+
+
 def probe(elig, stats, multipliers):
     """key -> m -> (median capacitors needed, runs that got there, runs).
 
@@ -144,7 +161,7 @@ def probe(elig, stats, multipliers):
     return out
 
 
-def report(keys, stats, prb, mult, multipliers_probe):
+def report(keys, stats, prb, mult, multipliers_probe, flags):
     print("\n[1] achieved floor per key: peak |Z11| on <=50 MHz (B2) of every full-budget Exp 1 run")
     print(f"    spread = (max-min)/min; anchor = median where spread > {SPREAD_THRESHOLD_PCT:g} %")
     print(f"{'key':<9}{'runs':>5}{'min':>10}{'median':>10}{'max':>10}{'spread%':>9}  {'anchor':<7}"
@@ -172,9 +189,20 @@ def report(keys, stats, prb, mult, multipliers_probe):
         print(f"{k:<9}" + "".join(cells))
     if mult:
         print("\n[4] levels that would be written: " + ", ".join(f"x{level_key(m)}" for m in mult))
-        print(f"{'key':<9}" + "".join(f"{'x' + level_key(m) + ' [ohm]':>14}" for m in mult))
+        print(f"{'key':<9}" + "".join(f"{'x' + level_key(m) + ' [ohm]':>14}" for m in mult)
+              + f"{'median/floor':>14}")
         for k in keys:
-            print(f"{k:<9}" + "".join(f"{stats[k]['floor'] * m:>14.5g}" for m in mult))
+            cells = ""
+            for m in mult:
+                v = f"{stats[k]['floor'] * m:.5g}" + ("*" if flags[k][level_key(m)] else " ")
+                cells += f"{v:>14}"
+            print(f"{k:<9}{cells}{stats[k]['median'] / stats[k]['floor']:>14.4f}")
+        print("    * = level target below the median achieved peak: inside the Exp 1 floor spread "
+              "(noise-flagged)")
+        for k in keys:
+            fl = [f"x{lab}" for lab, v in flags[k].items() if v]
+            if fl:
+                print(f"    flagged {k}: {', '.join(fl)}")
 
 
 def main():
@@ -231,7 +259,10 @@ def main():
 
     stats = anchor(elig, args.anchor, args.spread_threshold)
     prb = probe(elig, stats, args.probe_multipliers)
-    report(keys, stats, prb, mult, args.probe_multipliers)
+    flags = noise_flags(stats, mult)
+    methods = sorted({x["rec"].get("method", "numpy") for k in keys for x in elig[k]})
+    print(f"inversion methods feeding the floors: {', '.join(methods)}")
+    report(keys, stats, prb, mult, args.probe_multipliers, flags)
     switched = [k for k in keys if stats[k]["anchor"] == "median" and args.anchor == "auto"]
     print("\nrails switched from min to median anchoring (spread > "
           f"{args.spread_threshold:g} %): " + (", ".join(switched) if switched else "none"))
@@ -247,7 +278,11 @@ def main():
         "multipliers": mult,
         "floors_ohm": {k: stats[k]["floor"] for k in keys},
         "targets_ohm": {k: {lv: stats[k]["floor"] * m for lv, m in zip(levels, mult)} for k in keys},
+        "flags": flags,
+        "flag_rule": "flags[key][level] is true when targets_ohm[key][level] < the MEDIAN achieved "
+                     "peak of the Exp 1 full-budget runs (the level lies inside the floor spread)",
         "source": {
+            "methods_feeding_floors": methods,
             "exp1_results": src, "score_band": SCORE_BAND, "stage": args.stage,
             "floor_source": args.floor_source, "anchor_mode": args.anchor,
             "spread_threshold_pct": args.spread_threshold,

@@ -123,13 +123,18 @@ def show_targets():
         return False
     print("  levels (multiplier on the Exp 1 floor): "
           + ", ".join(f"x{lab}" for lab, _ in levels) + "   [stop at the tightest = first]")
+    flags = S.get_flags()
     print(f"  {'key':<10}" + "".join(f"{'x' + lab + ' [ohm]':>14}" for lab, _ in levels))
     for k, row in table.items():
-        print(f"  {k:<10}" + "".join(f"{row[lab]:>14.5g}" for lab, _ in levels))
+        print(f"  {k:<10}" + "".join(
+            f"{row[lab]:>13.5g}" + ("*" if flags.get(k, {}).get(lab) else " ") for lab, _ in levels))
+    flagged = [f"{k} x{lab}" for k, row in flags.items() for lab, v in row.items() if v]
+    print("  * = noise-flagged level (target below the median Exp 1 floor, i.e. inside the floor spread): "
+          + (", ".join(flagged) if flagged else "none"))
     return True
 
 
-def show_plan(probs):
+def show_plan(probs, ready):
     print("\n[4] planned cells")
     n_runs_total = 0
     for stage in (1, 2):
@@ -155,9 +160,20 @@ def show_plan(probs):
           + f"   ranking band: {C.CARE_BAND}")
     print("  Grid 2 (band = Grid 1 winner): sizes "
           + ", ".join(f"N={n}:{k}" for n, k in C.GRID2_SIZES.items()))
-    print(f"    methods {C.GRID2_METHODS}; {C.GRID2_RUNS} runs each; pure_python "
-          f"{C.GRID2_PURE_RUNS} runs at N in {C.GRID2_PURE_SIZES} only, other sizes extrapolated "
-          f"by n^3; time limit {C.GRID2_TIME_LIMIT_S}s/run")
+    print(f"    PRIMARY: wall-time for {C.FIXED_EVALS} fixed evaluations (identical configs, 1.."
+          f"{C.FIXED_EVAL_CAPS} capacitors) for {C.GRID2_TIMING_METHODS}; "
+          f"{[m for m in C.APPROXIMATE_METHODS]} is an APPROXIMATION: timing + series fallback rate only")
+    print(f"    SECONDARY: PSO runs of the exact methods {C.GRID2_PSO_METHODS}, {C.GRID2_RUNS} runs each "
+          f"(pure_python {C.GRID2_PURE_RUNS} runs at N in {C.GRID2_PURE_SIZES} only, other sizes "
+          f"extrapolated by n^3), stop level '{C.GRID2_STOP_LEVEL}', cap {C.GRID2_TIME_LIMIT_S}s/run, "
+          f"{'skip a size whose first numpy run hits the cap' if C.GRID2_SKIP_UNCONVERGED else 'no skipping'}")
+    if ready:
+        S.set_require_targets(True)
+        for n, k in C.GRID2_SIZES.items():
+            p = S.build_problem(k)
+            lab = p.stop_label(C.GRID2_STOP_LEVEL)
+            print(f"      N={n:<3} {p.name:<12} objective={p.objective:<5} PSO stop level x{lab}"
+                  + ("  [all levels flagged]" if p.level_flagged[lab] else ""))
     print(f"  threads: STUDY_THREADS={C.THREADS}; BLAS threads: "
           + ", ".join(f"{v}={os.environ.get(v)}" for v in
                       ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
@@ -173,7 +189,7 @@ def run():
         return 1
     probs = check_port_rules()
     ready = show_targets()
-    show_plan(probs)
+    show_plan(probs, ready)
     if _fails:
         print(f"\nRESULT: FAILED ({len(_fails)} check(s)):")
         for m in _fails:
