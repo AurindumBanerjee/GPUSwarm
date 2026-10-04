@@ -136,7 +136,7 @@ def show_plan(probs):
         sc = C.STAGES[stage]
         print(f"  Stage {stage}: {sc['runs']} runs/cell, {sc['n_particles']} particles x "
               f"{sc['n_iters']} iterations" + ("" if stage == 1 else
-              "  (survivor cells from Stage 1 only; 20 cells max)"))
+              f"  (survivor cells from Stage 1 only; {len(C.SCOPES) * len(C.BANDS)} cells max)"))
     print(f"  {'scope':<5}{'label':<22}{'problems':<46}{'objective':<10}{'max_caps':<9}")
     cells = 0
     for scope in C.SCOPES:

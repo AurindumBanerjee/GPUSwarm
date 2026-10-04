@@ -39,7 +39,7 @@ def main():
                     help="band used to rank cells (default from study_config / CARE_BAND)")
     ap.add_argument("--patience", type=int, default=None,
                     help="stop a run after this many capacitor counts without >0.1%% gain")
-    ap.add_argument("--grid2-band", choices=["B1", "B2", "B3", "B4"],
+    ap.add_argument("--grid2-band", choices=["B1", "B2", "B3"],
                     help="override the winning band for Grid 2")
     args = ap.parse_args()
 
