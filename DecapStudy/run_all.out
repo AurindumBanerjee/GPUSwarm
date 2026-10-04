@@ -1,0 +1,532 @@
+21:51:40 === Grid 1 / stage 1: 20 cells x 3 runs ({'n_particles': 20, 'n_iters': 6}) ===
+21:56:03 [18/60] A2 B2 run3 all: ok=False caps=68 own=7.978 care(B2)=7.978 evals=8161 262s
+22:00:45 [19/60] A2 B3 run1 all: ok=False caps=68 own=15.984 care(B2)=8.092 evals=8161 282s
+22:05:27 [20/60] A2 B3 run2 all: ok=False caps=68 own=16.023 care(B2)=8.047 evals=8161 282s
+22:10:07 [21/60] A2 B3 run3 all: ok=False caps=68 own=16.024 care(B2)=8.048 evals=8161 280s
+22:14:47 [22/60] A2 B4 run1 all: ok=False caps=68 own=2.295 care(B2)=8.077 evals=8161 281s
+22:19:30 [23/60] A2 B4 run2 all: ok=False caps=68 own=2.496 care(B2)=8.089 evals=8161 282s
+22:24:10 [24/60] A2 B4 run3 all: ok=False caps=68 own=2.311 care(B2)=8.075 evals=8161 280s
+22:24:48 [25/60] A3 B1 run1 all: ok=True caps=14 own=0.998 care(B2)=3.580 evals=1562 38s
+22:24:57 [26/60] A3 B1 run2 all: ok=True caps=8 own=0.986 care(B2)=3.590 evals=842 9s
+22:25:07 [27/60] A3 B1 run3 all: ok=True caps=9 own=0.992 care(B2)=3.619 evals=962 10s
+22:25:57 [28/60] A3 B2 run1 all: ok=False caps=38 own=3.561 care(B2)=3.561 evals=4561 51s
+22:26:47 [29/60] A3 B2 run2 all: ok=False caps=38 own=3.561 care(B2)=3.561 evals=4561 50s
+22:27:36 [30/60] A3 B2 run3 all: ok=False caps=38 own=3.560 care(B2)=3.560 evals=4561 49s
+22:28:29 [31/60] A3 B3 run1 all: ok=False caps=38 own=4.836 care(B2)=3.590 evals=4561 52s
+22:29:20 [32/60] A3 B3 run2 all: ok=False caps=38 own=4.662 care(B2)=3.601 evals=4561 52s
+22:30:14 [33/60] A3 B3 run3 all: ok=False caps=38 own=4.797 care(B2)=3.598 evals=4561 54s
+22:31:08 [34/60] A3 B4 run1 all: ok=False caps=38 own=2.301 care(B2)=3.624 evals=4561 53s
+22:32:02 [35/60] A3 B4 run2 all: ok=False caps=38 own=2.510 care(B2)=3.609 evals=4561 55s
+22:32:57 [36/60] A3 B4 run3 all: ok=False caps=38 own=2.306 care(B2)=3.589 evals=4561 54s
+22:33:00 [37/60] A4 B1 run1 all: ok=True caps=10 own=0.987 care(B2)=2.482 evals=1163 3s
+22:33:03 [38/60] A4 B1 run2 all: ok=True caps=9 own=0.965 care(B2)=2.555 evals=1067 3s
+22:33:06 [39/60] A4 B1 run3 all: ok=True caps=9 own=0.983 care(B2)=2.555 evals=962 3s
+22:33:13 [40/60] A4 B2 run1 all: ok=False caps=20 own=2.171 care(B2)=2.171 evals=2401 7s
+22:33:19 [41/60] A4 B2 run2 all: ok=False caps=20 own=2.216 care(B2)=2.216 evals=2401 6s
+22:33:27 [42/60] A4 B2 run3 all: ok=False caps=20 own=2.228 care(B2)=2.228 evals=2401 7s
+22:33:34 [43/60] A4 B3 run1 all: ok=False caps=20 own=4.420 care(B2)=3.050 evals=2401 7s
+22:33:41 [44/60] A4 B3 run2 all: ok=False caps=20 own=4.336 care(B2)=2.235 evals=2401 7s
+22:33:48 [45/60] A4 B3 run3 all: ok=False caps=20 own=4.485 care(B2)=2.335 evals=2401 7s
+22:33:55 [46/60] A4 B4 run1 all: ok=False caps=20 own=2.295 care(B2)=2.382 evals=2401 7s
+22:34:02 [47/60] A4 B4 run2 all: ok=False caps=20 own=2.215 care(B2)=2.249 evals=2401 7s
+22:34:09 [48/60] A4 B4 run3 all: ok=False caps=20 own=2.303 care(B2)=2.335 evals=2401 7s
+22:34:42 [49/60] A5 B1 run1 all: ok=True caps=4 own=0.911 care(B2)=2.242 evals=426 32s
+22:34:56 [50/60] A5 B1 run2 all: ok=True caps=3 own=0.998 care(B2)=2.572 evals=361 13s
+22:35:06 [51/60] A5 B1 run3 all: ok=True caps=3 own=0.975 care(B2)=2.401 evals=242 10s
+22:41:12 [52/60] A5 B2 run1 all: ok=False caps=78 own=1.083 care(B2)=1.083 evals=9361 366s
+22:47:17 [53/60] A5 B2 run2 all: ok=False caps=78 own=1.144 care(B2)=1.144 evals=9361 365s
+22:53:23 [54/60] A5 B2 run3 all: ok=False caps=78 own=1.146 care(B2)=1.146 evals=9361 366s
+22:59:48 [55/60] A5 B3 run1 all: ok=False caps=78 own=2.247 care(B2)=1.428 evals=9361 386s
+23:06:12 [56/60] A5 B3 run2 all: ok=False caps=78 own=2.162 care(B2)=1.338 evals=9361 383s
+23:12:37 [57/60] A5 B3 run3 all: ok=False caps=78 own=2.248 care(B2)=1.168 evals=9361 386s
+23:19:01 [58/60] A5 B4 run1 all: ok=False caps=78 own=1.304 care(B2)=1.194 evals=9361 383s
+23:25:23 [59/60] A5 B4 run2 all: ok=False caps=77 own=1.287 care(B2)=1.263 evals=9361 382s
+23:31:46 [60/60] A5 B4 run3 all: ok=False caps=78 own=1.278 care(B2)=1.168 evals=9361 383s
+23:31:46 Stage 1 screening table:
+# Stage 1 screening
+
+Ranking band: **B2** (median over runs of the re-scored peak/Ztarget; <=1 meets target). Cells with x_vs_best > 2.0 are dropped.
+
+| scope | label | band | n_runs | med_R_B1 | med_R_B2 | med_R_B3 | med_R_B4 | x_vs_best | keep | success | caps_used |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| A1 | MPHY rail-wise | B1 | 3 | 3.212 | 8.063 | 16.06 | 3.136 | 1.011 | True | 0 | 27 |
+| A1 | MPHY rail-wise | B2 | 3 | 3.268 | 7.977 | 16.06 | 2.59 | 1 | True | 0 | 56 |
+| A1 | MPHY rail-wise | B3 | 3 | 3.257 | 8.09 | 15.99 | 2.294 | 1.014 | True | 0 | 66 |
+| A1 | MPHY rail-wise | B4 | 3 | 3.257 | 8.09 | 15.99 | 2.492 | 1.014 | True | 0 | 66 |
+| A2 | MPHY whole package | B1 | 3 | 3.211 | 8.063 | 16.06 | 2.776 | 1.015 | True | 0 | 68 |
+| A2 | MPHY whole package | B2 | 3 | 3.28 | 7.941 | 16.05 | 3.11 | 1 | True | 0 | 50 |
+| A2 | MPHY whole package | B3 | 3 | 3.241 | 8.048 | 16.02 | 2.832 | 1.014 | True | 0 | 68 |
+| A2 | MPHY whole package | B4 | 3 | 3.254 | 8.077 | 16.08 | 2.311 | 1.017 | True | 0 | 68 |
+| A3 | MPHY improvable only | B1 | 3 | 0.9921 | 3.59 | 5.191 | 2.973 | 1.008 | True | 1 | 9 |
+| A3 | MPHY improvable only | B2 | 3 | 0.9925 | 3.561 | 5.066 | 2.837 | 1 | True | 0 | 38 |
+| A3 | MPHY improvable only | B3 | 3 | 1.034 | 3.598 | 4.797 | 2.815 | 1.011 | True | 0 | 38 |
+| A3 | MPHY improvable only | B4 | 3 | 1.062 | 3.609 | 5.07 | 2.306 | 1.014 | True | 0 | 38 |
+| A4 | DDR3 21-port | B1 | 3 | 0.9834 | 2.555 | 5.102 | 2.62 | 1.153 | True | 1 | 9 |
+| A4 | DDR3 21-port | B2 | 3 | 1.315 | 2.216 | 4.864 | 2.498 | 1 | True | 0 | 20 |
+| A4 | DDR3 21-port | B3 | 3 | 1.066 | 2.335 | 4.42 | 2.303 | 1.054 | True | 0 | 20 |
+| A4 | DDR3 21-port | B4 | 3 | 1.066 | 2.335 | 4.432 | 2.295 | 1.054 | True | 0 | 20 |
+| A5 | DDR3 79-port | B1 | 3 | 0.975 | 2.401 | 4.778 | 2.716 | 2.1 | False | 1 | 3 |
+| A5 | DDR3 79-port | B2 | 3 | 0.6231 | 1.144 | 2.43 | 1.381 | 1 | True | 0 | 78 |
+| A5 | DDR3 79-port | B3 | 3 | 0.6439 | 1.338 | 2.247 | 1.325 | 1.17 | True | 0 | 78 |
+| A5 | DDR3 79-port | B4 | 3 | 0.5464 | 1.194 | 2.264 | 1.287 | 1.044 | True | 0 | 78 |
+
+23:31:46 === Grid 1 / stage 2: 19 cells x 10 runs ({'n_particles': 50, 'n_iters': 15}) ===
+23:31:57 [1/190] A1 B1 run1 mer1: ok=False caps=13 own=3.211 care(B2)=8.062 evals=11251 11s
+23:31:58 [1/190] A1 B1 run1 mer2: ok=True caps=1 own=0.994 care(B2)=3.696 evals=99 0s
+23:31:58 [1/190] A1 B1 run1 pll1v0: ok=True caps=1 own=0.997 care(B2)=2.488 evals=7 0s
+23:32:09 [1/190] A1 B1 run1 pll1v8: ok=False caps=8 own=2.524 care(B2)=6.468 evals=11251 11s
+23:32:10 [1/190] A1 B1 run1 mphyvdd: ok=True caps=1 own=0.991 care(B2)=2.410 evals=282 0s
+23:32:24 [2/190] A1 B1 run2 mer1: ok=False caps=11 own=3.211 care(B2)=8.063 evals=11251 15s
+23:32:24 [2/190] A1 B1 run2 mer2: ok=True caps=1 own=0.998 care(B2)=3.637 evals=67 0s
+23:32:25 [2/190] A1 B1 run2 pll1v0: ok=True caps=1 own=0.994 care(B2)=2.487 evals=28 0s
+23:32:42 [2/190] A1 B1 run2 pll1v8: ok=False caps=2 own=2.524 care(B2)=6.522 evals=11251 17s
+23:32:42 [2/190] A1 B1 run2 mphyvdd: ok=True caps=1 own=0.882 care(B2)=2.465 evals=91 0s
+23:32:59 [3/190] A1 B1 run3 mer1: ok=False caps=13 own=3.211 care(B2)=8.063 evals=11251 17s
+23:33:00 [3/190] A1 B1 run3 mer2: ok=True caps=1 own=0.998 care(B2)=3.701 evals=92 0s
+23:33:00 [3/190] A1 B1 run3 pll1v0: ok=True caps=1 own=0.997 care(B2)=2.488 evals=30 0s
+23:33:16 [3/190] A1 B1 run3 pll1v8: ok=False caps=2 own=2.522 care(B2)=6.478 evals=11251 17s
+23:33:17 [3/190] A1 B1 run3 mphyvdd: ok=True caps=1 own=0.991 care(B2)=2.428 evals=67 0s
+23:33:33 [4/190] A1 B1 run4 mer1: ok=False caps=5 own=3.179 care(B2)=8.053 evals=11251 16s
+23:33:33 [4/190] A1 B1 run4 mer2: ok=True caps=1 own=0.998 care(B2)=3.632 evals=16 0s
+23:33:33 [4/190] A1 B1 run4 pll1v0: ok=True caps=1 own=0.963 care(B2)=2.407 evals=16 0s
+23:33:50 [4/190] A1 B1 run4 pll1v8: ok=False caps=8 own=2.522 care(B2)=6.478 evals=11251 17s
+23:33:50 [4/190] A1 B1 run4 mphyvdd: ok=True caps=1 own=0.992 care(B2)=2.503 evals=58 0s
+23:34:07 [5/190] A1 B1 run5 mer1: ok=False caps=5 own=3.211 care(B2)=8.065 evals=11251 17s
+23:34:08 [5/190] A1 B1 run5 mer2: ok=True caps=1 own=0.999 care(B2)=3.637 evals=107 0s
+23:34:08 [5/190] A1 B1 run5 pll1v0: ok=True caps=1 own=0.994 care(B2)=2.467 evals=31 0s
+23:34:25 [5/190] A1 B1 run5 pll1v8: ok=False caps=2 own=2.522 care(B2)=6.478 evals=11251 17s
+23:34:25 [5/190] A1 B1 run5 mphyvdd: ok=True caps=1 own=0.999 care(B2)=2.508 evals=25 0s
+23:34:41 [6/190] A1 B1 run6 mer1: ok=False caps=11 own=3.211 care(B2)=8.065 evals=11251 17s
+23:34:42 [6/190] A1 B1 run6 mer2: ok=True caps=1 own=1.000 care(B2)=3.635 evals=122 0s
+23:34:42 [6/190] A1 B1 run6 pll1v0: ok=True caps=1 own=0.986 care(B2)=2.462 evals=43 0s
+23:34:59 [6/190] A1 B1 run6 pll1v8: ok=False caps=7 own=2.554 care(B2)=6.470 evals=11251 17s
+23:34:59 [6/190] A1 B1 run6 mphyvdd: ok=True caps=1 own=0.983 care(B2)=2.478 evals=278 0s
+23:35:16 [7/190] A1 B1 run7 mer1: ok=False caps=13 own=3.211 care(B2)=8.062 evals=11251 17s
+23:35:16 [7/190] A1 B1 run7 mer2: ok=True caps=1 own=0.999 care(B2)=3.633 evals=103 0s
+23:35:17 [7/190] A1 B1 run7 pll1v0: ok=True caps=1 own=0.981 care(B2)=2.416 evals=29 0s
+23:35:34 [7/190] A1 B1 run7 pll1v8: ok=False caps=3 own=2.532 care(B2)=6.522 evals=11251 17s
+23:35:34 [7/190] A1 B1 run7 mphyvdd: ok=True caps=1 own=0.976 care(B2)=2.590 evals=4 0s
+23:35:51 [8/190] A1 B1 run8 mer1: ok=False caps=10 own=3.211 care(B2)=8.063 evals=11251 17s
+23:35:51 [8/190] A1 B1 run8 mer2: ok=True caps=1 own=0.946 care(B2)=3.646 evals=137 0s
+23:35:51 [8/190] A1 B1 run8 pll1v0: ok=True caps=1 own=0.996 care(B2)=2.488 evals=2 0s
+23:36:08 [8/190] A1 B1 run8 pll1v8: ok=False caps=2 own=2.522 care(B2)=6.478 evals=11251 17s
+23:36:09 [8/190] A1 B1 run8 mphyvdd: ok=True caps=1 own=0.991 care(B2)=2.494 evals=290 0s
+23:36:26 [9/190] A1 B1 run9 mer1: ok=False caps=13 own=3.211 care(B2)=8.064 evals=11251 17s
+23:36:26 [9/190] A1 B1 run9 mer2: ok=True caps=1 own=0.961 care(B2)=3.658 evals=96 0s
+23:36:26 [9/190] A1 B1 run9 pll1v0: ok=True caps=1 own=0.997 care(B2)=2.488 evals=52 0s
+23:36:43 [9/190] A1 B1 run9 pll1v8: ok=False caps=8 own=2.522 care(B2)=6.478 evals=11251 16s
+23:36:43 [9/190] A1 B1 run9 mphyvdd: ok=True caps=1 own=0.991 care(B2)=2.410 evals=12 0s
+23:37:00 [10/190] A1 B1 run10 mer1: ok=False caps=14 own=3.211 care(B2)=8.062 evals=11251 17s
+23:37:01 [10/190] A1 B1 run10 mer2: ok=True caps=1 own=0.963 care(B2)=3.702 evals=118 0s
+23:37:01 [10/190] A1 B1 run10 pll1v0: ok=True caps=1 own=0.999 care(B2)=2.490 evals=38 0s
+23:37:18 [10/190] A1 B1 run10 pll1v8: ok=False caps=7 own=2.524 care(B2)=6.468 evals=11251 17s
+23:37:19 [10/190] A1 B1 run10 mphyvdd: ok=True caps=1 own=0.974 care(B2)=2.590 evals=107 0s
+23:37:37 [11/190] A1 B2 run1 mer1: ok=False caps=6 own=7.940 care(B2)=7.940 evals=11251 18s
+23:37:55 [11/190] A1 B2 run1 mer2: ok=False caps=15 own=3.559 care(B2)=3.559 evals=11251 18s
+23:38:12 [11/190] A1 B2 run1 pll1v0: ok=False caps=14 own=2.069 care(B2)=2.069 evals=10501 17s
+23:38:30 [11/190] A1 B2 run1 pll1v8: ok=False caps=10 own=6.372 care(B2)=6.372 evals=11251 18s
+23:38:40 [11/190] A1 B2 run1 mphyvdd: ok=False caps=3 own=2.215 care(B2)=2.215 evals=6751 10s
+23:38:58 [12/190] A1 B2 run2 mer1: ok=False caps=13 own=7.946 care(B2)=7.946 evals=11251 18s
+23:39:17 [12/190] A1 B2 run2 mer2: ok=False caps=11 own=3.559 care(B2)=3.559 evals=11251 19s
+23:39:34 [12/190] A1 B2 run2 pll1v0: ok=False caps=13 own=2.079 care(B2)=2.079 evals=10501 17s
+23:39:53 [12/190] A1 B2 run2 pll1v8: ok=False caps=4 own=6.372 care(B2)=6.372 evals=11251 19s
+23:40:02 [12/190] A1 B2 run2 mphyvdd: ok=False caps=8 own=2.217 care(B2)=2.217 evals=6751 9s
+23:40:19 [13/190] A1 B2 run3 mer1: ok=False caps=10 own=7.940 care(B2)=7.940 evals=11251 17s
+23:40:36 [13/190] A1 B2 run3 mer2: ok=False caps=15 own=3.559 care(B2)=3.559 evals=11251 17s
+23:40:53 [13/190] A1 B2 run3 pll1v0: ok=False caps=14 own=2.076 care(B2)=2.076 evals=10501 17s
+23:41:12 [13/190] A1 B2 run3 pll1v8: ok=False caps=7 own=6.371 care(B2)=6.371 evals=11251 19s
+23:41:21 [13/190] A1 B2 run3 mphyvdd: ok=False caps=7 own=2.219 care(B2)=2.219 evals=6751 9s
+23:41:40 [14/190] A1 B2 run4 mer1: ok=False caps=12 own=7.944 care(B2)=7.944 evals=11251 19s
+23:41:57 [14/190] A1 B2 run4 mer2: ok=False caps=8 own=3.559 care(B2)=3.559 evals=11251 17s
+23:42:13 [14/190] A1 B2 run4 pll1v0: ok=False caps=14 own=2.074 care(B2)=2.074 evals=10501 17s
+23:42:32 [14/190] A1 B2 run4 pll1v8: ok=False caps=5 own=6.372 care(B2)=6.372 evals=11251 19s
+23:42:42 [14/190] A1 B2 run4 mphyvdd: ok=False caps=6 own=2.215 care(B2)=2.215 evals=6751 10s
+23:43:01 [15/190] A1 B2 run5 mer1: ok=False caps=8 own=7.940 care(B2)=7.940 evals=11251 19s
+23:43:19 [15/190] A1 B2 run5 mer2: ok=False caps=10 own=3.558 care(B2)=3.558 evals=11251 18s
+23:43:35 [15/190] A1 B2 run5 pll1v0: ok=False caps=10 own=2.074 care(B2)=2.074 evals=10501 16s
+23:43:53 [15/190] A1 B2 run5 pll1v8: ok=False caps=10 own=6.397 care(B2)=6.397 evals=11251 17s
+23:44:02 [15/190] A1 B2 run5 mphyvdd: ok=False caps=7 own=2.206 care(B2)=2.206 evals=6751 9s
+23:44:20 [16/190] A1 B2 run6 mer1: ok=False caps=10 own=7.941 care(B2)=7.941 evals=11251 18s
+23:44:38 [16/190] A1 B2 run6 mer2: ok=False caps=15 own=3.560 care(B2)=3.560 evals=11251 18s
+23:44:54 [16/190] A1 B2 run6 pll1v0: ok=False caps=14 own=2.070 care(B2)=2.070 evals=10501 17s
+23:45:12 [16/190] A1 B2 run6 pll1v8: ok=False caps=8 own=6.397 care(B2)=6.397 evals=11251 17s
+23:45:21 [16/190] A1 B2 run6 mphyvdd: ok=False caps=6 own=2.157 care(B2)=2.157 evals=6751 9s
+23:45:39 [17/190] A1 B2 run7 mer1: ok=False caps=10 own=7.975 care(B2)=7.975 evals=11251 18s
+23:45:57 [17/190] A1 B2 run7 mer2: ok=False caps=15 own=3.559 care(B2)=3.559 evals=11251 17s
+23:46:13 [17/190] A1 B2 run7 pll1v0: ok=False caps=14 own=2.067 care(B2)=2.067 evals=10501 16s
+23:46:31 [17/190] A1 B2 run7 pll1v8: ok=False caps=13 own=6.397 care(B2)=6.397 evals=11251 18s
+23:46:40 [17/190] A1 B2 run7 mphyvdd: ok=False caps=5 own=2.215 care(B2)=2.215 evals=6751 9s
+23:46:58 [18/190] A1 B2 run8 mer1: ok=False caps=5 own=7.976 care(B2)=7.976 evals=11251 18s
+23:47:16 [18/190] A1 B2 run8 mer2: ok=False caps=15 own=3.560 care(B2)=3.560 evals=11251 17s
+23:47:32 [18/190] A1 B2 run8 pll1v0: ok=False caps=14 own=2.069 care(B2)=2.069 evals=10501 16s
+23:47:49 [18/190] A1 B2 run8 pll1v8: ok=False caps=5 own=6.371 care(B2)=6.371 evals=11251 17s
+23:47:58 [18/190] A1 B2 run8 mphyvdd: ok=False caps=4 own=2.159 care(B2)=2.159 evals=6751 9s
+23:48:16 [19/190] A1 B2 run9 mer1: ok=False caps=15 own=7.967 care(B2)=7.967 evals=11251 17s
+23:48:33 [19/190] A1 B2 run9 mer2: ok=False caps=7 own=3.560 care(B2)=3.560 evals=11251 17s
+23:48:50 [19/190] A1 B2 run9 pll1v0: ok=False caps=14 own=2.071 care(B2)=2.071 evals=10501 17s
+23:49:09 [19/190] A1 B2 run9 pll1v8: ok=False caps=9 own=6.371 care(B2)=6.371 evals=11251 19s
+23:49:19 [19/190] A1 B2 run9 mphyvdd: ok=False caps=5 own=2.217 care(B2)=2.217 evals=6751 10s
+23:49:37 [20/190] A1 B2 run10 mer1: ok=False caps=8 own=7.941 care(B2)=7.941 evals=11251 19s
+23:49:57 [20/190] A1 B2 run10 mer2: ok=False caps=15 own=3.561 care(B2)=3.561 evals=11251 19s
+23:50:14 [20/190] A1 B2 run10 pll1v0: ok=False caps=14 own=2.071 care(B2)=2.071 evals=10501 17s
+23:50:33 [20/190] A1 B2 run10 pll1v8: ok=False caps=15 own=6.385 care(B2)=6.385 evals=11251 19s
+23:50:42 [20/190] A1 B2 run10 mphyvdd: ok=False caps=5 own=2.208 care(B2)=2.208 evals=6751 9s
+23:51:02 [21/190] A1 B3 run1 mer1: ok=False caps=8 own=15.980 care(B2)=8.106 evals=11251 20s
+23:51:22 [21/190] A1 B3 run1 mer2: ok=False caps=8 own=4.176 care(B2)=3.731 evals=11251 20s
+23:51:41 [21/190] A1 B3 run1 pll1v0: ok=False caps=7 own=3.660 care(B2)=2.563 evals=10501 19s
+23:52:00 [21/190] A1 B3 run1 pll1v8: ok=False caps=12 own=12.863 care(B2)=6.454 evals=11251 19s
+23:52:10 [21/190] A1 B3 run1 mphyvdd: ok=False caps=5 own=4.631 care(B2)=2.486 evals=6751 10s
+23:52:29 [22/190] A1 B3 run2 mer1: ok=False caps=11 own=15.980 care(B2)=8.098 evals=11251 20s
+23:52:50 [22/190] A1 B3 run2 mer2: ok=False caps=10 own=4.178 care(B2)=3.729 evals=11251 20s
+23:53:07 [22/190] A1 B3 run2 pll1v0: ok=False caps=4 own=3.657 care(B2)=2.551 evals=10501 18s
+23:53:27 [22/190] A1 B3 run2 pll1v8: ok=False caps=15 own=12.917 care(B2)=6.456 evals=11251 20s
+23:53:37 [22/190] A1 B3 run2 mphyvdd: ok=False caps=7 own=4.641 care(B2)=2.476 evals=6751 10s
+23:53:57 [23/190] A1 B3 run3 mer1: ok=False caps=15 own=16.023 care(B2)=8.049 evals=11251 20s
+23:54:17 [23/190] A1 B3 run3 mer2: ok=False caps=9 own=4.186 care(B2)=3.729 evals=11251 20s
+23:54:34 [23/190] A1 B3 run3 pll1v0: ok=False caps=5 own=3.665 care(B2)=2.494 evals=10501 18s
+23:54:54 [23/190] A1 B3 run3 pll1v8: ok=False caps=4 own=12.862 care(B2)=6.437 evals=11251 19s
+23:55:03 [23/190] A1 B3 run3 mphyvdd: ok=False caps=5 own=4.630 care(B2)=2.477 evals=6751 9s
+23:55:24 [24/190] A1 B3 run4 mer1: ok=False caps=9 own=15.981 care(B2)=8.099 evals=11251 21s
+23:55:45 [24/190] A1 B3 run4 mer2: ok=False caps=8 own=4.184 care(B2)=3.729 evals=11251 21s
+23:56:02 [24/190] A1 B3 run4 pll1v0: ok=False caps=5 own=3.654 care(B2)=2.533 evals=10501 17s
+23:56:21 [24/190] A1 B3 run4 pll1v8: ok=False caps=15 own=12.869 care(B2)=6.491 evals=11251 19s
+23:56:30 [24/190] A1 B3 run4 mphyvdd: ok=False caps=4 own=4.628 care(B2)=2.465 evals=6751 9s
+23:56:50 [25/190] A1 B3 run5 mer1: ok=False caps=10 own=15.981 care(B2)=8.105 evals=11251 20s
+23:57:09 [25/190] A1 B3 run5 mer2: ok=False caps=8 own=4.182 care(B2)=3.731 evals=11251 19s
+23:57:27 [25/190] A1 B3 run5 pll1v0: ok=False caps=11 own=3.670 care(B2)=2.473 evals=10501 18s
+23:57:47 [25/190] A1 B3 run5 pll1v8: ok=False caps=15 own=12.869 care(B2)=6.492 evals=11251 19s
+23:57:57 [25/190] A1 B3 run5 mphyvdd: ok=False caps=8 own=4.659 care(B2)=2.486 evals=6751 10s
+23:58:15 [26/190] A1 B3 run6 mer1: ok=False caps=15 own=15.984 care(B2)=8.090 evals=11251 18s
+23:58:35 [26/190] A1 B3 run6 mer2: ok=False caps=15 own=4.228 care(B2)=3.664 evals=11251 20s
+23:58:53 [26/190] A1 B3 run6 pll1v0: ok=False caps=11 own=3.701 care(B2)=2.364 evals=10501 18s
+23:59:12 [26/190] A1 B3 run6 pll1v8: ok=False caps=12 own=12.863 care(B2)=6.453 evals=11251 19s
+23:59:21 [26/190] A1 B3 run6 mphyvdd: ok=False caps=4 own=4.627 care(B2)=2.465 evals=6751 10s
+23:59:41 [27/190] A1 B3 run7 mer1: ok=False caps=15 own=16.023 care(B2)=8.045 evals=11251 20s
+23:59:59 [27/190] A1 B3 run7 mer2: ok=False caps=15 own=4.492 care(B2)=3.633 evals=11251 18s
+00:00:16 [27/190] A1 B3 run7 pll1v0: ok=False caps=14 own=4.046 care(B2)=2.158 evals=10501 17s
+00:00:36 [27/190] A1 B3 run7 pll1v8: ok=False caps=13 own=12.863 care(B2)=6.457 evals=11251 19s
+00:00:46 [27/190] A1 B3 run7 mphyvdd: ok=False caps=9 own=4.827 care(B2)=2.355 evals=6751 10s
+00:01:05 [28/190] A1 B3 run8 mer1: ok=False caps=15 own=15.982 care(B2)=8.090 evals=11251 19s
+00:01:25 [28/190] A1 B3 run8 mer2: ok=False caps=10 own=4.184 care(B2)=3.728 evals=11251 20s
+00:01:43 [28/190] A1 B3 run8 pll1v0: ok=False caps=14 own=4.044 care(B2)=2.194 evals=10501 18s
+00:02:03 [28/190] A1 B3 run8 pll1v8: ok=False caps=10 own=12.862 care(B2)=6.448 evals=11251 20s
+00:02:13 [28/190] A1 B3 run8 mphyvdd: ok=False caps=1 own=4.630 care(B2)=2.466 evals=6751 10s
+00:02:33 [29/190] A1 B3 run9 mer1: ok=False caps=10 own=15.981 care(B2)=8.105 evals=11251 20s
+00:02:52 [29/190] A1 B3 run9 mer2: ok=False caps=9 own=4.179 care(B2)=3.729 evals=11251 19s
+00:03:09 [29/190] A1 B3 run9 pll1v0: ok=False caps=9 own=3.669 care(B2)=2.471 evals=10501 17s
+00:03:28 [29/190] A1 B3 run9 pll1v8: ok=False caps=13 own=12.862 care(B2)=6.451 evals=11251 19s
+00:03:39 [29/190] A1 B3 run9 mphyvdd: ok=False caps=9 own=4.836 care(B2)=2.357 evals=6751 11s
+00:03:58 [30/190] A1 B3 run10 mer1: ok=False caps=11 own=15.981 care(B2)=8.095 evals=11251 19s
+00:04:18 [30/190] A1 B3 run10 mer2: ok=False caps=3 own=4.192 care(B2)=3.732 evals=11251 20s
+00:04:36 [30/190] A1 B3 run10 pll1v0: ok=False caps=14 own=3.677 care(B2)=2.427 evals=10501 18s
+00:04:57 [30/190] A1 B3 run10 pll1v8: ok=False caps=11 own=12.862 care(B2)=6.450 evals=11251 20s
+00:05:06 [30/190] A1 B3 run10 mphyvdd: ok=False caps=8 own=4.648 care(B2)=2.505 evals=6751 10s
+00:05:26 [31/190] A1 B4 run1 mer1: ok=False caps=8 own=1.630 care(B2)=8.106 evals=11251 20s
+00:05:46 [31/190] A1 B4 run1 mer2: ok=False caps=8 own=2.035 care(B2)=3.743 evals=11251 20s
+00:06:03 [31/190] A1 B4 run1 pll1v0: ok=False caps=7 own=2.264 care(B2)=2.563 evals=10501 17s
+00:06:22 [31/190] A1 B4 run1 pll1v8: ok=False caps=12 own=1.558 care(B2)=6.454 evals=11251 19s
+00:06:32 [31/190] A1 B4 run1 mphyvdd: ok=False caps=5 own=2.048 care(B2)=2.486 evals=6751 10s
+00:06:52 [32/190] A1 B4 run2 mer1: ok=False caps=11 own=1.630 care(B2)=8.098 evals=11251 20s
+00:07:11 [32/190] A1 B4 run2 mer2: ok=False caps=14 own=2.055 care(B2)=3.656 evals=11251 19s
+00:07:29 [32/190] A1 B4 run2 pll1v0: ok=False caps=4 own=2.262 care(B2)=2.551 evals=10501 18s
+00:07:48 [32/190] A1 B4 run2 pll1v8: ok=False caps=15 own=1.564 care(B2)=6.456 evals=11251 19s
+00:07:58 [32/190] A1 B4 run2 mphyvdd: ok=False caps=7 own=2.052 care(B2)=2.476 evals=6751 10s
+00:08:18 [33/190] A1 B4 run3 mer1: ok=False caps=15 own=1.634 care(B2)=8.049 evals=11251 20s
+00:08:37 [33/190] A1 B4 run3 mer2: ok=False caps=15 own=2.052 care(B2)=3.662 evals=11251 19s
+00:08:55 [33/190] A1 B4 run3 pll1v0: ok=False caps=5 own=2.267 care(B2)=2.494 evals=10501 18s
+00:09:14 [33/190] A1 B4 run3 pll1v8: ok=False caps=4 own=1.558 care(B2)=6.437 evals=11251 19s
+00:09:24 [33/190] A1 B4 run3 mphyvdd: ok=False caps=5 own=2.048 care(B2)=2.477 evals=6751 10s
+00:09:43 [34/190] A1 B4 run4 mer1: ok=False caps=9 own=1.630 care(B2)=8.099 evals=11251 20s
+00:10:02 [34/190] A1 B4 run4 mer2: ok=False caps=12 own=2.043 care(B2)=3.690 evals=11251 19s
+00:10:19 [34/190] A1 B4 run4 pll1v0: ok=False caps=5 own=2.260 care(B2)=2.533 evals=10501 17s
+00:10:39 [34/190] A1 B4 run4 pll1v8: ok=False caps=15 own=1.559 care(B2)=6.491 evals=11251 20s
+00:10:48 [34/190] A1 B4 run4 mphyvdd: ok=False caps=4 own=2.046 care(B2)=2.465 evals=6751 10s
+00:11:07 [35/190] A1 B4 run5 mer1: ok=False caps=10 own=1.630 care(B2)=8.105 evals=11251 19s
+00:11:26 [35/190] A1 B4 run5 mer2: ok=False caps=11 own=2.050 care(B2)=3.691 evals=11251 19s
+00:11:43 [35/190] A1 B4 run5 pll1v0: ok=False caps=11 own=2.270 care(B2)=2.473 evals=10501 18s
+00:12:03 [35/190] A1 B4 run5 pll1v8: ok=False caps=15 own=1.559 care(B2)=6.492 evals=11251 19s
+00:12:12 [35/190] A1 B4 run5 mphyvdd: ok=False caps=8 own=2.060 care(B2)=2.486 evals=6751 9s
+00:12:31 [36/190] A1 B4 run6 mer1: ok=False caps=15 own=1.630 care(B2)=8.090 evals=11251 19s
+00:12:51 [36/190] A1 B4 run6 mer2: ok=False caps=12 own=2.060 care(B2)=3.637 evals=11251 19s
+00:13:08 [36/190] A1 B4 run6 pll1v0: ok=False caps=14 own=2.482 care(B2)=2.116 evals=10501 18s
+00:13:27 [36/190] A1 B4 run6 pll1v8: ok=False caps=12 own=1.558 care(B2)=6.453 evals=11251 19s
+00:13:37 [36/190] A1 B4 run6 mphyvdd: ok=False caps=4 own=2.046 care(B2)=2.465 evals=6751 9s
+00:13:56 [37/190] A1 B4 run7 mer1: ok=False caps=15 own=1.634 care(B2)=8.045 evals=11251 19s
+00:14:15 [37/190] A1 B4 run7 mer2: ok=False caps=15 own=2.169 care(B2)=3.633 evals=11251 19s
+00:14:33 [37/190] A1 B4 run7 pll1v0: ok=False caps=14 own=2.503 care(B2)=2.158 evals=10501 17s
+00:14:51 [37/190] A1 B4 run7 pll1v8: ok=False caps=13 own=1.558 care(B2)=6.457 evals=11251 18s
+00:15:01 [37/190] A1 B4 run7 mphyvdd: ok=False caps=9 own=2.135 care(B2)=2.355 evals=6751 10s
+00:15:20 [38/190] A1 B4 run8 mer1: ok=False caps=15 own=1.630 care(B2)=8.090 evals=11251 19s
+00:15:40 [38/190] A1 B4 run8 mer2: ok=False caps=15 own=2.055 care(B2)=3.659 evals=11251 21s
+00:15:59 [38/190] A1 B4 run8 pll1v0: ok=False caps=4 own=2.267 care(B2)=2.518 evals=10501 19s
+00:16:20 [38/190] A1 B4 run8 pll1v8: ok=False caps=10 own=1.558 care(B2)=6.448 evals=11251 21s
+00:16:30 [38/190] A1 B4 run8 mphyvdd: ok=False caps=1 own=2.047 care(B2)=2.466 evals=6751 10s
+00:16:49 [39/190] A1 B4 run9 mer1: ok=False caps=10 own=1.630 care(B2)=8.105 evals=11251 19s
+00:17:09 [39/190] A1 B4 run9 mer2: ok=False caps=9 own=2.037 care(B2)=3.741 evals=11251 20s
+00:17:26 [39/190] A1 B4 run9 pll1v0: ok=False caps=9 own=2.270 care(B2)=2.471 evals=10501 18s
+00:17:46 [39/190] A1 B4 run9 pll1v8: ok=False caps=13 own=1.558 care(B2)=6.451 evals=11251 19s
+00:17:55 [39/190] A1 B4 run9 mphyvdd: ok=False caps=9 own=2.138 care(B2)=2.357 evals=6751 10s
+00:18:14 [40/190] A1 B4 run10 mer1: ok=False caps=11 own=1.630 care(B2)=8.095 evals=11251 19s
+00:18:33 [40/190] A1 B4 run10 mer2: ok=False caps=14 own=2.045 care(B2)=3.685 evals=11251 19s
+00:18:50 [40/190] A1 B4 run10 pll1v0: ok=False caps=14 own=2.275 care(B2)=2.427 evals=10501 17s
+00:19:10 [40/190] A1 B4 run10 pll1v8: ok=False caps=11 own=1.558 care(B2)=6.450 evals=11251 20s
+00:19:19 [40/190] A1 B4 run10 mphyvdd: ok=False caps=8 own=2.055 care(B2)=2.505 evals=6751 10s
+00:40:05 [41/190] A2 B1 run1 all: ok=False caps=31 own=3.210 care(B2)=8.066 evals=51001 1245s
+01:00:52 [42/190] A2 B1 run2 all: ok=False caps=67 own=3.211 care(B2)=8.063 evals=51001 1248s
+01:21:43 [43/190] A2 B1 run3 all: ok=False caps=68 own=3.211 care(B2)=8.062 evals=51001 1251s
+01:42:40 [44/190] A2 B1 run4 all: ok=False caps=66 own=3.211 care(B2)=8.062 evals=51001 1257s
+02:03:22 [45/190] A2 B1 run5 all: ok=False caps=60 own=3.211 care(B2)=8.063 evals=51001 1242s
+02:23:49 [46/190] A2 B1 run6 all: ok=False caps=68 own=3.211 care(B2)=8.063 evals=51001 1227s
+02:44:39 [47/190] A2 B1 run7 all: ok=False caps=65 own=3.211 care(B2)=8.063 evals=51001 1250s
+03:05:48 [48/190] A2 B1 run8 all: ok=False caps=37 own=3.210 care(B2)=8.063 evals=51001 1269s
+03:26:45 [49/190] A2 B1 run9 all: ok=False caps=44 own=3.211 care(B2)=8.062 evals=51001 1257s
+03:47:42 [50/190] A2 B1 run10 all: ok=False caps=68 own=3.211 care(B2)=8.062 evals=51001 1257s
+04:10:43 [51/190] A2 B2 run1 all: ok=False caps=45 own=7.940 care(B2)=7.940 evals=51001 1381s
+04:34:07 [52/190] A2 B2 run2 all: ok=False caps=51 own=7.943 care(B2)=7.943 evals=51001 1405s
+04:57:32 [53/190] A2 B2 run3 all: ok=False caps=52 own=7.944 care(B2)=7.944 evals=51001 1404s
+05:20:27 [54/190] A2 B2 run4 all: ok=False caps=63 own=7.939 care(B2)=7.939 evals=51001 1375s
+05:43:25 [55/190] A2 B2 run5 all: ok=False caps=62 own=7.940 care(B2)=7.940 evals=51001 1378s
+06:06:21 [56/190] A2 B2 run6 all: ok=False caps=57 own=7.940 care(B2)=7.940 evals=51001 1376s
+06:29:34 [57/190] A2 B2 run7 all: ok=False caps=68 own=7.952 care(B2)=7.952 evals=51001 1393s
+06:52:34 [58/190] A2 B2 run8 all: ok=False caps=54 own=7.943 care(B2)=7.943 evals=51001 1380s
+07:15:09 [59/190] A2 B2 run9 all: ok=False caps=39 own=7.939 care(B2)=7.939 evals=51001 1356s
+07:38:16 [60/190] A2 B2 run10 all: ok=False caps=68 own=7.953 care(B2)=7.953 evals=51001 1387s
+08:03:45 [61/190] A2 B3 run1 all: ok=False caps=41 own=15.981 care(B2)=8.104 evals=51001 1529s
+08:28:49 [62/190] A2 B3 run2 all: ok=False caps=53 own=15.980 care(B2)=8.101 evals=51001 1503s
+08:53:31 [63/190] A2 B3 run3 all: ok=False caps=53 own=15.980 care(B2)=8.096 evals=51001 1482s
+09:18:01 [64/190] A2 B3 run4 all: ok=False caps=40 own=15.980 care(B2)=8.100 evals=51001 1470s
+09:42:52 [65/190] A2 B3 run5 all: ok=False caps=60 own=15.980 care(B2)=8.097 evals=51001 1491s
+10:07:47 [66/190] A2 B3 run6 all: ok=False caps=45 own=15.980 care(B2)=8.100 evals=51001 1495s
+10:32:46 [67/190] A2 B3 run7 all: ok=False caps=64 own=15.980 care(B2)=8.093 evals=51001 1500s
+10:57:38 [68/190] A2 B3 run8 all: ok=False caps=62 own=15.981 care(B2)=8.097 evals=51001 1492s
+11:22:54 [69/190] A2 B3 run9 all: ok=False caps=15 own=15.980 care(B2)=8.106 evals=51001 1516s
+11:47:43 [70/190] A2 B3 run10 all: ok=False caps=68 own=15.983 care(B2)=8.088 evals=51001 1489s
+12:12:21 [71/190] A2 B4 run1 all: ok=False caps=68 own=2.288 care(B2)=8.070 evals=51001 1478s
+12:40:08 [72/190] A2 B4 run2 all: ok=False caps=27 own=2.267 care(B2)=8.072 evals=51001 1667s
+13:08:17 [73/190] A2 B4 run3 all: ok=False caps=61 own=2.267 care(B2)=8.071 evals=51001 1689s
+13:34:47 [74/190] A2 B4 run4 all: ok=False caps=60 own=2.270 care(B2)=8.068 evals=51001 1591s
+13:58:48 [75/190] A2 B4 run5 all: ok=False caps=63 own=2.271 care(B2)=8.113 evals=51001 1441s
+14:20:51 [76/190] A2 B4 run6 all: ok=False caps=64 own=2.267 care(B2)=8.068 evals=51001 1322s
+14:45:04 [77/190] A2 B4 run7 all: ok=False caps=51 own=2.264 care(B2)=8.072 evals=51001 1453s
+15:07:16 [78/190] A2 B4 run8 all: ok=False caps=54 own=2.276 care(B2)=8.070 evals=51001 1332s
+15:26:46 [79/190] A2 B4 run9 all: ok=False caps=55 own=2.271 care(B2)=8.069 evals=51001 1171s
+15:46:19 [80/190] A2 B4 run10 all: ok=False caps=44 own=2.271 care(B2)=8.067 evals=51001 1172s
+15:46:45 [81/190] A3 B1 run1 all: ok=True caps=5 own=0.999 care(B2)=3.635 evals=3432 27s
+15:47:15 [82/190] A3 B1 run2 all: ok=True caps=6 own=0.992 care(B2)=3.608 evals=3757 30s
+15:47:41 [83/190] A3 B1 run3 all: ok=True caps=5 own=0.985 care(B2)=3.609 evals=3205 26s
+15:47:57 [84/190] A3 B1 run4 all: ok=True caps=3 own=0.999 care(B2)=3.638 evals=2061 17s
+15:48:19 [85/190] A3 B1 run5 all: ok=True caps=4 own=0.999 care(B2)=3.630 evals=2717 21s
+15:48:48 [86/190] A3 B1 run6 all: ok=True caps=5 own=0.986 care(B2)=3.594 evals=3706 29s
+15:49:09 [87/190] A3 B1 run7 all: ok=True caps=4 own=0.998 care(B2)=3.662 evals=2564 21s
+15:49:30 [88/190] A3 B1 run8 all: ok=True caps=4 own=0.997 care(B2)=3.589 evals=2662 21s
+15:50:02 [89/190] A3 B1 run9 all: ok=True caps=6 own=0.998 care(B2)=3.631 evals=3952 32s
+15:50:22 [90/190] A3 B1 run10 all: ok=True caps=4 own=0.999 care(B2)=3.611 evals=2466 20s
+15:54:32 [91/190] A3 B2 run1 all: ok=False caps=14 own=3.559 care(B2)=3.559 evals=28501 250s
+15:58:38 [92/190] A3 B2 run2 all: ok=False caps=38 own=3.559 care(B2)=3.559 evals=28501 246s
+16:02:50 [93/190] A3 B2 run3 all: ok=False caps=34 own=3.560 care(B2)=3.560 evals=28501 252s
+16:06:48 [94/190] A3 B2 run4 all: ok=False caps=38 own=3.559 care(B2)=3.559 evals=28501 237s
+16:10:49 [95/190] A3 B2 run5 all: ok=False caps=37 own=3.559 care(B2)=3.559 evals=28501 241s
+16:14:51 [96/190] A3 B2 run6 all: ok=False caps=14 own=3.558 care(B2)=3.558 evals=28501 242s
+16:18:51 [97/190] A3 B2 run7 all: ok=False caps=31 own=3.555 care(B2)=3.555 evals=28501 241s
+16:22:52 [98/190] A3 B2 run8 all: ok=False caps=16 own=3.557 care(B2)=3.557 evals=28501 241s
+16:26:50 [99/190] A3 B2 run9 all: ok=False caps=15 own=3.559 care(B2)=3.559 evals=28501 238s
+16:31:02 [100/190] A3 B2 run10 all: ok=False caps=37 own=3.560 care(B2)=3.560 evals=28501 252s
+16:35:30 [101/190] A3 B3 run1 all: ok=False caps=37 own=4.653 care(B2)=3.611 evals=28501 268s
+16:40:03 [102/190] A3 B3 run2 all: ok=False caps=26 own=4.644 care(B2)=3.611 evals=28501 273s
+16:44:32 [103/190] A3 B3 run3 all: ok=False caps=38 own=4.702 care(B2)=3.635 evals=28501 269s
+16:49:00 [104/190] A3 B3 run4 all: ok=False caps=32 own=4.662 care(B2)=3.815 evals=28501 268s
+16:53:30 [105/190] A3 B3 run5 all: ok=False caps=38 own=4.750 care(B2)=3.610 evals=28501 270s
+16:57:57 [106/190] A3 B3 run6 all: ok=False caps=38 own=4.708 care(B2)=3.618 evals=28501 267s
+17:02:29 [107/190] A3 B3 run7 all: ok=False caps=38 own=4.651 care(B2)=3.690 evals=28501 272s
+17:06:57 [108/190] A3 B3 run8 all: ok=False caps=38 own=4.733 care(B2)=3.681 evals=28501 268s
+17:11:25 [109/190] A3 B3 run9 all: ok=False caps=38 own=4.666 care(B2)=3.790 evals=28501 268s
+17:15:55 [110/190] A3 B3 run10 all: ok=False caps=38 own=4.670 care(B2)=3.694 evals=28501 270s
+17:20:28 [111/190] A3 B4 run1 all: ok=False caps=38 own=2.297 care(B2)=3.660 evals=28501 273s
+17:24:57 [112/190] A3 B4 run2 all: ok=False caps=16 own=2.275 care(B2)=3.604 evals=28501 269s
+17:29:28 [113/190] A3 B4 run3 all: ok=False caps=37 own=2.270 care(B2)=3.596 evals=28501 271s
+17:34:00 [114/190] A3 B4 run4 all: ok=False caps=29 own=2.278 care(B2)=3.666 evals=28501 272s
+17:38:35 [115/190] A3 B4 run5 all: ok=False caps=38 own=2.297 care(B2)=3.670 evals=28501 274s
+17:43:09 [116/190] A3 B4 run6 all: ok=False caps=32 own=2.274 care(B2)=3.642 evals=28501 274s
+17:47:47 [117/190] A3 B4 run7 all: ok=False caps=29 own=2.269 care(B2)=3.720 evals=28501 278s
+17:52:23 [118/190] A3 B4 run8 all: ok=False caps=22 own=2.272 care(B2)=3.685 evals=28501 276s
+17:56:54 [119/190] A3 B4 run9 all: ok=False caps=38 own=2.289 care(B2)=3.677 evals=28501 270s
+18:01:21 [120/190] A3 B4 run10 all: ok=False caps=28 own=2.294 care(B2)=3.615 evals=28501 267s
+18:01:36 [121/190] A4 B1 run1 all: ok=True caps=7 own=0.976 care(B2)=2.577 evals=4508 15s
+18:01:46 [122/190] A4 B1 run2 all: ok=True caps=5 own=0.984 care(B2)=2.575 evals=3002 11s
+18:01:59 [123/190] A4 B1 run3 all: ok=True caps=5 own=0.963 care(B2)=2.607 evals=3596 12s
+18:02:12 [124/190] A4 B1 run4 all: ok=True caps=6 own=0.985 care(B2)=2.447 evals=3752 13s
+18:02:20 [125/190] A4 B1 run5 all: ok=True caps=4 own=0.993 care(B2)=2.611 evals=2352 8s
+18:02:28 [126/190] A4 B1 run6 all: ok=True caps=3 own=0.996 care(B2)=2.462 evals=2002 7s
+18:02:36 [127/190] A4 B1 run7 all: ok=True caps=4 own=0.994 care(B2)=2.605 evals=2368 8s
+18:02:48 [128/190] A4 B1 run8 all: ok=True caps=6 own=0.961 care(B2)=2.608 evals=3957 13s
+18:02:56 [129/190] A4 B1 run9 all: ok=True caps=4 own=0.993 care(B2)=2.601 evals=2302 8s
+18:03:04 [130/190] A4 B1 run10 all: ok=True caps=4 own=0.987 care(B2)=2.564 evals=2252 7s
+18:03:57 [131/190] A4 B2 run1 all: ok=False caps=20 own=2.060 care(B2)=2.060 evals=15001 54s
+18:04:51 [132/190] A4 B2 run2 all: ok=False caps=20 own=2.197 care(B2)=2.197 evals=15001 54s
+18:05:46 [133/190] A4 B2 run3 all: ok=False caps=20 own=2.090 care(B2)=2.090 evals=15001 54s
+18:06:40 [134/190] A4 B2 run4 all: ok=False caps=8 own=2.094 care(B2)=2.094 evals=15001 55s
+18:07:35 [135/190] A4 B2 run5 all: ok=False caps=20 own=2.017 care(B2)=2.017 evals=15001 55s
+18:08:29 [136/190] A4 B2 run6 all: ok=False caps=20 own=2.126 care(B2)=2.126 evals=15001 54s
+18:09:23 [137/190] A4 B2 run7 all: ok=False caps=20 own=2.079 care(B2)=2.079 evals=15001 54s
+18:10:17 [138/190] A4 B2 run8 all: ok=False caps=20 own=2.095 care(B2)=2.095 evals=15001 54s
+18:11:12 [139/190] A4 B2 run9 all: ok=False caps=13 own=2.065 care(B2)=2.065 evals=15001 54s
+18:12:06 [140/190] A4 B2 run10 all: ok=False caps=20 own=2.121 care(B2)=2.121 evals=15001 54s
+18:13:07 [141/190] A4 B3 run1 all: ok=False caps=20 own=4.091 care(B2)=2.762 evals=15001 62s
+18:14:09 [142/190] A4 B3 run2 all: ok=False caps=20 own=3.719 care(B2)=3.051 evals=15001 62s
+18:15:10 [143/190] A4 B3 run3 all: ok=False caps=20 own=4.467 care(B2)=2.913 evals=15001 61s
+18:16:10 [144/190] A4 B3 run4 all: ok=False caps=20 own=4.096 care(B2)=2.576 evals=15001 59s
+18:17:10 [145/190] A4 B3 run5 all: ok=False caps=20 own=4.295 care(B2)=3.023 evals=15001 60s
+18:18:12 [146/190] A4 B3 run6 all: ok=False caps=20 own=3.647 care(B2)=3.039 evals=15001 62s
+18:19:12 [147/190] A4 B3 run7 all: ok=False caps=20 own=4.351 care(B2)=2.260 evals=15001 60s
+18:20:10 [148/190] A4 B3 run8 all: ok=False caps=20 own=4.154 care(B2)=2.343 evals=15001 58s
+18:21:10 [149/190] A4 B3 run9 all: ok=False caps=20 own=4.293 care(B2)=2.414 evals=15001 60s
+18:22:11 [150/190] A4 B3 run10 all: ok=False caps=11 own=4.130 care(B2)=2.659 evals=15001 60s
+18:23:12 [151/190] A4 B4 run1 all: ok=False caps=20 own=2.222 care(B2)=2.282 evals=15001 61s
+18:24:19 [152/190] A4 B4 run2 all: ok=False caps=20 own=2.163 care(B2)=2.148 evals=15001 67s
+18:25:26 [153/190] A4 B4 run3 all: ok=False caps=20 own=2.263 care(B2)=2.328 evals=15001 68s
+18:26:24 [154/190] A4 B4 run4 all: ok=False caps=20 own=2.220 care(B2)=2.280 evals=15001 58s
+18:27:23 [155/190] A4 B4 run5 all: ok=False caps=20 own=2.165 care(B2)=2.192 evals=15001 59s
+18:28:22 [156/190] A4 B4 run6 all: ok=False caps=20 own=2.204 care(B2)=2.114 evals=15001 59s
+18:29:21 [157/190] A4 B4 run7 all: ok=False caps=20 own=2.266 care(B2)=2.612 evals=15001 59s
+18:30:20 [158/190] A4 B4 run8 all: ok=False caps=20 own=2.254 care(B2)=2.303 evals=15001 59s
+18:31:18 [159/190] A4 B4 run9 all: ok=False caps=20 own=2.223 care(B2)=2.242 evals=15001 58s
+18:32:15 [160/190] A4 B4 run10 all: ok=False caps=11 own=2.138 care(B2)=2.182 evals=15001 58s
+18:57:12 [161/190] A5 B2 run1 all: ok=False caps=78 own=1.067 care(B2)=1.067 evals=58501 1497s
+19:22:09 [162/190] A5 B2 run2 all: ok=False caps=78 own=1.105 care(B2)=1.105 evals=58501 1496s
+19:47:05 [163/190] A5 B2 run3 all: ok=False caps=78 own=1.099 care(B2)=1.099 evals=58501 1497s
+20:12:06 [164/190] A5 B2 run4 all: ok=False caps=78 own=1.042 care(B2)=1.042 evals=58501 1501s
+20:37:00 [165/190] A5 B2 run5 all: ok=False caps=78 own=1.082 care(B2)=1.082 evals=58501 1494s
+21:01:51 [166/190] A5 B2 run6 all: ok=False caps=78 own=1.109 care(B2)=1.109 evals=58501 1491s
+21:20:40 [167/190] A5 B2 run7 all: ok=True caps=59 own=0.999 care(B2)=0.999 evals=44219 1129s
+21:45:35 [168/190] A5 B2 run8 all: ok=False caps=77 own=1.075 care(B2)=1.075 evals=58501 1495s
+22:10:28 [169/190] A5 B2 run9 all: ok=False caps=78 own=1.118 care(B2)=1.118 evals=58501 1493s
+22:35:30 [170/190] A5 B2 run10 all: ok=False caps=78 own=1.046 care(B2)=1.046 evals=58501 1503s
+23:02:13 [171/190] A5 B3 run1 all: ok=False caps=78 own=2.166 care(B2)=1.312 evals=58501 1602s
+23:28:51 [172/190] A5 B3 run2 all: ok=False caps=78 own=2.114 care(B2)=1.419 evals=58501 1599s
+23:55:33 [173/190] A5 B3 run3 all: ok=False caps=78 own=2.224 care(B2)=1.509 evals=58501 1602s
+00:22:13 [174/190] A5 B3 run4 all: ok=False caps=78 own=1.881 care(B2)=1.502 evals=58501 1600s
+00:48:49 [175/190] A5 B3 run5 all: ok=False caps=78 own=2.101 care(B2)=1.083 evals=58501 1596s
+01:15:28 [176/190] A5 B3 run6 all: ok=False caps=78 own=2.114 care(B2)=1.399 evals=58501 1599s
+01:42:02 [177/190] A5 B3 run7 all: ok=False caps=78 own=2.103 care(B2)=1.118 evals=58501 1594s
+02:08:37 [178/190] A5 B3 run8 all: ok=False caps=78 own=2.157 care(B2)=1.278 evals=58501 1595s
+02:35:14 [179/190] A5 B3 run9 all: ok=False caps=78 own=2.054 care(B2)=1.310 evals=58501 1597s
+03:01:51 [180/190] A5 B3 run10 all: ok=False caps=78 own=2.063 care(B2)=1.324 evals=58501 1596s
+03:28:31 [181/190] A5 B4 run1 all: ok=False caps=78 own=1.278 care(B2)=1.168 evals=58501 1601s
+03:55:07 [182/190] A5 B4 run2 all: ok=False caps=78 own=1.215 care(B2)=1.211 evals=58501 1596s
+04:21:45 [183/190] A5 B4 run3 all: ok=False caps=78 own=1.195 care(B2)=1.175 evals=58501 1598s
+04:48:24 [184/190] A5 B4 run4 all: ok=False caps=78 own=1.184 care(B2)=1.164 evals=58501 1600s
+05:14:59 [185/190] A5 B4 run5 all: ok=False caps=78 own=1.188 care(B2)=1.105 evals=58501 1595s
+05:41:33 [186/190] A5 B4 run6 all: ok=False caps=78 own=1.211 care(B2)=1.163 evals=58501 1594s
+06:08:12 [187/190] A5 B4 run7 all: ok=False caps=78 own=1.170 care(B2)=1.060 evals=58501 1599s
+06:34:48 [188/190] A5 B4 run8 all: ok=False caps=78 own=1.263 care(B2)=1.377 evals=58501 1596s
+07:01:27 [189/190] A5 B4 run9 all: ok=False caps=78 own=1.254 care(B2)=1.261 evals=58501 1599s
+07:28:04 [190/190] A5 B4 run10 all: ok=False caps=78 own=1.261 care(B2)=1.152 evals=58501 1597s
+07:28:05 Winning band for Grid 2: B2
+07:28:05 === Grid 2 at band B2 ({'n_particles': 50, 'n_iters': 15, 'mode': 'loop', 'time_limit_s': 1800}) ===
+07:28:11 eval timing N=16 pure_python: 1554.68 ms/eval (dev vs numpy 1.0e-15)
+07:28:12 eval timing N=16 numpy: 42.32 ms/eval (dev vs numpy 0.0e+00)
+07:28:13 eval timing N=16 solve: 37.74 ms/eval (dev vs numpy 1.0e-15)
+07:28:16 eval timing N=16 sm: 157.22 ms/eval (dev vs numpy 7.4e-16)
+07:28:17 eval timing N=16 iterative: 75.20 ms/eval (dev vs numpy 0.0e+00)
+07:28:31 eval timing N=21 pure_python: 3400.87 ms/eval (dev vs numpy 3.4e-16)
+07:28:32 eval timing N=21 numpy: 53.75 ms/eval (dev vs numpy 0.0e+00)
+07:28:33 eval timing N=21 solve: 48.72 ms/eval (dev vs numpy 5.0e-16)
+07:28:36 eval timing N=21 sm: 177.23 ms/eval (dev vs numpy 4.7e-16)
+07:28:38 eval timing N=21 iterative: 77.75 ms/eval (dev vs numpy 7.9e-02)
+07:28:41 eval timing N=73 numpy: 259.94 ms/eval (dev vs numpy 0.0e+00)
+07:28:46 eval timing N=73 solve: 156.63 ms/eval (dev vs numpy 0.0e+00)
+07:28:59 eval timing N=73 sm: 724.00 ms/eval (dev vs numpy 8.8e-16)
+07:29:07 eval timing N=73 iterative: 424.75 ms/eval (dev vs numpy 0.0e+00)
+07:29:11 eval timing N=79 numpy: 308.45 ms/eval (dev vs numpy 0.0e+00)
+07:29:17 eval timing N=79 solve: 163.92 ms/eval (dev vs numpy 6.5e-16)
+07:29:32 eval timing N=79 sm: 838.18 ms/eval (dev vs numpy 7.9e-16)
+07:29:42 eval timing N=79 iterative: 514.07 ms/eval (dev vs numpy 0.0e+00)
+08:00:38 G2 N=16 pure_python run1: ok=False timeout=True caps=2 evals=1201 1856s
+08:31:33 G2 N=16 pure_python run2: ok=False timeout=True caps=2 evals=1201 1854s
+08:38:56 G2 N=16 numpy run1: ok=False timeout=False caps=15 evals=11251 444s
+08:46:20 G2 N=16 numpy run2: ok=False timeout=False caps=11 evals=11251 444s
+08:53:44 G2 N=16 numpy run3: ok=False timeout=False caps=15 evals=11251 444s
+08:59:40 G2 N=16 numpy run4: ok=False timeout=False caps=8 evals=11251 356s
+09:05:37 G2 N=16 numpy run5: ok=False timeout=False caps=10 evals=11251 357s
+09:10:56 G2 N=16 solve run1: ok=False timeout=False caps=15 evals=11251 320s
+09:16:16 G2 N=16 solve run2: ok=False timeout=False caps=11 evals=11251 320s
+09:21:36 G2 N=16 solve run3: ok=False timeout=False caps=15 evals=11251 321s
+09:27:14 G2 N=16 solve run4: ok=False timeout=False caps=8 evals=11251 338s
+09:32:44 G2 N=16 solve run5: ok=False timeout=False caps=10 evals=11251 331s
+09:51:56 G2 N=16 sm run1: ok=False timeout=False caps=15 evals=11251 1151s
+10:10:57 G2 N=16 sm run2: ok=False timeout=False caps=11 evals=11251 1141s
+10:29:59 G2 N=16 sm run3: ok=False timeout=False caps=15 evals=11251 1142s
+10:49:00 G2 N=16 sm run4: ok=False timeout=False caps=8 evals=11251 1141s
+11:08:05 G2 N=16 sm run5: ok=False timeout=False caps=10 evals=11251 1144s
+11:18:39 G2 N=16 iterative run1: ok=False timeout=False caps=2 evals=11251 634s
+11:29:07 G2 N=16 iterative run2: ok=False timeout=False caps=2 evals=11251 628s
+11:39:42 G2 N=16 iterative run3: ok=False timeout=False caps=15 evals=11251 635s
+11:50:15 G2 N=16 iterative run4: ok=False timeout=False caps=15 evals=11251 632s
+12:00:36 G2 N=16 iterative run5: ok=False timeout=False caps=2 evals=11251 621s
+12:31:44 G2 N=21 pure_python run1: ok=False timeout=True caps=1 evals=551 1868s
+13:02:51 G2 N=21 pure_python run2: ok=False timeout=True caps=1 evals=551 1868s
+13:14:00 G2 N=21 numpy run1: ok=False timeout=False caps=20 evals=15001 669s
+13:26:15 G2 N=21 numpy run2: ok=False timeout=False caps=20 evals=15001 735s
+13:38:32 G2 N=21 numpy run3: ok=False timeout=False caps=20 evals=15001 737s
+13:50:41 G2 N=21 numpy run4: ok=False timeout=False caps=8 evals=15001 729s
+14:02:27 G2 N=21 numpy run5: ok=False timeout=False caps=20 evals=15001 706s
+14:12:13 G2 N=21 solve run1: ok=False timeout=False caps=20 evals=15001 586s
+14:22:01 G2 N=21 solve run2: ok=False timeout=False caps=20 evals=15001 587s
+14:31:47 G2 N=21 solve run3: ok=False timeout=False caps=20 evals=15001 586s
+14:41:35 G2 N=21 solve run4: ok=False timeout=False caps=8 evals=15001 588s
+14:51:22 G2 N=21 solve run5: ok=False timeout=False caps=20 evals=15001 587s
+15:21:26 G2 N=21 sm run1: ok=False timeout=True caps=18 evals=13251 1804s
+15:51:27 G2 N=21 sm run2: ok=False timeout=True caps=18 evals=13251 1801s
+16:21:28 G2 N=21 sm run3: ok=False timeout=True caps=18 evals=13251 1801s
+16:51:31 G2 N=21 sm run4: ok=False timeout=True caps=8 evals=13251 1803s
+17:21:36 G2 N=21 sm run5: ok=False timeout=True caps=18 evals=13251 1805s
+17:36:37 G2 N=21 iterative run1: ok=False timeout=False caps=20 evals=15001 900s
+17:51:49 G2 N=21 iterative run2: ok=False timeout=False caps=20 evals=15001 912s
+18:07:01 G2 N=21 iterative run3: ok=False timeout=False caps=20 evals=15001 912s
+18:22:24 G2 N=21 iterative run4: ok=False timeout=False caps=19 evals=15001 923s
+18:37:41 G2 N=21 iterative run5: ok=False timeout=False caps=20 evals=15001 917s
+19:07:50 G2 N=73 numpy run1: ok=False timeout=True caps=11 evals=7551 1809s
+19:37:59 G2 N=73 numpy run2: ok=False timeout=True caps=10 evals=7451 1809s
+20:08:02 G2 N=73 numpy run3: ok=False timeout=True caps=11 evals=7551 1803s
+20:38:13 G2 N=73 numpy run4: ok=False timeout=True caps=11 evals=7601 1811s
+21:08:25 G2 N=73 numpy run5: ok=False timeout=True caps=11 evals=7601 1811s
+21:38:29 G2 N=73 solve run1: ok=False timeout=True caps=16 evals=12551 1804s
+22:08:31 G2 N=73 solve run2: ok=False timeout=True caps=11 evals=12201 1802s
+22:38:32 G2 N=73 solve run3: ok=False timeout=True caps=16 evals=12051 1801s
+23:08:34 G2 N=73 solve run4: ok=False timeout=True caps=17 evals=12651 1801s
+23:38:36 G2 N=73 solve run5: ok=False timeout=True caps=17 evals=12651 1802s
+00:08:41 G2 N=73 sm run1: ok=False timeout=True caps=8 evals=5701 1804s
+00:38:44 G2 N=73 sm run2: ok=False timeout=True caps=8 evals=5701 1804s
+01:08:51 G2 N=73 sm run3: ok=False timeout=True caps=8 evals=5701 1806s
+01:38:53 G2 N=73 sm run4: ok=False timeout=True caps=8 evals=5701 1803s
+02:08:58 G2 N=73 sm run5: ok=False timeout=True caps=8 evals=5701 1805s
+02:39:02 G2 N=73 iterative run1: ok=False timeout=True caps=7 evals=4851 1804s
+03:09:09 G2 N=73 iterative run2: ok=False timeout=True caps=7 evals=4851 1807s
+03:39:13 G2 N=73 iterative run3: ok=False timeout=True caps=7 evals=4801 1804s
+04:09:23 G2 N=73 iterative run4: ok=False timeout=True caps=7 evals=4851 1810s
+04:39:30 G2 N=73 iterative run5: ok=False timeout=True caps=6 evals=4801 1808s
+05:09:43 G2 N=79 numpy run1: ok=False timeout=True caps=9 evals=6201 1813s
+05:39:52 G2 N=79 numpy run2: ok=False timeout=True caps=9 evals=6201 1809s
+06:10:01 G2 N=79 numpy run3: ok=False timeout=True caps=9 evals=6201 1809s
+06:40:11 G2 N=79 numpy run4: ok=False timeout=True caps=9 evals=6201 1810s
+07:10:22 G2 N=79 numpy run5: ok=False timeout=True caps=9 evals=6201 1811s
+07:40:30 G2 N=79 solve run1: ok=False timeout=True caps=16 evals=12001 1808s
+08:10:34 G2 N=79 solve run2: ok=False timeout=True caps=16 evals=12001 1803s
+08:40:35 G2 N=79 solve run3: ok=False timeout=True caps=16 evals=12001 1801s
+09:10:36 G2 N=79 solve run4: ok=False timeout=True caps=16 evals=12001 1801s
+09:40:43 G2 N=79 solve run5: ok=False timeout=True caps=16 evals=12001 1807s
+10:11:10 G2 N=79 sm run1: ok=False timeout=True caps=7 evals=5251 1826s
+10:41:33 G2 N=79 sm run2: ok=False timeout=True caps=7 evals=5251 1823s
+11:11:57 G2 N=79 sm run3: ok=False timeout=True caps=7 evals=5251 1824s
+11:42:18 G2 N=79 sm run4: ok=False timeout=True caps=7 evals=5251 1821s
+12:12:41 G2 N=79 sm run5: ok=False timeout=True caps=7 evals=5251 1823s
+12:42:48 G2 N=79 iterative run1: ok=False timeout=True caps=6 evals=3951 1807s
+13:12:52 G2 N=79 iterative run2: ok=False timeout=True caps=6 evals=3951 1804s
+13:43:02 G2 N=79 iterative run3: ok=False timeout=True caps=6 evals=4001 1810s
+14:13:10 G2 N=79 iterative run4: ok=False timeout=True caps=6 evals=3951 1808s
+14:43:16 G2 N=79 iterative run5: ok=False timeout=True caps=6 evals=4001 1807s
+14:43:19 consistency[B1]: reduction check 1.52e-13, combined peak dev 1.93e-05 -> A1 decomposition validated: combined-network rail impedances match the isolated results.
+14:43:21 consistency[B2]: reduction check 1.58e-13, combined peak dev 2.71e-05 -> A1 decomposition validated: combined-network rail impedances match the isolated results.
+14:43:23 consistency[B3]: reduction check 1.52e-13, combined peak dev 6.98e-06 -> A1 decomposition validated: combined-network rail impedances match the isolated results.
+14:43:25 consistency[B4]: reduction check 1.52e-13, combined peak dev 6.98e-06 -> A1 decomposition validated: combined-network rail impedances match the isolated results.
+14:43:47 Report: /DATA/Aurindum/GPUSwarm/DecapStudy/results/report.md
