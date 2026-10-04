@@ -121,16 +121,20 @@ def show_targets():
         print("  The study REFUSES to start until every target is filled "
               "(python derive_targets.py, after Exp 1 has finished).")
         return False
-    print("  levels (multiplier on the Exp 1 floor): "
-          + ", ".join(f"x{lab}" for lab, _ in levels) + "   [stop at the tightest = first]")
-    flags = S.get_flags()
-    print(f"  {'key':<10}" + "".join(f"{'x' + lab + ' [ohm]':>14}" for lab, _ in levels))
-    for k, row in table.items():
-        print(f"  {k:<10}" + "".join(
-            f"{row[lab]:>13.5g}" + ("*" if flags.get(k, {}).get(lab) else " ") for lab, _ in levels))
-    flagged = [f"{k} x{lab}" for k, row in flags.items() for lab, v in row.items() if v]
-    print("  * = noise-flagged level (target below the median Exp 1 floor, i.e. inside the floor spread): "
-          + (", ".join(flagged) if flagged else "none"))
+    print("  levels (multiplier on each band's own Exp 1 floor): "
+          + ", ".join(f"x{lab}" for lab, _ in levels)
+          + "   [Grid 1 never stops on them: full budget; Grid 2 stops at its stop level]")
+    allflags = S.get_flags()
+    for band, tab in table.items():
+        flags = allflags.get(band, {})
+        print(f"  --- band {band} ({C.BAND_LABEL[band]}): targets derived from Exp 1 runs optimised on {band}")
+        print(f"  {'key':<10}" + "".join(f"{'x' + lab + ' [ohm]':>14}" for lab, _ in levels))
+        for k, row in tab.items():
+            print(f"  {k:<10}" + "".join(
+                f"{row[lab]:>13.5g}" + ("*" if flags.get(k, {}).get(lab) else " ") for lab, _ in levels))
+        flagged = [f"{k} x{lab}" for k, row in flags.items() for lab, v in row.items() if v]
+        print("  * = noise-flagged (below the median Exp 1 floor of this band): "
+              + (", ".join(flagged) if flagged else "none"))
     return True
 
 
@@ -169,11 +173,12 @@ def show_plan(probs, ready):
           f"{'skip a size whose first numpy run hits the cap' if C.GRID2_SKIP_UNCONVERGED else 'no skipping'}")
     if ready:
         S.set_require_targets(True)
+        gb = C.CARE_BAND                  # Grid 2 runs on the Grid 1 winner (expected: the ranking band)
         for n, k in C.GRID2_SIZES.items():
             p = S.build_problem(k)
-            lab = p.stop_label(C.GRID2_STOP_LEVEL)
-            print(f"      N={n:<3} {p.name:<12} objective={p.objective:<5} PSO stop level x{lab}"
-                  + ("  [all levels flagged]" if p.level_flagged[lab] else ""))
+            lab = p.stop_label(C.GRID2_STOP_LEVEL, gb)
+            print(f"      N={n:<3} {p.name:<12} objective={p.objective:<5} PSO stop level x{lab} on {gb}"
+                  + ("  [all levels flagged]" if p.flagged_for(gb)[lab] else ""))
     print(f"  threads: STUDY_THREADS={C.THREADS}; BLAS threads: "
           + ", ".join(f"{v}={os.environ.get(v)}" for v in
                       ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",

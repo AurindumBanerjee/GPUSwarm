@@ -123,9 +123,10 @@ def set_require_targets(flag):
 
 
 def load_targets(path=None):
-    """(levels, table). levels = [(label, multiplier)] ascending, i.e. TIGHTEST
-    first; table[key][label] = target in ohm. Raises TargetsNotSet unless every
-    required target (5 rails + ddr21 + ddr_full, every level) is a positive number."""
+    """(levels, tables). levels = [(label, multiplier)] ascending, i.e. TIGHTEST first;
+    tables[band][key][label] = target in ohm, one table PER BAND (each derived from Exp 1
+    runs optimised on that band and scored on it). Raises TargetsNotSet unless every
+    required target (5 rails + ddr21 + ddr_full, every level, every band) is a positive number."""
     path = path or C.TARGETS_FILE
     try:
         with open(path) as fh:
@@ -139,24 +140,30 @@ def load_targets(path=None):
         raise TargetsNotSet(f"{path}: 'multipliers' must be a non-empty list of positive numbers")
     levels = [(f"{m:g}", float(m)) for m in sorted(set(mult))]
     keys = [r[0] for r in C.MPHY_RAILS] + list(C.DDR_TARGET_KEYS)
-    table, bad = {}, []
-    for k in keys:
-        row = (cfg.get("targets_ohm") or {}).get(k)
-        if not isinstance(row, dict):
-            bad.append(f"{k}: missing")
+    tables, bad = {}, []
+    for band in C.BANDS:
+        bcfg = (cfg.get("bands") or {}).get(band)
+        if not isinstance(bcfg, dict):
+            bad.append(f"band {band}: missing")
             continue
-        table[k] = {}
-        for lab, _ in levels:
-            v = row.get(lab)
-            if isinstance(v, bool) or not isinstance(v, (int, float)) or not v > 0:
-                bad.append(f"{k} x{lab} = {v!r}")
-            else:
-                table[k][lab] = float(v)
+        tables[band] = {}
+        for k in keys:
+            row = (bcfg.get("targets_ohm") or {}).get(k)
+            if not isinstance(row, dict):
+                bad.append(f"{band} {k}: missing")
+                continue
+            tables[band][k] = {}
+            for lab, _ in levels:
+                v = row.get(lab)
+                if isinstance(v, bool) or not isinstance(v, (int, float)) or not v > 0:
+                    bad.append(f"{band} {k} x{lab} = {v!r}")
+                else:
+                    tables[band][k][lab] = float(v)
     if bad:
         raise TargetsNotSet(f"{path} is not filled in ({len(bad)} bad/null target(s)): "
                             + "; ".join(bad[:12]) + (" ..." if len(bad) > 12 else "")
                             + ". Run derive_targets.py after Exp 1 has finished.")
-    return levels, table
+    return levels, tables
 
 
 def get_targets():
@@ -166,15 +173,18 @@ def get_targets():
 
 
 def get_flags():
-    """{key: {level: bool}} noise flags from targets.json ("flags"): True when the level's
-    target lies below the median Exp 1 floor, i.e. inside the floor spread. All False if absent."""
+    """{band: {key: {level: bool}}} noise flags from targets.json: True when the level's target
+    (in that band) lies below the median Exp 1 floor of that band, i.e. inside the floor spread.
+    All False if absent."""
     if "flags" not in _CACHE:
         try:
             with open(C.TARGETS_FILE) as fh:
-                raw = json.load(fh).get("flags") or {}
+                raw = {b: (v or {}).get("flags") or {}
+                       for b, v in (json.load(fh).get("bands") or {}).items()}
         except (OSError, ValueError):
             raw = {}
-        _CACHE["flags"] = {k: {lab: bool(v) for lab, v in row.items()} for k, row in raw.items()}
+        _CACHE["flags"] = {b: {k: {lab: bool(v) for lab, v in row.items()} for k, row in fl.items()}
+                           for b, fl in raw.items()}
     return _CACHE["flags"]
 
 
@@ -202,33 +212,50 @@ class Problem:
         self.global_index = (np.arange(self.N) if global_index is None
                              else np.asarray(global_index, dtype=int))
         self.objective = "ratio" if name in C.RATIO_OBJECTIVE_PROBLEMS else "raw"
+        self.band_levels = {}      # band -> that band's own levels / targets / flags
         if _REQUIRE_TARGETS:
-            levels, table = get_targets()                 # raises TargetsNotSet on any null
-            # [(label, multiplier, per-obs target vector in ohm)], tightest first
-            self.levels = [(lab, m, np.array([table[k][lab] for k in self.target_keys]))
-                           for lab, m in levels]
-            self.targets = self.levels[0][2]              # tightest: ratio scale / default stop level
-            fl = get_flags()
-            # a level is noise-flagged for a problem if ANY of its rails' targets is
-            self.level_flags = {lab: [bool(fl.get(k, {}).get(lab, False)) for k in self.target_keys]
-                                for lab, _, _ in self.levels}
-            self.level_flagged = {lab: any(v) for lab, v in self.level_flags.items()}
-        else:                                             # --validate only: no PSO is possible
-            self.levels, self.targets = [], None
-            self.level_flags, self.level_flagged = {}, {}
+            levels, tables = get_targets()                # raises TargetsNotSet on any null
+            allflags = get_flags()
+            for band in C.BANDS:
+                # [(label, multiplier, per-obs target vector in ohm)], tightest first
+                lv = [(lab, m, np.array([tables[band][k][lab] for k in self.target_keys]))
+                      for lab, m in levels]
+                fl = allflags.get(band, {})
+                # a level is noise-flagged for a problem if ANY of its rails' targets is
+                lflags = {lab: [bool(fl.get(k, {}).get(lab, False)) for k in self.target_keys]
+                          for lab, _, _ in lv}
+                self.band_levels[band] = {
+                    "levels": lv, "targets": lv[0][2], "flags": lflags,
+                    "flagged": {lab: any(v) for lab, v in lflags.items()}}
         self._yinv = None
         self._lists = None
         self._E = None
 
-    def stop_label(self, rule="tightest"):
-        """Level whose first hit ends a run: the tightest, or (Grid 2) the tightest level that is
-        NOT noise-flagged -- falling back to the loosest if every level is flagged."""
+    def levels_for(self, band):
+        """[(label, multiplier, per-obs target vector)] of THIS band, tightest first."""
+        return self.band_levels[band]["levels"]
+
+    def targets_for(self, band):
+        """Tightest-level per-observation target vector of this band (ratio-objective scale)."""
+        return self.band_levels[band]["targets"]
+
+    def flags_for(self, band):
+        return self.band_levels[band]["flags"]
+
+    def flagged_for(self, band):
+        return self.band_levels[band]["flagged"]
+
+    def stop_label(self, rule, band):
+        """Level of `band` whose first hit ends a run: the tightest, or (Grid 2) the tightest level
+        that is NOT noise-flagged -- falling back to the loosest if every level is flagged.
+        rule "none" (Grid 1) never stops a run; its reporting level is still the tightest."""
+        lv = self.levels_for(band)
         if rule == "tightest_unflagged":
-            for lab, _, _ in self.levels:
-                if not self.level_flagged[lab]:
+            for lab, _, _ in lv:
+                if not self.flagged_for(band)[lab]:
                     return lab
-            return self.levels[-1][0]
-        return self.levels[0][0]
+            return lv[-1][0]
+        return lv[0][0]
 
     @property
     def y_inv_base(self):
@@ -430,34 +457,37 @@ def peaks_of(prob, bs, config, method="numpy", mode="batched"):
     return az.max(axis=0)
 
 
-def cost_of(prob, peaks):
-    """Objective. 'ratio' (A2): max_k peak_k / Ztarget_k at the tightest level.
+def cost_of(prob, peaks, tvec=None):
+    """Objective. 'ratio' (A2): max_k peak_k / Ztarget_k at the tightest level of the band being
+    optimised (tvec).
     'raw' (all other problems): max_k peak_k in ohm, i.e. the raw peak |Z11| for
     single-observation problems. Targets only enter the 'ratio' objective."""
     if peaks is None:
         return 1e200
     if prob.objective == "ratio":
-        return float((peaks / prob.targets).max())
+        return float((peaks / (prob.targets_for(C.CARE_BAND) if tvec is None else tvec)).max())
     return float(peaks.max())
 
 
-def levels_met(prob, peaks):
-    """Labels of every threshold level whose per-rail targets are all met."""
+def levels_met(prob, peaks, band):
+    """Labels of every threshold level of `band` whose per-rail targets are all met."""
     if peaks is None:
         return []
-    return [lab for lab, _, vec in prob.levels if bool(np.all(peaks <= vec))]
+    return [lab for lab, _, vec in prob.levels_for(band) if bool(np.all(peaks <= vec))]
 
 
-def evaluate(prob, bs, config, method="numpy", mode="batched"):
-    """(cost, peaks) of one placement."""
+def evaluate(prob, bs, config, method="numpy", mode="batched", tvec=None):
+    """(cost, peaks) of one placement. tvec: ratio-objective scale (the optimised band's tightest
+    targets); irrelevant for the raw objective."""
     peaks = peaks_of(prob, bs, config, method, mode)
-    return cost_of(prob, peaks), peaks
+    return cost_of(prob, peaks, tvec), peaks
 
 
 def score_bands(prob, config):
     """Re-score a placement on ALL bands (independent of how it was found).
-    B4's 'peaks_ohm' are the weighted peaks max_f w(f)|Z_kk(f)|. 'ratio' is
-    max_k peak_k / Ztarget_k(tightest level); 'met_levels' lists the levels met."""
+    B4's 'peaks_ohm' are the weighted peaks max_f w(f)|Z_kk(f)|. Each band is scored against ITS OWN
+    targets: 'ratio' is max_k peak_k / Ztarget_k(tightest level of that band), 'met_levels' lists the
+    levels of that band met, 'target_ohm' is that band's tightest target vector."""
     z = np.abs(diag_z(prob, len(freqs()), config, "numpy", "batched"))
     out = {}
     for b in C.BANDS:
@@ -465,8 +495,9 @@ def score_bands(prob, config):
         zz = z[:nf] * W[:nf] if W is not None else z[:nf]
         peaks = zz.max(axis=0)
         out[b] = {"peaks_ohm": peaks.tolist(),
-                  "ratio": float((peaks / prob.targets).max()),
-                  "met_levels": levels_met(prob, peaks)}
+                  "ratio": float((peaks / prob.targets_for(b)).max()),
+                  "target_ohm": prob.targets_for(b).tolist(),
+                  "met_levels": levels_met(prob, peaks, b)}
     return out
 
 
@@ -559,18 +590,21 @@ def seed_particles(n_caps, prev_best, n_particles):
 # ============================================================ PSO run
 
 def run_pso(prob, band, run_id, cfg):
-    """One seeded run: grow the capacitor count until the TIGHTEST target level is met.
+    """One seeded run: grow the capacitor count 1..max_caps; stop early only if cfg["stop_level"]
+    asks for it (Grid 2). Levels are those of the band being optimised.
 
     cfg keys: n_particles, n_iters, method (default numpy), mode (default
     batched), max_caps (default and ceiling: prob.max_caps = N - n_obs),
-    time_limit_s, patience, threads.
+    time_limit_s, patience, threads, stop_level ("none" = run the whole capacitor budget and only
+    RECORD the levels as they are passed [Grid 1]; "tightest" / "tightest_unflagged" = stop at the
+    first hit of that level [Grid 2]).
 
     Every evaluated placement is checked against every threshold level; the first
     one that meets a level is recorded for that level (caps, iteration, evaluations,
     time, placement), so one run reports against all levels. The winning placement
     is always re-scored on every band.
     """
-    if not prob.levels:
+    if not prob.band_levels:
         raise TargetsNotSet("problem was built without targets; refusing to run PSO")
     method = cfg.get("method", "numpy")
     mode = cfg.get("mode", "batched")
@@ -581,7 +615,11 @@ def run_pso(prob, band, run_id, cfg):
     threads = cfg.get("threads", C.THREADS) if mode == "batched" else 1
     pool = ThreadPoolExecutor(threads) if threads > 1 else None
     bs = band_spec(prob, band)          # (nf, weights-or-None)
-    tight = prob.stop_label(cfg.get("stop_level", "tightest"))   # first hit of this level stops the run
+    rule = cfg.get("stop_level", "tightest")
+    stops = rule != "none"               # Grid 1 runs its full budget; levels are only recorded
+    tight = prob.stop_label(rule, band)  # the run's reporting level (and its stop level if stops)
+    blevels = prob.levels_for(band)
+    tvec = prob.targets_for(band)
 
     t0 = time.perf_counter()
     n_evals = 0
@@ -591,18 +629,18 @@ def run_pso(prob, band, run_id, cfg):
 
     def note(peaks, config, n_caps):
         """Record every level this placement is the first to meet; True if tightest met."""
-        for lab in levels_met(prob, peaks):
+        for lab in levels_met(prob, peaks, band):
             if lab not in hits:
                 hits[lab] = {"caps_needed": n_caps, "iter": iters_total + 1, "n_evals": n_evals,
                              "time_s": time.perf_counter() - t0,
                              "placement": placement_records(prob, config)}
-        return tight in hits
+        return stops and tight in hits
 
-    cost0, peaks0 = evaluate(prob, bs, [], method, mode)
+    cost0, peaks0 = evaluate(prob, bs, [], method, mode, tvec)
     n_evals += 1
     best = {"cost": cost0, "config": [], "n_caps": 0, "iter": 0}
     bare_pass = note(peaks0, [], 0)
-    if bare_pass:
+    if hits:
         for h in hits.values():
             h["iter"] = 0
     curve_caps, curve_cost, histories = [], [], []
@@ -630,11 +668,11 @@ def run_pso(prob, band, run_id, cfg):
             # Threaded mode evaluates the whole iteration at once; results are then
             # consumed in particle order, so trajectories and the immediate-stop point
             # are identical to serial (n_evals counts up to the stopping particle).
-            res = list(pool.map(lambda c: evaluate(prob, bs, c, method, mode), configs)) \
+            res = list(pool.map(lambda c: evaluate(prob, bs, c, method, mode, tvec), configs)) \
                 if pool else None
             for i in range(P):
                 config = configs[i]
-                cost, peaks = res[i] if pool else evaluate(prob, bs, config, method, mode)
+                cost, peaks = res[i] if pool else evaluate(prob, bs, config, method, mode, tvec)
                 n_evals += 1
                 if cost < pbest_val[i]:
                     pbest_val[i] = cost
@@ -644,7 +682,7 @@ def run_pso(prob, band, run_id, cfg):
                 if cost < best["cost"]:
                     best = {"cost": cost, "config": config, "n_caps": n_caps,
                             "iter": iters_total + 1}
-                if note(peaks, config, n_caps):          # immediate stop at the tightest level
+                if note(peaks, config, n_caps):          # Grid 2: immediate stop at the stop level
                     best = {"cost": cost, "config": config, "n_caps": n_caps,
                             "iter": iters_total + 1}
                     stop = True
@@ -684,12 +722,12 @@ def run_pso(prob, band, run_id, cfg):
     config = best["config"]
     success = tight in hits
     levels_out = {}
-    for lab, mult, vec in prob.levels:
+    for lab, mult, vec in blevels:
         h = hits.get(lab)
         levels_out[lab] = {
             "multiplier": mult, "target_ohm": vec.tolist(), "hit": h is not None,
-            "inside_noise": prob.level_flagged[lab],      # target below the median Exp 1 floor
-            "inside_noise_rails": [k for k, f in zip(prob.target_keys, prob.level_flags[lab]) if f],
+            "inside_noise": prob.flagged_for(band)[lab],  # target below this band's median Exp 1 floor
+            "inside_noise_rails": [k for k, f in zip(prob.target_keys, prob.flags_for(band)[lab]) if f],
             "caps_needed": h["caps_needed"] if h else None,
             "iter": h["iter"] if h else None,
             "n_evals": h["n_evals"] if h else None,
@@ -698,10 +736,13 @@ def run_pso(prob, band, run_id, cfg):
         }
     return {
         "objective": prob.objective,
-        "stop_level": tight,
+        "optimised_band": band,
+        "stop_level": tight if stops else "none",
+        "report_level": tight,
+        "targets_ohm_own_band": tvec.tolist(),
         "cost_unit": "ratio" if prob.objective == "ratio" else "ohm",
         "success": bool(success),
-        "bare_pass": bool(bare_pass),
+        "bare_pass": bool(tight in hits and hits[tight]["caps_needed"] == 0),
         "timed_out": bool(timed_out),
         "caps_needed": hits[tight]["caps_needed"] if success else None,
         "caps_used": best["n_caps"],
