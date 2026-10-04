@@ -119,68 +119,121 @@ def all_cells():
 
 # ============================================================ Grid 2
 
-def _random_config(prob, n_caps, rng):
-    ports = rng.choice(prob.pads, size=min(n_caps, len(prob.pads)), replace=False)
-    models = rng.integers(0, S.decaps().shape[0], size=len(ports))
-    return [(int(m), int(p)) for m, p in zip(models, ports)]
+def fixed_configs(prob, k, seed):
+    """k fixed (model, pad) configurations, identical for every method at a size; the number of
+    capacitors cycles through 1..min(FIXED_EVAL_CAPS, pads)."""
+    rng = np.random.default_rng(seed)
+    top = min(C.FIXED_EVAL_CAPS, prob.max_caps)
+    out = []
+    for i in range(k):
+        n_caps = 1 + (i % top)
+        pads = rng.choice(prob.pads, size=n_caps, replace=False)
+        models = rng.integers(0, S.decaps().shape[0], size=n_caps)
+        out.append([(int(m), int(p)) for m, p in zip(models, pads)])
+    return out
 
 
-def time_evals(band):
-    """Wall-time per fitness evaluation, method x size (loop mode, same configs)."""
-    done = {(r["method"], r["size_N"]) for r in load_records("eval_timing")}
+def time_fixed_evals(band):
+    """PRIMARY Grid 2 metric: wall-time for a FIXED evaluation count. Every method evaluates the
+    same FIXED_EVALS (model, pad) configurations in per-frequency loop mode; the cost agreement
+    with numpy is recorded alongside. `iterative` is an approximation: timing only, plus its
+    series fallback rate; its cost deviation is recorded but never used as a quality figure."""
     for N, key in C.GRID2_SIZES.items():
         prob = S.build_problem(key)
-        nf = S.band_spec(prob, band)
-        rng = np.random.default_rng(777)
-        cfgs = [_random_config(prob, C.EVAL_TIMING_CAPS, rng)
-                for _ in range(C.EVAL_TIMING_N)]
-        for method in C.GRID2_METHODS:
-            if method == "pure_python" and N not in C.GRID2_PURE_SIZES:
+        bs = S.band_spec(prob, band)
+        cfgs = fixed_configs(prob, C.FIXED_EVALS, C.FIXED_EVAL_SEED + N)
+        existing = {r["method"]: r for r in load_records("eval_timing") if r["size_N"] == N}
+        methods = [m for m in C.GRID2_TIMING_METHODS
+                   if not (m == "pure_python" and N not in C.GRID2_PURE_SIZES)]
+        ref = np.array(existing["numpy"]["costs"]) if "numpy" in existing else None
+        for method in ["numpy"] + [m for m in methods if m != "numpy"]:
+            if method in existing or method not in methods:
                 continue
-            if (method, N) in done:
-                continue
-            n_use = 3 if method == "pure_python" else len(cfgs)
-            S.evaluate(prob, nf, cfgs[0][:1], method, "loop")            # warm-up
+            S.evaluate(prob, bs, cfgs[0][:1], method, "loop")            # warm-up
             t = time.perf_counter()
-            vals = [S.evaluate(prob, nf, c, method, "loop")[0] for c in cfgs[:n_use]]
-            per = (time.perf_counter() - t) / n_use
-            ref = [S.evaluate(prob, nf, c, "numpy", "loop")[0] for c in cfgs[:n_use]] \
-                if method != "numpy" else vals
-            rel = float(max(abs(a - b) / max(abs(b), 1e-30) for a, b in zip(vals, ref)))
-            append_record({"record_type": "eval_timing", "band": band, "size_N": N,
-                           "problem": prob.name, "method": method,
-                           "sec_per_eval": per, "n_timed": n_use,
-                           "n_caps": C.EVAL_TIMING_CAPS, "nf": nf[0],
-                           "max_rel_dev_vs_numpy": rel})
-            log(f"eval timing N={N} {method}: {per * 1e3:.2f} ms/eval "
-                f"(dev vs numpy {rel:.1e})")
+            costs = np.array([S.evaluate(prob, bs, c, method, "loop")[0] for c in cfgs])
+            total = time.perf_counter() - t
+            if method == "numpy":
+                ref = costs
+            ok = (costs < 1e199) & (ref < 1e199)
+            rel = np.abs(costs[ok] - ref[ok]) / np.abs(ref[ok])
+            rec = {"record_type": "eval_timing", "band": band, "size_N": N, "problem": prob.name,
+                   "method": method, "approximation": method in C.APPROXIMATE_METHODS,
+                   "n_evals": len(cfgs), "total_s": total, "sec_per_eval": total / len(cfgs),
+                   "nf": bs[0], "caps_min": 1, "caps_max": min(C.FIXED_EVAL_CAPS, prob.max_caps),
+                   "max_rel_cost_dev_vs_numpy": float(rel.max()) if rel.size else None,
+                   "median_rel_cost_dev_vs_numpy": float(np.median(rel)) if rel.size else None,
+                   "n_failed": int((costs >= 1e199).sum())}
+            if method == "numpy":
+                rec["costs"] = costs.tolist()
+            if method in C.APPROXIMATE_METHODS:
+                rec["series"] = S.iterative_fallback_rate(prob, bs, cfgs[:C.FALLBACK_PROBE_CONFIGS])
+            append_record(rec)
+            extra = (f", series fallback {rec['series']['fallback_rate']:.1%}"
+                     if "series" in rec else "")
+            log(f"fixed-eval timing N={N} {method}{' (approximation)' if rec['approximation'] else ''}: "
+                f"{total:.1f} s for {len(cfgs)} evals = {1e3 * total / len(cfgs):.1f} ms/eval "
+                f"(max cost dev vs numpy {rec['max_rel_cost_dev_vs_numpy']:.1e}{extra})")
 
 
 def run_grid2(band, overrides=None):
-    """Cost study at the winning band. pure_python only at N in GRID2_PURE_SIZES."""
+    """Cost study at the winning band.
+
+    1. fixed-evaluation timing, all five methods (iterative = approximation, timing only)
+    2. PSO runs for the EXACT methods only, stopping at the tightest NOT noise-flagged level,
+       under the unchanged wall-clock cap: secondary time-to-target, and placement matching
+       against numpy. pure_python runs only at GRID2_PURE_SIZES. If the first numpy run at a size
+       hits the cap without reaching the stop level, the rest of that size's PSO runs are skipped
+       (time-to-target and placement matching are moot there) and a grid2_skip record is written.
+    """
     pso = dict(C.GRID2_PSO)
     pso.update(overrides or {})
     pso["mode"] = "loop"
     pso["time_limit_s"] = pso.get("time_limit_s", C.GRID2_TIME_LIMIT_S)
+    pso["stop_level"] = C.GRID2_STOP_LEVEL
     log(f"=== Grid 2 at band {band} ({pso}) ===")
-    time_evals(band)
+    time_fixed_evals(band)
     done = _done()
+    skipped = {r["size_N"] for r in load_records("grid2_skip")}
+    order = ["numpy"] + [m for m in C.GRID2_PSO_METHODS if m != "numpy"]
+
+    def numpy_run1(N):
+        return next((r for r in load_records("run") if r.get("grid") == "G2" and r.get("size_N") == N
+                     and r["method"] == "numpy" and r["run_id"] == 1), None)
+
     for N, key in C.GRID2_SIZES.items():
         prob = S.build_problem(key)
-        for method in C.GRID2_METHODS:
+        stop_lab = prob.stop_label(C.GRID2_STOP_LEVEL)
+        log(f"Grid 2 N={N} ({prob.name}): PSO stop level x{stop_lab}"
+            + (" (flagged: every level is inside the floor spread)" if prob.level_flagged[stop_lab] else ""))
+        for method in order:
             if method == "pure_python" and N not in C.GRID2_PURE_SIZES:
                 continue
             runs = C.GRID2_PURE_RUNS if method == "pure_python" else C.GRID2_RUNS
             for run_id in range(1, runs + 1):
-                if (3, f"G2_N{N}", band, run_id, "all", method) in done:
-                    continue
-                cfg = dict(pso, method=method)
-                t = time.perf_counter()
-                rec = _run_and_log(3, f"G2_N{N}", band, run_id, prob, "all", cfg,
-                                   extra={"grid": "G2", "size_N": N})
-                log(f"G2 N={N} {method} run{run_id}: ok={rec['success']} "
-                    f"timeout={rec['timed_out']} caps={rec['caps_used']} "
-                    f"evals={rec['n_evals']} {time.perf_counter() - t:.0f}s")
+                if N in skipped:
+                    break
+                if (3, f"G2_N{N}", band, run_id, "all", method) not in done:
+                    cfg = dict(pso, method=method)
+                    t = time.perf_counter()
+                    rec = _run_and_log(3, f"G2_N{N}", band, run_id, prob, "all", cfg,
+                                       extra={"grid": "G2", "size_N": N})
+                    log(f"G2 N={N} {method} run{run_id}: reached x{stop_lab}={rec['success']} "
+                        f"timeout={rec['timed_out']} caps={rec['caps_used']} "
+                        f"evals={rec['n_evals']} {time.perf_counter() - t:.0f}s")
+                if method == "numpy" and run_id == 1 and C.GRID2_SKIP_UNCONVERGED:
+                    r1 = numpy_run1(N)
+                    if r1 and r1["timed_out"] and not r1["success"]:
+                        append_record({"record_type": "grid2_skip", "size_N": N, "problem": prob.name,
+                                       "band": band, "stop_level": stop_lab,
+                                       "reason": "first numpy run hit the wall-clock cap without "
+                                                 "reaching the stop level; remaining PSO runs skipped"})
+                        skipped.add(N)
+                        log(f"G2 N={N}: numpy run1 hit the {pso['time_limit_s']} s cap without reaching "
+                            f"x{stop_lab} -> remaining PSO runs at this size skipped "
+                            f"(fixed-evaluation timing stands)")
+            if N in skipped:
+                break
 
 
 # ============================================================ rail responsiveness

@@ -165,6 +165,19 @@ def get_targets():
     return _CACHE["targets"]
 
 
+def get_flags():
+    """{key: {level: bool}} noise flags from targets.json ("flags"): True when the level's
+    target lies below the median Exp 1 floor, i.e. inside the floor spread. All False if absent."""
+    if "flags" not in _CACHE:
+        try:
+            with open(C.TARGETS_FILE) as fh:
+                raw = json.load(fh).get("flags") or {}
+        except (OSError, ValueError):
+            raw = {}
+        _CACHE["flags"] = {k: {lab: bool(v) for lab, v in row.items()} for k, row in raw.items()}
+    return _CACHE["flags"]
+
+
 class Problem:
     """A PDN + observation ports + decap sites + per-observation-port targets.
 
@@ -194,12 +207,28 @@ class Problem:
             # [(label, multiplier, per-obs target vector in ohm)], tightest first
             self.levels = [(lab, m, np.array([table[k][lab] for k in self.target_keys]))
                            for lab, m in levels]
-            self.targets = self.levels[0][2]              # tightest: stop condition / ratio scale
+            self.targets = self.levels[0][2]              # tightest: ratio scale / default stop level
+            fl = get_flags()
+            # a level is noise-flagged for a problem if ANY of its rails' targets is
+            self.level_flags = {lab: [bool(fl.get(k, {}).get(lab, False)) for k in self.target_keys]
+                                for lab, _, _ in self.levels}
+            self.level_flagged = {lab: any(v) for lab, v in self.level_flags.items()}
         else:                                             # --validate only: no PSO is possible
             self.levels, self.targets = [], None
+            self.level_flags, self.level_flagged = {}, {}
         self._yinv = None
         self._lists = None
         self._E = None
+
+    def stop_label(self, rule="tightest"):
+        """Level whose first hit ends a run: the tightest, or (Grid 2) the tightest level that is
+        NOT noise-flagged -- falling back to the loosest if every level is flagged."""
+        if rule == "tightest_unflagged":
+            for lab, _, _ in self.levels:
+                if not self.level_flagged[lab]:
+                    return lab
+            return self.levels[-1][0]
+        return self.levels[0][0]
 
     @property
     def y_inv_base(self):
@@ -449,6 +478,27 @@ def placement_records(prob, config):
              "pad_global": int(prob.global_index[p])} for i, (m, p) in enumerate(config)]
 
 
+def iterative_fallback_rate(prob, bs, cfgs):
+    """How far is the `iterative` series from exact? Over every (configuration, frequency) case,
+    ||E||_1 with E = A B - I (B = base inverse). The second-order series needs ||E||_1 < 1; otherwise
+    `iterative` silently falls back to a full inverse. Its error is O(||E||^3) elsewhere, so it is an
+    APPROXIMATION, not an exact method."""
+    nf, _ = bs
+    d = decaps()
+    yinv = prob.y_inv_base
+    eye = np.eye(prob.N)
+    norms = []
+    for cfg in cfgs:
+        for f in range(nf):
+            A = prob.y[f].copy()
+            for cap, port in cfg:
+                A[port, port] += d[cap, f]
+            norms.append(np.linalg.norm(A @ yinv[f] - eye, 1))
+    norms = np.array(norms)
+    return {"fallback_rate": float((norms >= 1).mean()), "n_cases": int(norms.size),
+            "median_norm": float(np.median(norms)), "p95_norm": float(np.percentile(norms, 95))}
+
+
 # ============================================================ PSO pieces
 
 def frac_to_index(frac, K):
@@ -531,7 +581,7 @@ def run_pso(prob, band, run_id, cfg):
     threads = cfg.get("threads", C.THREADS) if mode == "batched" else 1
     pool = ThreadPoolExecutor(threads) if threads > 1 else None
     bs = band_spec(prob, band)          # (nf, weights-or-None)
-    tight = prob.levels[0][0]           # label of the tightest level = stop condition
+    tight = prob.stop_label(cfg.get("stop_level", "tightest"))   # first hit of this level stops the run
 
     t0 = time.perf_counter()
     n_evals = 0
@@ -638,6 +688,8 @@ def run_pso(prob, band, run_id, cfg):
         h = hits.get(lab)
         levels_out[lab] = {
             "multiplier": mult, "target_ohm": vec.tolist(), "hit": h is not None,
+            "inside_noise": prob.level_flagged[lab],      # target below the median Exp 1 floor
+            "inside_noise_rails": [k for k, f in zip(prob.target_keys, prob.level_flags[lab]) if f],
             "caps_needed": h["caps_needed"] if h else None,
             "iter": h["iter"] if h else None,
             "n_evals": h["n_evals"] if h else None,
@@ -646,6 +698,7 @@ def run_pso(prob, band, run_id, cfg):
         }
     return {
         "objective": prob.objective,
+        "stop_level": tight,
         "cost_unit": "ratio" if prob.objective == "ratio" else "ohm",
         "success": bool(success),
         "bare_pass": bool(bare_pass),

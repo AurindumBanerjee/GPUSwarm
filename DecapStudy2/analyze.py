@@ -68,6 +68,7 @@ def run_level():
         for lab in labels:
             row[f"hit_{lab}"] = r["levels"][lab]["hit"]
             row[f"caps_{lab}"] = r["levels"][lab]["caps_needed"]
+            row[f"flag_{lab}"] = r["levels"][lab].get("inside_noise", False)
         rows.append(row)
     df = pd.DataFrame(rows)
     keys = ["stage", "scope", "band", "run_id"]
@@ -80,7 +81,8 @@ def run_level():
         conv_iter=("conv_iter", "max"), n_evals=("n_evals", "sum"),
         wall_s=("wall_s", "sum"), n_rec=("rec_rail", "count"),
         **{f"hit_{lab}": (f"hit_{lab}", "all") for lab in labels},
-        **{f"caps_{lab}": (f"caps_{lab}", _sum_all) for lab in labels}).reset_index()
+        **{f"caps_{lab}": (f"caps_{lab}", _sum_all) for lab in labels},
+        **{f"flag_{lab}": (f"flag_{lab}", "any") for lab in labels}).reset_index()
     pl = per_rail_long()
     for b in BANDS:
         g = pl.groupby(keys)[f"ratio_{b}"].max().rename(f"R_{b}")
@@ -154,8 +156,27 @@ def grid1_matrix(stage=2):
         success_rate=("success", "mean"),
         # one success rate and median capacitor count per threshold level (x = multiplier on the floor)
         **{f"succ_x{lab}": (f"hit_{lab}", "mean") for lab in labels},
-        **{f"caps_x{lab}": (f"caps_{lab}", "median") for lab in labels}).reset_index()
+        **{f"caps_x{lab}": (f"caps_{lab}", "median") for lab in labels},
+        # True when the level's target is below the median Exp 1 floor (inside the floor spread)
+        **{f"flag_x{lab}": (f"flag_{lab}", "any") for lab in labels}).reset_index()
     return g
+
+
+NOISE_NOTE = ("\n\u2020 = noise-flagged level: its target lies below the median achieved Exp 1 floor, i.e. "
+              "inside the floor spread. A low success rate there means *target inside measurement "
+              "noise*, not a difference between scopes or bands.\n")
+
+
+def grid1_display(g):
+    """Grid 1 matrix for the report: success rate at a noise-flagged level gets a dagger and the
+    flag columns are folded away (they stay in grid1_matrix.csv)."""
+    d = g.copy()
+    for c in [c for c in g.columns if c.startswith("succ_x")]:
+        lab = c[len("succ_x"):]
+        fc = f"flag_x{lab}"
+        flagged = list(g[fc]) if fc in g.columns else [False] * len(g)
+        d[c] = [f"{v:.2f}\u2020" if bool(f) else f"{v:.2f}" for v, f in zip(g[c], flagged)]
+    return d.drop(columns=[c for c in g.columns if c.startswith("flag_x")])
 
 
 def rails_ohm_table(stage=2):
@@ -182,17 +203,24 @@ def winning_band(care=None, stage=2):
     return sc.idxmin(), sc.to_dict()
 
 
-def grid2_table():
-    runs = [r for r in X.load_records("run") if r.get("grid") == "G2"]
+def grid2_tables():
+    """(primary, secondary, info).
+
+    primary   -- wall-time for a FIXED evaluation count, every method (iterative = approximation:
+                 timing + series fallback rate only, no quality column)
+    secondary -- PSO runs of the exact methods: time-to-target (converged runs only) and placement
+                 match against numpy (runs not truncated by the cap only)
+    """
     tim = pd.DataFrame(X.load_records("eval_timing"))
+    runs = [r for r in X.load_records("run") if r.get("grid") == "G2"]
+    skips = {r["size_N"]: r for r in X.load_records("grid2_skip")}
     if tim.empty:
-        return pd.DataFrame(), pd.DataFrame()
-    # extrapolate pure_python per-eval time with n^3 scaling from the largest measured N
+        return pd.DataFrame(), pd.DataFrame(), {"pure_python_exponent": float("nan")}
     pp = tim[tim.method == "pure_python"].sort_values("size_N")
-    exponent = np.nan
+    exponent = float("nan")
     if len(pp) >= 2:
-        a, b = pp.iloc[0], pp.iloc[-1]
-        exponent = np.log(b.sec_per_eval / a.sec_per_eval) / np.log(b.size_N / a.size_N)
+        a_, b_ = pp.iloc[0], pp.iloc[-1]
+        exponent = float(np.log(b_.sec_per_eval / a_.sec_per_eval) / np.log(b_.size_N / a_.size_N))
     ref = pp.iloc[-1] if len(pp) else None
 
     def t_pp(N):
@@ -200,63 +228,64 @@ def grid2_table():
         if len(row):
             return float(row.sec_per_eval.iloc[0]), "measured"
         if ref is None:
-            return np.nan, "n/a"
+            return float("nan"), "n/a"
         return float(ref.sec_per_eval * (N / ref.size_N) ** 3), "extrapolated n^3"
 
-    rdf = pd.DataFrame([{
-        "N": r["size_N"], "method": r["method"], "run_id": r["run_id"],
-        "success": r["success"], "timed_out": r["timed_out"], "n_evals": r["n_evals"],
-        "wall_s": r["wall_s"], "ttt": r["time_to_target_s"], "caps": r["caps_used"],
-        "placement": tuple(sorted((c["pad"], c["model"]) for c in r["placement"])),
-        "own_ratio": r["best_cost_own_band"]} for r in runs])
     rows = []
     for N in sorted(tim.size_N.unique()):
         tpp, how = t_pp(N)
-        for m in C.GRID2_METHODS:
+        K = int(tim[tim.size_N == N].n_evals.iloc[0])
+        for m in C.GRID2_TIMING_METHODS:
+            label = f"{m} (approximation)" if m in C.APPROXIMATE_METHODS else m
             te = tim[(tim.size_N == N) & (tim.method == m)]
             if m == "pure_python" and how != "measured":
-                rows.append({"N": N, "method": m, "sec_per_eval": tpp, "source": how,
-                             "speedup_eval_vs_pure": 1.0})
+                rows.append({"N": N, "method": label, "evals": K, "wall_s": tpp * K,
+                             "ms_per_eval": 1e3 * tpp, "speedup_vs_pure": 1.0, "source": how})
                 continue
             if te.empty:
                 continue
-            row = {"N": N, "method": m, "sec_per_eval": float(te.sec_per_eval.iloc[0]),
-                   "source": "measured", "speedup_eval_vs_pure": tpp / float(te.sec_per_eval.iloc[0]),
-                   "max_rel_dev_vs_numpy": float(te.max_rel_dev_vs_numpy.iloc[0])}
-            if not rdf.empty:
-                mm = rdf[(rdf.N == N) & (rdf.method == m)]
-                nm = rdf[(rdf.N == N) & (rdf.method == "numpy")]
-                if len(mm):
-                    row["runs"] = len(mm)
-                    row["success_rate"] = mm.success.mean()
-                    row["timeouts"] = int(mm.timed_out.sum())
-                    row["n_evals_med"] = float(mm.n_evals.median())
-                    tt = mm.apply(lambda r: r.ttt if r.success and r.ttt is not None else r.wall_s, axis=1)
-                    row["time_to_target_s_med"] = float(tt.median())
-                    both = mm.merge(nm, on="run_id", suffixes=("", "_np"))
-                    if len(both):
-                        row["placement_match_vs_numpy"] = float(
-                            (both.placement == both.placement_np).mean())
-                        row["max_ratio_dev_vs_numpy"] = float(
-                            (both.own_ratio - both.own_ratio_np).abs().max())
-            rows.append(row)
-    out = pd.DataFrame(rows)
-    # total-time speedup vs pure_python: pure time (measured or n^3-extrapolated x numpy eval count)
-    if not out.empty and "n_evals_med" in out:
-        sp = []
-        for _, r in out.iterrows():
-            nev = out[(out.N == r.N) & (out.method == "numpy")]["n_evals_med"]
-            tpp, _ = t_pp(r.N)
-            ptt = out[(out.N == r.N) & (out.method == "pure_python") & (out.source == "measured")]
-            if len(ptt) and "time_to_target_s_med" in ptt and pd.notna(ptt.time_to_target_s_med.iloc[0]):
-                base = float(ptt.time_to_target_s_med.iloc[0])
-            elif len(nev) and pd.notna(nev.iloc[0]):
-                base = tpp * float(nev.iloc[0])
+            t = te.iloc[0]
+            row = {"N": N, "method": label, "evals": K, "wall_s": float(t.total_s),
+                   "ms_per_eval": 1e3 * float(t.sec_per_eval),
+                   "speedup_vs_pure": tpp / float(t.sec_per_eval), "source": "measured"}
+            if m in C.APPROXIMATE_METHODS:                     # no quality figure for an approximation
+                row["series_fallback_rate"] = float(t.series["fallback_rate"])
             else:
-                base = np.nan
-            sp.append(base / r.time_to_target_s_med if pd.notna(r.get("time_to_target_s_med")) else np.nan)
-        out["speedup_total_vs_pure"] = sp
-    return out, pd.DataFrame({"pure_python_scaling_exponent": [exponent]})
+                row["max_cost_dev_vs_numpy"] = float(t.max_rel_cost_dev_vs_numpy)
+            rows.append(row)
+    primary = pd.DataFrame(rows)
+
+    exact = [r for r in runs if r["method"] not in C.APPROXIMATE_METHODS]
+    rdf = pd.DataFrame([{
+        "N": r["size_N"], "method": r["method"], "run_id": r["run_id"], "stop": r.get("stop_level"),
+        "success": r["success"], "timed_out": r["timed_out"], "n_evals": r["n_evals"],
+        "ttt": r["time_to_target_s"],
+        "placement": tuple(sorted((c["pad"], c["model"]) for c in r["placement"]))} for r in exact])
+    srows = []
+    sizes = sorted(set(rdf.N) | set(skips)) if not rdf.empty else sorted(skips)
+    for N in sizes:
+        for m in C.GRID2_PSO_METHODS:
+            mm = rdf[(rdf.N == N) & (rdf.method == m)] if not rdf.empty else rdf
+            if mm.empty:
+                continue
+            nm = rdf[(rdf.N == N) & (rdf.method == "numpy")]
+            conv = mm[mm.success]
+            row = {"N": N, "method": m, "stop level": f"x{mm.stop.iloc[0]}", "runs": len(mm),
+                   "reached": int(mm.success.sum()), "timeouts": int(mm.timed_out.sum()),
+                   "n_evals_med": float(mm.n_evals.median()),
+                   "time_to_target_s_med": float(conv.ttt.median()) if len(conv) else float("nan")}
+            if m != "numpy":
+                both = mm.merge(nm, on="run_id", suffixes=("", "_np"))
+                both = both[~both.timed_out & ~both.timed_out_np]     # skip cap-truncated runs
+                row["placement_match_vs_numpy"] = (
+                    f"{int((both.placement == both.placement_np).sum())}/{len(both)}"
+                    if len(both) else "n/a (cap-truncated)")
+            srows.append(row)
+        if N in skips:
+            srows.append({"N": N, "method": "(PSO runs skipped)",
+                          "stop level": f"x{skips[N]['stop_level']}",
+                          "placement_match_vs_numpy": skips[N]["reason"]})
+    return primary, pd.DataFrame(srows), {"pure_python_exponent": exponent}
 
 
 # ============================================================ plots
@@ -420,9 +449,12 @@ def build_report():
     try:
         import study_core as S
         levels, table = S.load_targets()
-        tt = pd.DataFrame([{"target key": k, **{f"x{lab} [ohm]": v[lab] for lab, _ in levels}}
+        flags = S.get_flags()
+        tt = pd.DataFrame([{"target key": k,
+                            **{f"x{lab} [ohm]": (f"{v[lab]:.5g}" + ("\u2020" if flags.get(k, {}).get(lab) else ""))
+                               for lab, _ in levels}}
                            for k, v in table.items()])
-        parts.append("\n## Targets used\n" + md(tt))
+        parts.append("\n## Targets used\n" + md(tt) + NOISE_NOTE)
     except Exception as e:                      # report must still build from the JSONL
         parts.append(f"\n_(targets.json not readable here: {e})_\n")
     s1 = os.path.join(C.OUT_ROOT, "stage1_table.md")
@@ -431,7 +463,7 @@ def build_report():
     g = grid1_matrix(stage)
     if not g.empty:
         parts.append(f"\n## Grid 1 matrix (stage {stage}; R_x = median peak/Ztarget re-scored on band x)\n")
-        parts.append(md(g))
+        parts.append(md(grid1_display(g)) + NOISE_NOTE)
         parts.append("\n### Per-rail median peaks (ohm)\n" + md(rails_ohm_table(stage)))
         g.to_csv(os.path.join(C.OUT_ROOT, "grid1_matrix.csv"), index=False)
         rails_ohm_table(stage).to_csv(os.path.join(C.OUT_ROOT, "grid1_rails_ohm.csv"), index=False)
@@ -444,12 +476,24 @@ def build_report():
                      "mer1 and pll1v8 barely respond: the observation port sits at the die and "
                      "package inductance hides the pads. They stay in A1/A2; A3 exists because "
                      "of them.\n" + md(pd.DataFrame(rows)))
-    t2, ex = grid2_table()
-    if not t2.empty:
-        parts.append("\n## Grid 2 timing\n" + md(t2))
+    t1, t2, info = grid2_tables()
+    if not t1.empty:
+        parts.append("\n## Grid 2 -- wall-time for a FIXED evaluation count (primary)\n"
+                     f"Every method evaluates the same {int(t1.evals.iloc[0])} (model, pad) configurations per size "
+                     "in per-frequency loop mode. `iterative` is an APPROXIMATION (second-order series, "
+                     "falls back to a full inverse where it diverges): timing and series fallback rate only, "
+                     "no placement-match or quality claim. pure_python at N=73/79 is extrapolated by n^3 "
+                     "from its measured scaling.\n" + md(t1))
         parts.append(f"\nMeasured pure_python scaling exponent (N=16 -> 21): "
-                     f"{ex.pure_python_scaling_exponent.iloc[0]:.2f} (n^3 assumed for N=73/79)\n")
-        t2.to_csv(os.path.join(C.OUT_ROOT, "grid2_timing.csv"), index=False)
+                     f"{info['pure_python_exponent']:.2f} (n^3 assumed for N=73/79)\n")
+        t1.to_csv(os.path.join(C.OUT_ROOT, "grid2_fixed_eval_timing.csv"), index=False)
+    if not t2.empty:
+        parts.append("\n## Grid 2 -- PSO runs, exact methods (secondary)\n"
+                     "Stop level = the tightest level that is not noise-flagged. Time-to-target is the median "
+                     "over converged runs only (blank = none converged within the 1800 s cap). Placement match "
+                     "counts only runs that neither method had truncated by the cap; `iterative` is not run.\n"
+                     + md(t2))
+        t2.to_csv(os.path.join(C.OUT_ROOT, "grid2_pso_runs.csv"), index=False)
     for b in BANDS:
         p = os.path.join(C.OUT_ROOT, f"consistency_{b}.json")
         if os.path.exists(p):

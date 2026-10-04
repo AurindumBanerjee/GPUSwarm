@@ -54,6 +54,30 @@ per-rail targets only deciding when to stop. Bands: B1 (<=20 MHz), B2 (<=50 MHz)
 cells; the weighting code is dormant and `BANDS` in `study_config.py` brings it back. Every winning placement
 is re-scored on all bands.
 
+## Noise flags
+
+A level whose target (floor x multiplier) lies **below the median** achieved peak of the Exp 1 runs is *inside
+the floor spread*: a typical run could not reach it. `derive_targets.py` writes these flags to `targets.json`
+(`flags[key][level]`); every run record carries them (`levels[lvl].inside_noise`, `inside_noise_rails`; a level of a
+multi-rail problem is flagged if any of its rails is), and the report marks flagged success rates with a dagger.
+A low success rate at a flagged level means "target inside measurement noise", not a difference between
+scopes or bands. Grid 2 stops its PSO runs at the tightest level that is *not* flagged.
+
+## Grid 2
+
+* **Primary metric: wall-time for a fixed evaluation count** - `FIXED_EVALS` identical (model, pad)
+  configurations (1..20 capacitors) per size, evaluated by every method in per-frequency loop mode; the cost
+  agreement with numpy is recorded alongside. `pure_python` is measured at N=16 and 21 only and extrapolated
+  by the measured n^3 scaling to N=73 and 79.
+* **`iterative` is an approximation** (second-order Neumann series, full-inverse fallback where it diverges),
+  not a method under test: it is timed per evaluation only, with its series fallback rate beside it, and is
+  excluded from placement-match claims and every achieved-impedance comparison. It gets no PSO runs.
+* **Secondary: PSO runs of the exact methods** (numpy, solve, sm, pure_python at N=16/21) for time-to-target
+  (converged runs only) and placement match against numpy (runs not truncated by the unchanged 1800 s cap).
+  If the first numpy run at a size hits the cap without reaching the stop level the rest of that size is skipped
+  (recorded in a `grid2_skip` record).
+* N=16 uses `mer1`: with the Exp 1 floors `mer2`'s bare network already meets every level, so its runs would be empty.
+
 ## Port rules
 
 Observation ports come first in every dataset and never take a capacitor: one in every dataset except
