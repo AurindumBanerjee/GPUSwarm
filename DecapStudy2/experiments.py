@@ -267,6 +267,7 @@ def rail_response(stride=7):
         out[prob.rails[0] if key != "ddr21" else "ddr21"] = row
         log(f"rail response {key}: " + ", ".join(
             f"{b} {row[b]['gain_pct']:.1f}%" for b in C.BANDS))
+    os.makedirs(C.OUT_ROOT, exist_ok=True)
     with open(path, "w") as fh:
         json.dump({"models_sampled_stride": stride, "rails": out}, fh, indent=2)
     return out
