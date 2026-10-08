@@ -1,0 +1,25 @@
+2026-10-08 12:41:55,388 INFO: RUN_START | experiment=template_toy | threshold=0.050000 | run=1 | seed=12346 | particles=20 | iterations=30
+2026-10-08 12:41:55,403 INFO: RESULT | time_s=0.0003 | iterations=6 | best=0.013971 | success=True
+2026-10-08 12:41:55,408 INFO: RUN_START | experiment=template_toy | threshold=0.050000 | run=2 | seed=12347 | particles=20 | iterations=30
+2026-10-08 12:41:55,408 INFO: RESULT | time_s=0.0003 | iterations=6 | best=0.045522 | success=True
+2026-10-08 12:41:55,413 INFO: RUN_START | experiment=template_toy | threshold=0.050000 | run=3 | seed=12348 | particles=20 | iterations=30
+2026-10-08 12:41:55,414 INFO: STAGE | threshold=0.05 | run=3 | iter=10 | best=0.058305
+2026-10-08 12:41:55,414 INFO: RESULT | time_s=0.0006 | iterations=12 | best=0.041089 | success=True
+2026-10-08 12:41:55,427 INFO: RUN_START | experiment=template_toy | threshold=0.020000 | run=1 | seed=12346 | particles=20 | iterations=30
+2026-10-08 12:41:55,428 INFO: RESULT | time_s=0.0003 | iterations=6 | best=0.013971 | success=True
+2026-10-08 12:41:55,433 INFO: RUN_START | experiment=template_toy | threshold=0.020000 | run=2 | seed=12347 | particles=20 | iterations=30
+2026-10-08 12:41:55,434 INFO: STAGE | threshold=0.02 | run=2 | iter=10 | best=0.019223
+2026-10-08 12:41:55,434 INFO: RESULT | time_s=0.0008 | iterations=10 | best=0.019223 | success=True
+2026-10-08 12:41:55,438 INFO: RUN_START | experiment=template_toy | threshold=0.020000 | run=3 | seed=12348 | particles=20 | iterations=30
+2026-10-08 12:41:55,440 INFO: STAGE | threshold=0.02 | run=3 | iter=10 | best=0.058305
+2026-10-08 12:41:55,440 INFO: RESULT | time_s=0.0006 | iterations=14 | best=0.018450 | success=True
+2026-10-08 12:41:55,445 INFO: RUN_START | experiment=template_toy | threshold=0.010000 | run=1 | seed=12346 | particles=20 | iterations=30
+2026-10-08 12:41:55,446 INFO: STAGE | threshold=0.01 | run=1 | iter=10 | best=0.013971
+2026-10-08 12:41:55,446 INFO: RESULT | time_s=0.0005 | iterations=12 | best=0.009518 | success=True
+2026-10-08 12:41:55,451 INFO: RUN_START | experiment=template_toy | threshold=0.010000 | run=2 | seed=12347 | particles=20 | iterations=30
+2026-10-08 12:41:55,451 INFO: STAGE | threshold=0.01 | run=2 | iter=10 | best=0.019223
+2026-10-08 12:41:55,452 INFO: RESULT | time_s=0.0005 | iterations=11 | best=0.008700 | success=True
+2026-10-08 12:41:55,459 INFO: RUN_START | experiment=template_toy | threshold=0.010000 | run=3 | seed=12348 | particles=20 | iterations=30
+2026-10-08 12:41:55,459 INFO: STAGE | threshold=0.01 | run=3 | iter=10 | best=0.058305
+2026-10-08 12:41:55,460 INFO: RESULT | time_s=0.0007 | iterations=19 | best=0.009441 | success=True
+2026-10-08 12:41:56,572 INFO: DONE | outputs under D:\MyStuff\College\.7thSemester\PSO\GPUSwarm\runs\reference\run01_template_sample

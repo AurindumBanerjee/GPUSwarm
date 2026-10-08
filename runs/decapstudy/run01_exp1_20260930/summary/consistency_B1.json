@@ -1,0 +1,60 @@
+{
+  "band": "B1",
+  "tolerance_peak_rel_dev": 0.01,
+  "reduction_check_max_rel_dev": 1.5193698594525266e-13,
+  "worst_peak_rel_dev_combined": 1.9327856326098755e-05,
+  "rails": [
+    {
+      "rail": "mer1",
+      "caps": 5,
+      "peak_isolated_ohm": 3.2104948466810135,
+      "peak_alone_in_full_ohm": 3.2104948466810144,
+      "peak_combined_ohm": 3.2104946750454193,
+      "max_rel_dev_alone": 9.98735969765112e-15,
+      "max_rel_dev_combined": 3.5524111307732644e-07,
+      "peak_rel_dev_combined": 5.3460791055026074e-08
+    },
+    {
+      "rail": "mer2",
+      "caps": 1,
+      "peak_isolated_ohm": 0.9919188257501915,
+      "peak_alone_in_full_ohm": 0.991918825750191,
+      "peak_combined_ohm": 0.9919135708217104,
+      "max_rel_dev_alone": 1.1035640462093271e-14,
+      "max_rel_dev_combined": 6.992339266199461e-06,
+      "peak_rel_dev_combined": 5.2977404448000886e-06
+    },
+    {
+      "rail": "pll1v0",
+      "caps": 1,
+      "peak_isolated_ohm": 2.4466889880174874,
+      "peak_alone_in_full_ohm": 2.4466889880174874,
+      "peak_combined_ohm": 2.4466416987642523,
+      "max_rel_dev_alone": 3.6440091379216617e-14,
+      "max_rel_dev_combined": 3.045203209178885e-05,
+      "peak_rel_dev_combined": 1.9327856326098755e-05
+    },
+    {
+      "rail": "pll1v8",
+      "caps": 2,
+      "peak_isolated_ohm": 23.399452709734593,
+      "peak_alone_in_full_ohm": 23.399452709734597,
+      "peak_combined_ohm": 23.399451449853768,
+      "max_rel_dev_alone": 1.9402408566235813e-14,
+      "max_rel_dev_combined": 4.991760314582564e-06,
+      "peak_rel_dev_combined": 5.384232020604834e-08
+    },
+    {
+      "rail": "mphyvdd",
+      "caps": 1,
+      "peak_isolated_ohm": 2.5975734164055813,
+      "peak_alone_in_full_ohm": 2.5975734164055817,
+      "peak_combined_ohm": 2.5975731831432634,
+      "max_rel_dev_alone": 1.5193698594525266e-13,
+      "max_rel_dev_combined": 1.6619053665807326e-07,
+      "peak_rel_dev_combined": 8.980008666263155e-08
+    }
+  ],
+  "decomposition_valid": true,
+  "verdict": "A1 decomposition validated: combined-network rail impedances match the isolated results."
+}

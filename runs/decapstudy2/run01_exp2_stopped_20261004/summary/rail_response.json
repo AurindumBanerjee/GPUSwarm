@@ -1,0 +1,107 @@
+{
+  "models_sampled_stride": 7,
+  "rails": {
+    "mer1": {
+      "B1": {
+        "bare_peak_ohm": 0.6549223104078016,
+        "all_pads_filled_ohm": 0.6424069001353722,
+        "gain_pct": 1.9109763209374298
+      },
+      "B2": {
+        "bare_peak_ohm": 1.6274551224637681,
+        "all_pads_filled_ohm": 1.5997661571344437,
+        "gain_pct": 1.7013658285954247
+      },
+      "B3": {
+        "bare_peak_ohm": 3.241204112953024,
+        "all_pads_filled_ohm": 3.19759372582155,
+        "gain_pct": 1.3454995616348664
+      }
+    },
+    "mer2": {
+      "B1": {
+        "bare_peak_ohm": 0.232936312092426,
+        "all_pads_filled_ohm": 0.17153790959931645,
+        "gain_pct": 26.358450488710183
+      },
+      "B2": {
+        "bare_peak_ohm": 0.7249582299437218,
+        "all_pads_filled_ohm": 0.7120060941215319,
+        "gain_pct": 1.786604425912286
+      },
+      "B3": {
+        "bare_peak_ohm": 1.1600376125696479,
+        "all_pads_filled_ohm": 0.8619914030920394,
+        "gain_pct": 25.692805668377762
+      }
+    },
+    "pll1v0": {
+      "B1": {
+        "bare_peak_ohm": 0.6643398464140149,
+        "all_pads_filled_ohm": 0.3760238634473643,
+        "gain_pct": 43.39886949773185
+      },
+      "B2": {
+        "bare_peak_ohm": 1.6631429775716924,
+        "all_pads_filled_ohm": 1.041004562522558,
+        "gain_pct": 37.407392114747765
+      },
+      "B3": {
+        "bare_peak_ohm": 3.515612179031639,
+        "all_pads_filled_ohm": 1.8622027731263653,
+        "gain_pct": 47.03048350346478
+      }
+    },
+    "pll1v8": {
+      "B1": {
+        "bare_peak_ohm": 4.834620320758323,
+        "all_pads_filled_ohm": 4.598319013047933,
+        "gain_pct": 4.887691111870518
+      },
+      "B2": {
+        "bare_peak_ohm": 12.086416003216858,
+        "all_pads_filled_ohm": 11.555389111171673,
+        "gain_pct": 4.393584433167364
+      },
+      "B3": {
+        "bare_peak_ohm": 24.335726962527204,
+        "all_pads_filled_ohm": 23.178293408941318,
+        "gain_pct": 4.756108397206016
+      }
+    },
+    "mphyvdd": {
+      "B1": {
+        "bare_peak_ohm": 0.5784670565224782,
+        "all_pads_filled_ohm": 0.43778743182141405,
+        "gain_pct": 24.319383984764155
+      },
+      "B2": {
+        "bare_peak_ohm": 1.4529613214263535,
+        "all_pads_filled_ohm": 1.101676807470317,
+        "gain_pct": 24.177141454198182
+      },
+      "B3": {
+        "bare_peak_ohm": 3.1515086098968803,
+        "all_pads_filled_ohm": 2.3396508962540894,
+        "gain_pct": 25.760923231917033
+      }
+    },
+    "ddr21": {
+      "B1": {
+        "bare_peak_ohm": 0.1007653496163142,
+        "all_pads_filled_ohm": 0.05977680671374062,
+        "gain_pct": 40.67721995571523
+      },
+      "B2": {
+        "bare_peak_ohm": 0.25073684042524175,
+        "all_pads_filled_ohm": 0.14447950618225253,
+        "gain_pct": 42.37803031368671
+      },
+      "B3": {
+        "bare_peak_ohm": 0.5017056683399895,
+        "all_pads_filled_ohm": 0.2306236316989422,
+        "gain_pct": 54.03208569239124
+      }
+    }
+  }
+}

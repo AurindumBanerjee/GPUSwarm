@@ -1,0 +1,71 @@
+{
+  "problem": "ddr21",
+  "band": "B2",
+  "n_configs": 200,
+  "seed": 20261004,
+  "cost_unit": "ohm (peak |Z| on the band)",
+  "methods": {
+    "numpy_batched": {
+      "max_rel_diff": 0.0,
+      "median_rel_diff": 0.0,
+      "worst_config_index": 0,
+      "worst_config_n_caps": 1,
+      "n_failed": 0,
+      "verdict": "agrees (float noise)",
+      "mean_signed_rel_diff": 0.0,
+      "frac_underestimated": 0.0,
+      "seconds": 5.222484142985195
+    },
+    "solve": {
+      "max_rel_diff": 1.137792476822642e-15,
+      "median_rel_diff": 2.4767795674097804e-16,
+      "worst_config_index": 85,
+      "worst_config_n_caps": 6,
+      "n_failed": 0,
+      "verdict": "agrees (float noise)",
+      "mean_signed_rel_diff": 2.1130877337882906e-16,
+      "frac_underestimated": 0.135,
+      "seconds": 7.859962121001445
+    },
+    "sm": {
+      "max_rel_diff": 8.533443576169815e-16,
+      "median_rel_diff": 1.590879945075026e-16,
+      "worst_config_index": 85,
+      "worst_config_n_caps": 6,
+      "n_failed": 0,
+      "verdict": "agrees (float noise)",
+      "mean_signed_rel_diff": 1.465118773974909e-16,
+      "frac_underestimated": 0.175,
+      "seconds": 30.46251400600886
+    },
+    "iterative": {
+      "max_rel_diff": 0.1469170428853736,
+      "median_rel_diff": 0.0,
+      "worst_config_index": 8,
+      "worst_config_n_caps": 9,
+      "n_failed": 0,
+      "verdict": "OFF by more than 1e-9",
+      "mean_signed_rel_diff": 0.0062883562463449645,
+      "frac_underestimated": 0.075,
+      "seconds": 12.085213842976373,
+      "series_diagnostics_first10_configs": {
+        "n_freq_evals": 19390,
+        "frac_fallback_to_full_inverse": 0.08318720990201135,
+        "median_norm": 0.24962448862693196,
+        "p95_norm": 1.2087892569566707,
+        "max_norm": 8.477496263114269
+      }
+    },
+    "pure_python": {
+      "max_rel_diff": 1.0209258715212472e-15,
+      "median_rel_diff": 2.751150868297909e-16,
+      "worst_config_index": 138,
+      "worst_config_n_caps": 19,
+      "n_failed": 0,
+      "verdict": "agrees (float noise)",
+      "mean_signed_rel_diff": 2.3098789970709394e-16,
+      "frac_underestimated": 0.14,
+      "seconds": 679.1608430199558
+    }
+  }
+}

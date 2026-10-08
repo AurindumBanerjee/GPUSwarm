@@ -1,0 +1,16 @@
+======================================================================
+arm           median best        min        max    spread
+A none           0.048614   0.048347   0.050433     4.31%
+B naive          0.041882   0.040534   0.043398     7.07%
+C current        0.047321   0.046374   0.051929    11.98%
+
+Paired per-run difference vs arm C (negative = that arm did better):
+  A none     median +4.396%  range -6.897% to +6.576%  beats C in 2/5
+  B naive    median -13.960%  range -19.348% to -7.747%  beats C in 5/5
+
+Warm-block carried-gene spread (the FIX 11 mechanism):
+  B naive    start 4.075e-17  end 4.075e-17  frozen stages 0/95
+  C current  start 1.856e-02  end 9.003e-03  frozen stages 0/95
+
+Records -> /DATA/Aurindum/GPUSwarm/Comparisons/warmstart_arms_results.jsonl
+Figure  -> /DATA/Aurindum/GPUSwarm/Comparisons/warmstart_arms.png

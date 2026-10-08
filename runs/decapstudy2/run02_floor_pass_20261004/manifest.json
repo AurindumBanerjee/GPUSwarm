@@ -1,0 +1,77 @@
+{
+  "experiment": "decapstudy2",
+  "run_id": "run02_floor_pass_20261004",
+  "status": "finished",
+  "description": "Floor pass: full-budget numpy PSO runs for the (key, band) floors Exp 1 cannot supply (B1: mer2, pll1v0, mphyvdd, ddr21 x10 runs; ddr_full x6), no early stop.",
+  "start": "2026-10-04 17:08",
+  "end": "2026-10-04 19:36",
+  "host": "eeiitj123.iitj.ac.in",
+  "launch": "cd DecapStudy2 && STUDY_THREADS=32 nohup python -u floor_pass.py > logs/floor_pass.out",
+  "environment": "conda env work; BLAS pinned to 1 thread; STUDY_THREADS=32",
+  "code": [
+    {
+      "file": "README.md",
+      "source": "ed9b2a1:DecapStudy2/README.md",
+      "md5": "26deee44c27cab7c849a29527db4a0b7"
+    },
+    {
+      "file": "analyze.py",
+      "source": "ed9b2a1:DecapStudy2/analyze.py",
+      "md5": "4326e1977cc316346a9fb1a31c159d66"
+    },
+    {
+      "file": "check_cost_agreement.py",
+      "source": "ed9b2a1:DecapStudy2/check_cost_agreement.py",
+      "md5": "413b71402f5af49f3ff309b364a1d270"
+    },
+    {
+      "file": "derive_targets.py",
+      "source": "ed9b2a1:DecapStudy2/derive_targets.py",
+      "md5": "b7cf4f0913318aca71f023ffd8b66716"
+    },
+    {
+      "file": "experiments.py",
+      "source": "ed9b2a1:DecapStudy2/experiments.py",
+      "md5": "2065cfa5e66d953274ea06cec9bb588a"
+    },
+    {
+      "file": "floor_pass.py",
+      "source": "ed9b2a1:DecapStudy2/floor_pass.py",
+      "md5": "5eab7e28009dc86a6bebac755dd33a49"
+    },
+    {
+      "file": "run_all.py",
+      "source": "ed9b2a1:DecapStudy2/run_all.py",
+      "md5": "d1abd2ac1d537d66db16076e45fc7550"
+    },
+    {
+      "file": "run_exp2.sh",
+      "source": "ed9b2a1:DecapStudy2/run_exp2.sh",
+      "md5": "30adbfb09dae0f0cfe6e52bd4480d57e"
+    },
+    {
+      "file": "study_config.py",
+      "source": "ed9b2a1:DecapStudy2/study_config.py",
+      "md5": "131602b5fe0a37879b11c0e4f1a0200b"
+    },
+    {
+      "file": "study_core.py",
+      "source": "ed9b2a1:DecapStudy2/study_core.py",
+      "md5": "d909de7623f7686a8b1ae72ea539b8a2"
+    },
+    {
+      "file": "validate.py",
+      "source": "ed9b2a1:DecapStudy2/validate.py",
+      "md5": "0d9e2d15c19266f83edccb0cc66b7945"
+    }
+  ],
+  "code_commits": [
+    "ed9b2a1"
+  ],
+  "output_files": 1,
+  "retrofitted": true,
+  "notes": [
+    "The same file is tracked at DecapStudy2/floor_pass/floor_runs.jsonl (input to derive_targets.py).",
+    "Needed because Exp 1's B1 runs stopped after 1-7 capacitors on its old target, so they are not floors; B2/B3 floors come from Exp 1 itself."
+  ]
+}
