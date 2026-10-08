@@ -58,7 +58,20 @@ N_ITERATIONS = 40      # was 15
 W_MAX, W_MIN = 0.9, 0.4
 C1, C2 = 1.5, 1.5
 N_WARM_START = 20
-WARM_START_JITTER = 0.02
+# Jitter OFF: the warm block carries prev_best verbatim ("naive" warm start).
+# SB.py's FIX 11 added an exact elite plus Gaussian jitter on the carried genes,
+# on the argument that identical carried genes freeze those dimensions. The
+# mechanism is real -- measured carried-gene spread is 4.1e-17 at jitter 0
+# against 1.9e-2 at 0.02 -- but on the 21-port benchmark PDN the freezing HELPS:
+# each stage becomes a search over the new capacitor alone, i.e. greedy forward
+# selection, which reached 14% lower impedance (5/5 paired runs, identical
+# evaluation counts) and hit the 0.05 target in half the evaluations.
+# See Comparisons/warmstart_{arms,thresholds}.py. Set this back to 0.02 to
+# restore FIX 11; the block in seed_particles is already gated on it.
+# Caveat: one PDN, small sample, and that harness did not reproduce SB.py's
+# earlier threshold results -- treat as a tuning choice, not a settled result,
+# and never mix results produced under different values of this constant.
+WARM_START_JITTER = 0.0
 BASE_SEED = 12345
 NUM_RUNS = int(os.environ.get("NUM_RUNS", "10"))
 TIME_LIMIT_S = float(os.environ.get("TIME_LIMIT_S", "1800"))
@@ -97,6 +110,39 @@ def library():
         _lib["freq"] = sio.loadmat(os.path.join(DATA, "Decaps", "sp_freq.mat"))["freq"].ravel()
         _lib["lists"] = None
     return _lib
+
+
+_thr = {}
+
+def thresholds(path=None):
+    """Per-problem time-to-target thresholds in ohm, from thresholds.json."""
+    if not _thr:
+        path = path or os.path.join(HERE, "thresholds.json")
+        with open(path) as fh:
+            _thr.update(json.load(fh))
+    return _thr
+
+
+def check_thresholds(prob, method="numpy"):
+    """Every level must sit strictly between the minimum PSO reached and the
+    bare impedance. Above bare it is met with zero capacitors and the run stops
+    at the first evaluation; below the floor it can never be met."""
+    T = thresholds()
+    if T["band"] != RANK_BAND:
+        raise ValueError(f"thresholds.json is for band {T['band']}, RANK_BAND is {RANK_BAND}")
+    e = T["problems"].get(prob.name)
+    if e is None:
+        raise KeyError(f"no thresholds for problem {prob.name!r}")
+    bare = float(np.max(bare_peaks(prob, method)[RANK_BAND]))
+    levels = [(k, float(e[k])) for k in ("T1", "T2", "T3")]
+    for k, v in levels:
+        if v >= bare:
+            raise ValueError(f"{prob.name} {k}={v} >= bare {bare:.6g}: met with zero "
+                             f"capacitors, the run would stop at the first evaluation")
+        if v <= e["min_reached_ohm"]:
+            raise ValueError(f"{prob.name} {k}={v} <= floor {e['min_reached_ohm']}: "
+                             f"unreachable")
+    return levels, bare
 
 
 def band_mask(name):
@@ -433,7 +479,8 @@ def placement_records(config):
 # ============================================================
 
 def run_pso(prob, method, run_id, out_folder, results_path,
-            threshold=None, max_caps=None, pool=None, out_root=None):
+            threshold=None, max_caps=None, pool=None, out_root=None,
+            level=None):
     """One PSO run: capacitor counts 1..max_caps, warm-started stage to stage.
 
     With threshold=None the full budget is searched and the whole
@@ -549,6 +596,7 @@ def run_pso(prob, method, run_id, out_folder, results_path,
         "n_pads": len(prob.pads), "max_caps": cap_ceiling,
         "method": method, "run_id": run_id, "seed_base": BASE_SEED,
         "rank_band": RANK_BAND, "threshold_ohm": threshold,
+        "threshold_level": level,
         "bare_peak_ohm": {b: float(np.max(bare_peaks(prob, method)[b])) for b in BANDS},
         "best_peak_ohm": {b: float(np.max(pk[b])) for b in BANDS},
         "best_peak_per_obs_ohm": {b: [float(x) for x in pk[b]] for b in BANDS},
@@ -616,6 +664,7 @@ def selftest(prob, methods):
 def main(board, problems, out_root, argv=None):
     argv = sys.argv[1:] if argv is None else argv
     validate = "--validate" in argv
+    use_thresholds = "--thresholds" in argv
     os.makedirs(out_root, exist_ok=True)
     results = os.path.join(out_root, "results_long.jsonl")
 
@@ -632,28 +681,46 @@ def main(board, problems, out_root, argv=None):
         bp = bare_peaks(p, "numpy")
         print(f"  {p.name:14s} N={p.N:3d} pads={len(p.pads):3d}  bare peak "
               + "  ".join(f"{b}={np.max(bp[b]):.4g}" for b in BANDS))
+    # Threshold mode: run each level, easiest first, and stop on target.
+    levels_by_prob = {}
+    if use_thresholds:
+        for p in probs:
+            lv, bare = check_thresholds(p)
+            levels_by_prob[p.name] = list(reversed(lv))        # T3, T2, T1
+            print(f"  {p.name:14s} bare {bare:.6g} | " +
+                  "  ".join(f"{k}={v:g}" for k, v in lv))
+        print("  all thresholds lie strictly between the measured floor and bare.")
+
     if validate:
-        print("--validate: data, port rules and methods check out; no PSO run.")
+        print("--validate: data, port rules, thresholds and methods check out; "
+              "no PSO run.")
         return
 
     pool = ThreadPoolExecutor(THREADS) if THREADS > 1 else None
     try:
         for p in probs:
             for meth in METHODS:
-                for run in range(1, NUM_RUNS + 1):
-                    folder = os.path.join(out_root, p.name, meth, f"run_{run}")
-                    print(f"[{time.strftime('%H:%M:%S')}] {p.name} {meth} run {run}/{NUM_RUNS}",
-                          flush=True)
-                    try:
-                        r = run_pso(p, meth, run, folder, results, pool=pool,
-                                    out_root=out_root)
-                        print(f"    best {r['best_peak_ohm'][RANK_BAND]:.6g} ohm "
-                              f"@ {r['best_n_caps']} caps, {r['total_wall_time_s']:.1f}s",
-                              flush=True)
-                    except Exception as exc:
-                        logging.getLogger("main").error(
-                            "RUN_FAILED | %s %s run %s | %s", p.name, meth, run, exc)
-                        print(f"    [ERROR] {exc}", flush=True)
+                for lvl, thr in (levels_by_prob.get(p.name) or [(None, None)]):
+                    for run in range(1, NUM_RUNS + 1):
+                        folder = os.path.join(out_root, p.name, meth,
+                                              lvl or "nothreshold", f"run_{run}")
+                        tag = f" {lvl}={thr:g}" if thr else ""
+                        print(f"[{time.strftime('%H:%M:%S')}] {p.name} {meth}{tag} "
+                              f"run {run}/{NUM_RUNS}", flush=True)
+                        try:
+                            r = run_pso(p, meth, run, folder, results, pool=pool,
+                                        out_root=out_root, threshold=thr,
+                                        level=lvl)
+                            hit = ("hit in %.1fs, %d caps" % (r["time_to_target_s"],
+                                   r["caps_at_target"])) if r["success"] else "MISSED"
+                            print(f"    best {r['best_peak_ohm'][RANK_BAND]:.6g} ohm "
+                                  f"@ {r['best_n_caps']} caps, "
+                                  f"{r['total_wall_time_s']:.1f}s - {hit}", flush=True)
+                        except Exception as exc:
+                            logging.getLogger("main").error(
+                                "RUN_FAILED | %s %s %s run %s | %s",
+                                p.name, meth, lvl, run, exc)
+                            print(f"    [ERROR] {exc}", flush=True)
     finally:
         if pool:
             pool.shutdown()

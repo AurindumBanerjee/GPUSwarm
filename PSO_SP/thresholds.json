@@ -1,0 +1,100 @@
+{
+  "_comment": "Thresholds for the time-to-target study, in ohm, on band B50. T = bare - f*(bare - min), f = 0.20/0.40/0.60, i.e. 20/40/60 percent of the way from the undecoupled board impedance down to the minimum PSO reached in the full-budget run (100 particles x 40 iterations, 3 runs, numpy, B50). Rounded to 2 dp at or above 1 ohm and 4 dp below, so the step between levels stays resolvable at both ends of a range spanning 0.07 to 12 ohm.",
+  "band": "B50",
+  "fractions": [
+    0.2,
+    0.4,
+    0.6
+  ],
+  "source": "PSO_SP full-budget run, results_{mphy,vddq_ddr3}/results_long.jsonl",
+  "problems": {
+    "mer1": {
+      "bare_peak_ohm": 1.627455,
+      "min_reached_ohm": 1.587596,
+      "decimals": 2,
+      "T1": 1.62,
+      "T2": 1.61,
+      "T3": 1.6,
+      "T1_exact": 1.619483,
+      "T2_exact": 1.611511,
+      "T3_exact": 1.60354
+    },
+    "mer2": {
+      "bare_peak_ohm": 0.724958,
+      "min_reached_ohm": 0.710968,
+      "decimals": 4,
+      "T1": 0.7222,
+      "T2": 0.7194,
+      "T3": 0.7166,
+      "T1_exact": 0.72216,
+      "T2_exact": 0.719362,
+      "T3_exact": 0.716564
+    },
+    "pll1v0": {
+      "bare_peak_ohm": 1.663143,
+      "min_reached_ohm": 1.029717,
+      "decimals": 2,
+      "T1": 1.54,
+      "T2": 1.41,
+      "T3": 1.28,
+      "T1_exact": 1.536458,
+      "T2_exact": 1.409773,
+      "T3_exact": 1.283088
+    },
+    "pll1v8": {
+      "bare_peak_ohm": 12.086416,
+      "min_reached_ohm": 11.467508,
+      "decimals": 2,
+      "T1": 11.96,
+      "T2": 11.84,
+      "T3": 11.72,
+      "T1_exact": 11.962634,
+      "T2_exact": 11.838853,
+      "T3_exact": 11.715071
+    },
+    "mphyvdd": {
+      "bare_peak_ohm": 1.452961,
+      "min_reached_ohm": 1.07829,
+      "decimals": 2,
+      "T1": 1.38,
+      "T2": 1.3,
+      "T3": 1.23,
+      "T1_exact": 1.378027,
+      "T2_exact": 1.303093,
+      "T3_exact": 1.228158
+    },
+    "mphy_full": {
+      "bare_peak_ohm": 12.086416,
+      "min_reached_ohm": 11.465702,
+      "decimals": 2,
+      "T1": 11.96,
+      "T2": 11.84,
+      "T3": 11.71,
+      "T1_exact": 11.962273,
+      "T2_exact": 11.83813,
+      "T3_exact": 11.713988
+    },
+    "ddr21": {
+      "bare_peak_ohm": 0.250737,
+      "min_reached_ohm": 0.130053,
+      "decimals": 4,
+      "T1": 0.2266,
+      "T2": 0.2025,
+      "T3": 0.1783,
+      "T1_exact": 0.2266,
+      "T2_exact": 0.202463,
+      "T3_exact": 0.178327
+    },
+    "ddr_full": {
+      "bare_peak_ohm": 0.250737,
+      "min_reached_ohm": 0.06608,
+      "decimals": 4,
+      "T1": 0.2138,
+      "T2": 0.1769,
+      "T3": 0.1399,
+      "T1_exact": 0.213806,
+      "T2_exact": 0.176874,
+      "T3_exact": 0.139943
+    }
+  }
+}

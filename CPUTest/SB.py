@@ -183,8 +183,35 @@ C1, C2 = 1.5, 1.5
 # (elitism). WARM_START_JITTER is the std-dev of the Gaussian noise added
 # to the CARRIED genes of warm particles 1.. -- without it the warm block
 # is internally degenerate and cannot move in those dimensions.
+#
+# JITTER DISABLED (2026-10-06), on measurement rather than argument.
+# FIX 11's reasoning above is correct about the MECHANISM: with jitter at 0
+# the carried genes have zero spread across the warm block, both velocity
+# terms vanish there, and those dimensions do not move within a stage. That
+# was confirmed directly (Comparisons/warmstart_arms.py: carried-gene spread
+# 4.1e-17 without jitter, 1.9e-2 with it).
+#
+# But the mechanism turns out to HELP on this PDN, not hurt. Freezing the
+# carried genes makes each stage a search over the new capacitor alone --
+# effectively greedy forward selection -- and that beat the jittered swarm:
+#     full budget, 5 paired runs, 20-cap budget, identical evaluation counts
+#       jitter 0.02 : median best 0.04732 ohm
+#       jitter 0    : median best 0.04188 ohm   (14% lower, won 5/5 paired)
+#     threshold 0.05 : jitter 0 reached it in 9.1 s / 3,758 evals
+#                      jitter 0.02 in 19.1 s / 8,168 evals, and missed 1/10
+#     threshold 0.045: jitter 0 hit 10/10, jitter 0.02 hit 0/10
+#
+# Set WARM_START_JITTER = 0.02 to restore the previous behaviour; nothing
+# else changes, the block below is already gated on this constant.
+#
+# CAVEAT, carried from that study: its harness did NOT reproduce this
+# script's earlier results (it reached the 0.04 threshold 0/10 where the old
+# runs reached it 18/20), so something beyond the warm-start rule differs
+# between the two. Treat this as a tuning change justified on one PDN with a
+# small sample, not as a settled result, and do not mix numbers produced
+# before and after this line without saying which setting produced them.
 N_WARM_START = 20
-WARM_START_JITTER = 0.02
+WARM_START_JITTER = 0.0
 
 # METHODS = ["numpy", "solve", "sm", "iterative", "pure_python"]
 METHODS = ["pure_python"]
