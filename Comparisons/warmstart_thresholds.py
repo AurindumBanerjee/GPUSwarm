@@ -161,7 +161,9 @@ def run_once(seed_fn, run_id, threshold, pool=None):
             carried = np.ones(2 * n_caps, bool)
             carried[n_caps - 1] = False; carried[-1] = False
             total_stages += 1
-            if particles[:nw][:, carried].std(axis=0).max() == 0.0:
+            # std() of identical floats is ~1e-17, never exactly 0 -- use a
+            # tolerance well below the jitter scale (0.02) instead.
+            if particles[:nw][:, carried].std(axis=0).max() < 1e-12:
                 frozen_stages += 1
 
         for it in range(N_ITERATIONS):
