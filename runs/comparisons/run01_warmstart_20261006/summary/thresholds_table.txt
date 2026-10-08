@@ -1,0 +1,18 @@
+==============================================================================
+ threshold       arm  success   med t2t  med caps  med evals  frozen stages
+      0.05     naive 10/10           9.1       6.0       3758      0/47     
+      0.05   current 9/10          19.1      11.0       8168      0/123    
+     0.045     naive 10/10          12.2       7.5       5163      0/67     
+     0.045   current 0/10           nan       nan        nan      0/190    
+      0.04     naive 0/10           nan       nan        nan      0/190    
+      0.04   current 0/10           nan       nan        nan      0/190    
+      0.03     naive 0/10           nan       nan        nan      0/190    
+      0.03   current 0/10           nan       nan        nan      0/190    
+
+Paired per-run comparison (same seed, same threshold):
+  thr=0.05   identical 0/10 | current better 5 | naive better 5
+  thr=0.045  identical 0/10 | current better 0 | naive better 10
+  thr=0.04   identical 0/10 | current better 0 | naive better 10
+  thr=0.03   identical 0/10 | current better 0 | naive better 10
+
+Records -> /DATA/Aurindum/GPUSwarm/Comparisons/warmstart_results.jsonl

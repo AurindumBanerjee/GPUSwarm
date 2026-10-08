@@ -1,0 +1,43 @@
+{
+  "experiment": "pso_sp",
+  "run_id": "run01_full_budget_20261005",
+  "status": "finished",
+  "description": "PSO_SP full-budget runs (no early stop) on MPHY (6 problems) and VDDQ DDR3 (2 problems), numpy only, 3 runs each; lowest impedance each network reaches.",
+  "start": "2026-10-05 01:12",
+  "end": "2026-10-05 16:45",
+  "host": "eeiitj123.iitj.ac.in",
+  "launch": "cd PSO_SP && TIME_LIMIT_S=86400 NUM_RUNS=3 STUDY_THREADS=16 nohup python -u pso_mphy.py > mphy.out & TIME_LIMIT_S=86400 NUM_RUNS=3 STUDY_THREADS=16 nohup python -u pso_vddq_ddr3.py > ddr3.out &",
+  "environment": "conda env work; BLAS pinned to 1 thread; 16 particle threads per job, two jobs in parallel; numpy 2.2.5, MKL 2023.1; timer perf_counter",
+  "code": [
+    {
+      "file": "README.md",
+      "source": "a043279:PSO_SP/README.md",
+      "md5": "2e77eadc3d46a7964f28e2473070a75f"
+    },
+    {
+      "file": "pso_mphy.py",
+      "source": "a043279:PSO_SP/pso_mphy.py",
+      "md5": "fa1903e37d1284f672fcc6a4b702ea02"
+    },
+    {
+      "file": "pso_sp_core.py",
+      "source": "a043279:PSO_SP/pso_sp_core.py",
+      "md5": "d04dc385244623aafa4af6b712612720"
+    },
+    {
+      "file": "pso_vddq_ddr3.py",
+      "source": "a043279:PSO_SP/pso_vddq_ddr3.py",
+      "md5": "fce7000bd1ecbcaf061bfe03f7323df6"
+    }
+  ],
+  "code_commits": [
+    "a043279"
+  ],
+  "output_files": 98,
+  "retrofitted": true,
+  "notes": [
+    "Code is the committed version a043279; the working copy later gained a --thresholds mode and jitter 0 (commit 6b369c7) -- those are NOT in this run.",
+    "This run used WARM_START_JITTER = 0.02 (the then-default).",
+    "No run hit the 86400 s cap (timed_out false for all 24)."
+  ]
+}

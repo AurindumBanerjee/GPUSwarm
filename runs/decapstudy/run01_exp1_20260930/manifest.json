@@ -1,0 +1,52 @@
+{
+  "experiment": "decapstudy",
+  "run_id": "run01_exp1_20260930",
+  "status": "finished",
+  "description": "Exp 1 decap study: 5 scopes x 4 bands PSO grid (staged), Grid 2 inversion-method timing, consistency checks; assumed-voltage targets.",
+  "start": "2026-09-30 01:06 (earliest result file)",
+  "end": "2026-10-04 14:43",
+  "host": "eeiitj123.iitj.ac.in",
+  "launch": "cd DecapStudy && STUDY_THREADS=32 nohup python -u run_all.py > run_all.out 2>&1  (resumable; see run_all.out)",
+  "environment": "conda env work; BLAS pinned to 1 thread; STUDY_THREADS=32 particle threads; numpy 2.2.5, scipy 1.15.3, MKL 2023.1",
+  "code": [
+    {
+      "file": "README.md",
+      "source": "e403d48:DecapStudy/README.md",
+      "md5": "adcf5f5f52c05110a1f1e1dc00ed0332"
+    },
+    {
+      "file": "analyze.py",
+      "source": "e403d48:DecapStudy/analyze.py",
+      "md5": "ae8a7d00dee5c0240de6dd02d40dbd7a"
+    },
+    {
+      "file": "experiments.py",
+      "source": "e403d48:DecapStudy/experiments.py",
+      "md5": "3844e58eb734d2ed1ab2261ae5a26575"
+    },
+    {
+      "file": "run_all.py",
+      "source": "e403d48:DecapStudy/run_all.py",
+      "md5": "7df40cc0c2acdf019b6fb9aaa4e97c51"
+    },
+    {
+      "file": "study_config.py",
+      "source": "e403d48:DecapStudy/study_config.py",
+      "md5": "2e4c0ccbfeff9125d35a2e1c67e2112b"
+    },
+    {
+      "file": "study_core.py",
+      "source": "e403d48:DecapStudy/study_core.py",
+      "md5": "26219dff6f00a048efc772f3e257daa6"
+    }
+  ],
+  "code_commits": [
+    "e403d48"
+  ],
+  "output_files": 67,
+  "retrofitted": true,
+  "notes": [
+    "Original results also remain tracked at DecapStudy/results (commit e403d48); this folder duplicates them under the run layout.",
+    "Winning band B2; best scopes A3 (MPHY) and A5 (DDR3); Grid 2 at N=73/79 hit the 1800 s cap."
+  ]
+}

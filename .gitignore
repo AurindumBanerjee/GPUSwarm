@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ---- runs/ (see README.md): code copies, manifests, READMEs, summaries and plots are tracked; raw output and logs are not
+runs/*/*/output/
+runs/*/*/logs/
+# reference samples are tracked even where a rule above (e.g. *.log) would match
+!reference/output_style/**

@@ -1,0 +1,283 @@
+{
+  "_comment": "Derived by derive_targets.py from Exp 1. targets_ohm[key][level] = floors_ohm[key] * level, in ohm of peak |Z_kk| on the <=50 MHz band.",
+  "multipliers": [
+    1.02,
+    1.05,
+    1.1,
+    1.25,
+    1.5
+  ],
+  "floors_ohm": {
+    "mer1": 1.587955549292058,
+    "mer2": 0.7116035309200393,
+    "pll1v0": 1.0335049464958412,
+    "pll1v8": 11.46782662941879,
+    "mphyvdd": 1.0786993944109011,
+    "ddr21": 0.13613291539027067,
+    "ddr_full": 0.0703138200395421
+  },
+  "targets_ohm": {
+    "mer1": {
+      "1.02": 1.6197146602778993,
+      "1.05": 1.6673533267566611,
+      "1.1": 1.746751104221264,
+      "1.25": 1.9849444366150726,
+      "1.5": 2.381933323938087
+    },
+    "mer2": {
+      "1.02": 0.7258356015384401,
+      "1.05": 0.7471837074660412,
+      "1.1": 0.7827638840120432,
+      "1.25": 0.8895044136500491,
+      "1.5": 1.0674052963800589
+    },
+    "pll1v0": {
+      "1.02": 1.0541750454257581,
+      "1.05": 1.0851801938206334,
+      "1.1": 1.1368554411454255,
+      "1.25": 1.2918811831198016,
+      "1.5": 1.5502574197437617
+    },
+    "pll1v8": {
+      "1.02": 11.697183162007166,
+      "1.05": 12.04121796088973,
+      "1.1": 12.614609292360669,
+      "1.25": 14.334783286773487,
+      "1.5": 17.201739944128185
+    },
+    "mphyvdd": {
+      "1.02": 1.100273382299119,
+      "1.05": 1.1326343641314462,
+      "1.1": 1.1865693338519914,
+      "1.25": 1.3483742430136263,
+      "1.5": 1.6180490916163517
+    },
+    "ddr21": {
+      "1.02": 0.13885557369807608,
+      "1.05": 0.1429395611597842,
+      "1.1": 0.14974620692929774,
+      "1.25": 0.17016614423783832,
+      "1.5": 0.204199373085406
+    },
+    "ddr_full": {
+      "1.02": 0.07172009644033295,
+      "1.05": 0.07382951104151922,
+      "1.1": 0.07734520204349632,
+      "1.25": 0.08789227504942763,
+      "1.5": 0.10547073005931315
+    }
+  },
+  "flags": {
+    "mer1": {
+      "1.02": false,
+      "1.05": false,
+      "1.1": false,
+      "1.25": false,
+      "1.5": false
+    },
+    "mer2": {
+      "1.02": false,
+      "1.05": false,
+      "1.1": false,
+      "1.25": false,
+      "1.5": false
+    },
+    "pll1v0": {
+      "1.02": false,
+      "1.05": false,
+      "1.1": false,
+      "1.25": false,
+      "1.5": false
+    },
+    "pll1v8": {
+      "1.02": false,
+      "1.05": false,
+      "1.1": false,
+      "1.25": false,
+      "1.5": false
+    },
+    "mphyvdd": {
+      "1.02": true,
+      "1.05": false,
+      "1.1": false,
+      "1.25": false,
+      "1.5": false
+    },
+    "ddr21": {
+      "1.02": true,
+      "1.05": false,
+      "1.1": false,
+      "1.25": false,
+      "1.5": false
+    },
+    "ddr_full": {
+      "1.02": true,
+      "1.05": false,
+      "1.1": false,
+      "1.25": false,
+      "1.5": false
+    }
+  },
+  "flag_rule": "flags[key][level] is true when targets_ohm[key][level] < the MEDIAN achieved peak of the Exp 1 full-budget runs (the level lies inside the floor spread)",
+  "source": {
+    "methods_feeding_floors": [
+      "numpy"
+    ],
+    "exp1_results": "/DATA/Aurindum/GPUSwarm/DecapStudy/results/results_long.jsonl",
+    "score_band": "B2",
+    "stage": 2,
+    "floor_source": "b2",
+    "anchor_mode": "auto",
+    "spread_threshold_pct": 10.0,
+    "derived_utc": "2026-10-04T11:12:59Z",
+    "per_key": {
+      "mer1": {
+        "n_runs": 10,
+        "min": 1.587955549292058,
+        "median": 1.5884780046687703,
+        "max": 1.5951278141138439,
+        "spread_pct": 0.4516665989160293,
+        "anchor": "min",
+        "floor": 1.587955549292058,
+        "max_caps": 15,
+        "caps_at_min_run": 6,
+        "caps_min": 5,
+        "caps_median": 10.0,
+        "caps_max": 15,
+        "n_at_full_budget": 1,
+        "min_run": {
+          "scope": "A1",
+          "optimised_band": "B2",
+          "run_id": 1,
+          "stage": 2
+        }
+      },
+      "mer2": {
+        "n_runs": 10,
+        "min": 0.7116035309200393,
+        "median": 0.7118307635577836,
+        "max": 0.7121170464408046,
+        "spread_pct": 0.07216314962651547,
+        "anchor": "min",
+        "floor": 0.7116035309200393,
+        "max_caps": 15,
+        "caps_at_min_run": 10,
+        "caps_min": 7,
+        "caps_median": 15.0,
+        "caps_max": 15,
+        "n_at_full_budget": 6,
+        "min_run": {
+          "scope": "A1",
+          "optimised_band": "B2",
+          "run_id": 5,
+          "stage": 2
+        }
+      },
+      "pll1v0": {
+        "n_runs": 10,
+        "min": 1.0335049464958412,
+        "median": 1.035471132576756,
+        "max": 1.0394925734055036,
+        "spread_pct": 0.5793515483369255,
+        "anchor": "min",
+        "floor": 1.0335049464958412,
+        "max_caps": 14,
+        "caps_at_min_run": 14,
+        "caps_min": 10,
+        "caps_median": 14.0,
+        "caps_max": 14,
+        "n_at_full_budget": 8,
+        "min_run": {
+          "scope": "A1",
+          "optimised_band": "B2",
+          "run_id": 7,
+          "stage": 2
+        }
+      },
+      "pll1v8": {
+        "n_runs": 10,
+        "min": 11.46782662941879,
+        "median": 11.470181450679824,
+        "max": 11.515280831172898,
+        "spread_pct": 0.41380292262504936,
+        "anchor": "min",
+        "floor": 11.46782662941879,
+        "max_caps": 15,
+        "caps_at_min_run": 9,
+        "caps_min": 4,
+        "caps_median": 8.5,
+        "caps_max": 15,
+        "n_at_full_budget": 1,
+        "min_run": {
+          "scope": "A1",
+          "optimised_band": "B2",
+          "run_id": 9,
+          "stage": 2
+        }
+      },
+      "mphyvdd": {
+        "n_runs": 10,
+        "min": 1.0786993944109011,
+        "median": 1.1074621133867892,
+        "max": 1.1093288751948687,
+        "spread_pct": 2.8394825233674026,
+        "anchor": "min",
+        "floor": 1.0786993944109011,
+        "max_caps": 9,
+        "caps_at_min_run": 6,
+        "caps_min": 3,
+        "caps_median": 5.5,
+        "caps_max": 8,
+        "n_at_full_budget": 0,
+        "min_run": {
+          "scope": "A1",
+          "optimised_band": "B2",
+          "run_id": 6,
+          "stage": 2
+        }
+      },
+      "ddr21": {
+        "n_runs": 10,
+        "min": 0.13613291539027067,
+        "median": 0.1412402065474255,
+        "max": 0.1483141864521991,
+        "spread_pct": 8.948071836268788,
+        "anchor": "min",
+        "floor": 0.13613291539027067,
+        "max_caps": 20,
+        "caps_at_min_run": 20,
+        "caps_min": 8,
+        "caps_median": 20.0,
+        "caps_max": 20,
+        "n_at_full_budget": 8,
+        "min_run": {
+          "scope": "A4",
+          "optimised_band": "B2",
+          "run_id": 5,
+          "stage": 2
+        }
+      },
+      "ddr_full": {
+        "n_runs": 9,
+        "min": 0.0703138200395421,
+        "median": 0.07303260881288075,
+        "max": 0.07545267994612063,
+        "spread_pct": 7.308463547690354,
+        "anchor": "min",
+        "floor": 0.0703138200395421,
+        "max_caps": 78,
+        "caps_at_min_run": 78,
+        "caps_min": 77,
+        "caps_median": 78,
+        "caps_max": 78,
+        "n_at_full_budget": 8,
+        "min_run": {
+          "scope": "A5",
+          "optimised_band": "B2",
+          "run_id": 4,
+          "stage": 2
+        }
+      }
+    }
+  }
+}

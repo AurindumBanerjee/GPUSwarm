@@ -1,0 +1,77 @@
+{
+  "experiment": "decapstudy2",
+  "run_id": "run01_exp2_stopped_20261004",
+  "status": "stopped (killed at Stage 1 run 15/45; targets redesigned)",
+  "description": "Exp 2 first launch: targets from Exp 1 B2 floors x [1.02..1.5], one B2-derived target set applied to all bands, Grid 1 stopped on the tightest level. Stopped because B1 cells met every level with 0 capacitors (invalid cells).",
+  "start": "2026-10-04 ~16:48 (first log line)",
+  "end": "2026-10-04 ~17:00 (killed)",
+  "host": "eeiitj123.iitj.ac.in",
+  "launch": "cd DecapStudy2 && STUDY_THREADS=32 ./run_exp2.sh",
+  "environment": "conda env work; BLAS pinned to 1 thread; STUDY_THREADS=32; PID 86342 (killed by user request)",
+  "code": [
+    {
+      "file": "README.md",
+      "source": "655bc52:DecapStudy2/README.md",
+      "md5": "5cede2579547761195f0e121faf8ff54"
+    },
+    {
+      "file": "analyze.py",
+      "source": "655bc52:DecapStudy2/analyze.py",
+      "md5": "e0ce3de2066eaa83b0a49728530a4bf4"
+    },
+    {
+      "file": "check_cost_agreement.py",
+      "source": "655bc52:DecapStudy2/check_cost_agreement.py",
+      "md5": "413b71402f5af49f3ff309b364a1d270"
+    },
+    {
+      "file": "derive_targets.py",
+      "source": "655bc52:DecapStudy2/derive_targets.py",
+      "md5": "9c33aec873767754b7946c99aaa0555a"
+    },
+    {
+      "file": "experiments.py",
+      "source": "655bc52:DecapStudy2/experiments.py",
+      "md5": "718e680ed5a60f25d3902d00f1287a85"
+    },
+    {
+      "file": "run_all.py",
+      "source": "655bc52:DecapStudy2/run_all.py",
+      "md5": "d1abd2ac1d537d66db16076e45fc7550"
+    },
+    {
+      "file": "run_exp2.sh",
+      "source": "655bc52:DecapStudy2/run_exp2.sh",
+      "md5": "30adbfb09dae0f0cfe6e52bd4480d57e"
+    },
+    {
+      "file": "study_config.py",
+      "source": "655bc52:DecapStudy2/study_config.py",
+      "md5": "d5b64169e144fc596a560ae6e0db6c03"
+    },
+    {
+      "file": "study_core.py",
+      "source": "655bc52:DecapStudy2/study_core.py",
+      "md5": "a1c1d9615135cf5a3f96e375eaeb8c70"
+    },
+    {
+      "file": "targets.json",
+      "source": "655bc52:DecapStudy2/targets.json",
+      "md5": "d36c9c88279aaa029bc14a1789f7f599"
+    },
+    {
+      "file": "validate.py",
+      "source": "655bc52:DecapStudy2/validate.py",
+      "md5": "75eaa36b2328121b0eb0b892786c0d6c"
+    }
+  ],
+  "code_commits": [
+    "655bc52"
+  ],
+  "output_files": 3,
+  "retrofitted": true,
+  "notes": [
+    "51 records written before the stop; superseded by the per-band-target redesign (commit ed9b2a1: per-band targets, Grid 1 full budget, floor pass).",
+    "Not resumed: the per-band relaunch has not been started."
+  ]
+}

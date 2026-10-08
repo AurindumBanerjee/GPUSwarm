@@ -1,0 +1,36 @@
+{
+  "experiment": "template_toy",
+  "run_id": "run01_template_sample",
+  "status": "finished",
+  "start": "2026-10-08T12:41:55+0530",
+  "end": "2026-10-08T12:41:56+0530",
+  "host": "LAPTOP-RLFI74M5",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.3",
+  "numpy": "2.5.3",
+  "cpu_count": 16,
+  "timer": "time.perf_counter",
+  "code": {
+    "file": "code/template_experiment__run01_template_sample.py",
+    "md5": "6e37842460202855a4c1f1cdedeba078",
+    "git": "6b369c7+dirty"
+  },
+  "settings": {
+    "NUM_RUNS": 3,
+    "BASE_SEED": 12345,
+    "THREADS": 1,
+    "DIM": 6,
+    "N_PARTICLES": 20,
+    "N_ITERATIONS": 30,
+    "THRESHOLDS": [
+      0.05,
+      0.02,
+      0.01
+    ]
+  },
+  "blas_threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  }
+}
