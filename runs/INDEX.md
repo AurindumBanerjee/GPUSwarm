@@ -21,3 +21,4 @@ Every run has its own folder: code/ (exact copy), output/ and logs/ (raw, git-ig
 | gpu_experiments/run_incremental_full2 | created | 2026-10-09 | Exp 3: rank-1 incremental inverse updates for model-swap-only moves. | None exp03_incremental.py |
 | gpu_experiments/run_macro_full2 | created | 2026-10-09 | Exp 4: vector-fit macromodel on a dense grid, VDDQ_DDR3 ddr21 up to 300 MHz, 6695-model library. | None exp04_rational_macromodel.py |
 | gpu_experiments/run_compare_full2 | created | 2026-10-09 | Cross-experiment comparison tables and plots (GPU numpy baseline a, CPU ScratchBench baseline b). | None exp07_compare.py |
+| gpu_experiments/run_baseline_naive40 | created | 2026-10-09 | GPU baselines: numpy (full inverse, BASELINE a), woodbury_batch, fast. 50x40, warm 0.4/0.0, complex128. | None exp00_baseline.py |
