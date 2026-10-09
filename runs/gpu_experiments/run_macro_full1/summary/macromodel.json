@@ -1,0 +1,72 @@
+{
+  "vf_rows": [
+    {
+      "poles": 48,
+      "max_err": 0.006983671763401212,
+      "rms_err": 0.00037017063502682487,
+      "z11_max_rel_err": 0.16412274211074096,
+      "unstable_flips_last": 11,
+      "unstable_flips_total": 164,
+      "min_real_pole_ratio": 1.1236553508925438e-05,
+      "fit_time_s": 89.30235665803775
+    },
+    {
+      "poles": 80,
+      "max_err": 0.007070231135656845,
+      "rms_err": 0.0003726291000649833,
+      "z11_max_rel_err": 0.16940707635846888,
+      "unstable_flips_last": 23,
+      "unstable_flips_total": 306,
+      "min_real_pole_ratio": 2.4951186933140277e-06,
+      "fit_time_s": 136.87284296797588
+    },
+    {
+      "poles": 120,
+      "max_err": 0.006969614190808859,
+      "rms_err": 0.00033313663682065127,
+      "z11_max_rel_err": 0.15258392379328992,
+      "unstable_flips_last": 34,
+      "unstable_flips_total": 485,
+      "min_real_pole_ratio": 7.372501324369743e-05,
+      "fit_time_s": 229.83089131792076
+    },
+    {
+      "poles": 160,
+      "max_err": 0.006916966768450704,
+      "rms_err": 0.00030347288169301823,
+      "z11_max_rel_err": 0.17258011807942397,
+      "unstable_flips_last": 56,
+      "unstable_flips_total": 660,
+      "min_real_pole_ratio": 4.341664687703042e-05,
+      "fit_time_s": 288.52014150610194
+    }
+  ],
+  "vf_poles": 160,
+  "cap_fit": {
+    "pure_rlc_whole_band_median_of_median_rel_err": 0.10186587118399687,
+    "pure_rlc_whole_band_p90_of_median_rel_err": 0.3425160437653886,
+    "tail_rlc_top30pct_median_of_median_rel_err": 0.010887120315574738,
+    "junction_scale_abs_median": 1.015341514712767,
+    "junction_index": 2087,
+    "junction_MHz": 99.660735,
+    "median_tab_vs_macro_|Y|_ratio_above_99.8MHz": 0.9969861959312315
+  },
+  "n_grid": 2327,
+  "n_dense": 9305,
+  "build_time_s": 747.960484029958,
+  "dense_factor": 4,
+  "random_cfg_macro_vs_exact_grid_rel_dev": {
+    "median": 0.0034429289179435454,
+    "max": 0.034338690869411194
+  },
+  "random_cfg_dense_over_grid_peak_ratio": {
+    "median": 1.0,
+    "max": 1.0,
+    "min": 1.0
+  },
+  "bare_z11_peak": {
+    "tabulated_grid": 1.609540878623331,
+    "macro_dense": 1.6105728530648276,
+    "macro_dense_f_MHz": 299.674278
+  }
+}

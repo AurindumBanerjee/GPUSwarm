@@ -1,0 +1,3 @@
+device decode + collision resolution vs CPU decode_swarm on 200 swarms (half heavily colliding)
+differing_entries = 0
+entries_compared = 216000

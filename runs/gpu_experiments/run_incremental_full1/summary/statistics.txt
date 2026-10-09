@@ -1,0 +1,11 @@
+records = 240
+successes = 162
+failures_or_timeouts = 78
+best_overall = 0.0398494
+total_time woodbury_batch = 343.13s incremental = 129.38s speedup_incremental_over_woodbury_batch = 2.652
+total_time wb_cache = 123.51s incremental = 129.38s speedup_incremental_over_wb_cache = 0.955
+max_rel_cost_dev_incremental_vs_exact_woodbury = 2.929e-13
+eligible_fraction_of_evaluations = 0.1791 (of all swarm evaluations incl. cache hits)
+eligible_fraction_of_computed = 0.3052 (mean over runs; configurations not served by the cache)
+eligible_fraction_after_first_iteration = 0.1893 (mean over runs)
+incremental_vs_woodbury_batch: max_rel_best_minz_dev = 4.507e-02 | identical_evals_and_caps_rate = 0.7667

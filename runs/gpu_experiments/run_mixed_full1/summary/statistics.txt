@@ -1,0 +1,10 @@
+records = 240
+successes = 160
+failures_or_timeouts = 80
+best_overall = 0.0401053
+max_rel_cost_dev_random_configs = 6.289e-16
+fallback_fraction_random = 0.000e+00
+batch: max_rel_best_minz_dev_mixed_vs_c128 = 3.427e-16 | identical_caps_and_evals_rate = 1.0000
+fast: max_rel_best_minz_dev_mixed_vs_c128 = 3.427e-16 | identical_caps_and_evals_rate = 1.0000
+batch: total_time c128 = 347.20s mixed = 197.25s speedup_mixed_over_c128 = 1.760
+fast: total_time c128 = 94.82s mixed = 95.23s speedup_mixed_over_c128 = 0.996

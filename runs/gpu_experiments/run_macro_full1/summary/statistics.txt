@@ -1,0 +1,6 @@
+records = 120
+successes = 0
+failures_or_timeouts = 120
+best_overall = 0.762073
+macro: success(own model) = 0.000 | success(exact re-score) = 0.000 | exact_peak mean = 0.76295 | dense/grid peak ratio mean = 1.0000 max = 1.0000
+tab: success(own model) = 0.000 | success(exact re-score) = 0.000 | exact_peak mean = 0.76263 | dense/grid peak ratio mean = 1.0000 max = 1.0000

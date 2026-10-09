@@ -1,0 +1,23 @@
+random-configuration test (40 per size), complex64 solve + 2 refinement steps vs complex128
+k=1 | max_rel_cost_dev=5.669e-16
+k=2 | max_rel_cost_dev=3.956e-16
+k=3 | max_rel_cost_dev=3.939e-16
+k=4 | max_rel_cost_dev=6.289e-16
+k=5 | max_rel_cost_dev=4.371e-16
+k=6 | max_rel_cost_dev=4.192e-16
+k=7 | max_rel_cost_dev=4.169e-16
+k=8 | max_rel_cost_dev=5.759e-16
+k=9 | max_rel_cost_dev=4.703e-16
+k=10 | max_rel_cost_dev=4.400e-16
+k=11 | max_rel_cost_dev=4.535e-16
+k=12 | max_rel_cost_dev=4.868e-16
+k=13 | max_rel_cost_dev=4.701e-16
+k=14 | max_rel_cost_dev=3.099e-16
+k=15 | max_rel_cost_dev=4.382e-16
+k=16 | max_rel_cost_dev=4.762e-16
+k=17 | max_rel_cost_dev=3.854e-16
+k=18 | max_rel_cost_dev=4.233e-16
+k=19 | max_rel_cost_dev=4.354e-16
+k=20 | max_rel_cost_dev=2.506e-16
+max_rel_cost_dev = 6.289e-16
+fallback_fraction_of_systems = 0.000e+00

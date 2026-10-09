@@ -1,0 +1,14 @@
+records = 120
+successes = 84
+failures_or_timeouts = 36
+best_overall = 0.0399338
+polish_events = 416
+relaxed: mean rel. improvement over PSO stage best = 0.1132 | max = 0.1599 | fraction of events better than PSO = 1.000
+nearest: mean rel. improvement over PSO stage best = -0.9503 | max = -0.1102 | fraction of events better than PSO = 0.000
+local: mean rel. improvement over PSO stage best = 0.0014 | max = 0.0511 | fraction of events better than PSO = 0.178
+final (best of PSO/nearest/local) mean rel. improvement = 0.0014; worse-than-PSO events (must be 0) = 0
+mean polish time = 0.733s
+success: fast 0.667 polish 0.733
+mean caps_at_target: fast 5.775 polish 6.000
+mean best_minz: fast 0.045135 polish 0.044868
+max |rescored - reported| best_minz (polish) = 1.947e-04
