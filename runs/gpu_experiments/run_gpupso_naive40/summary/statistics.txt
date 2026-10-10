@@ -1,0 +1,10 @@
+records = 240
+successes = 178
+failures_or_timeouts = 62
+best_overall = 0.0399322
+decode_check_differing_entries = 0 of 216000
+total_time woodbury_batch = 277.02s gpu_rng = 323.08s speedup_gpu_rng_over_woodbury_batch = 0.857
+total_time woodbury_batch = 277.02s gpu_debug = 296.19s speedup_gpu_debug_over_woodbury_batch = 0.935
+total_time fast = 106.49s gpu_rng = 323.08s speedup_gpu_rng_over_fast = 0.330
+total_time fast = 106.49s gpu_debug = 296.19s speedup_gpu_debug_over_fast = 0.360
+gpu_debug trajectory match vs numpy baseline (best_minz, caps_at_target) = 1.0000 (strict incl. n_evals: 1.0000); vs woodbury_batch = 1.0000 (strict 1.0000)

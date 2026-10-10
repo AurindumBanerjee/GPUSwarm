@@ -1,0 +1,4 @@
+series R-L-C fit of the capacitor library (3348 models, weighted LS on 1/D)
+median over models of the median relative |Z| error = 0.0389
+90th percentile of the median error = 0.1981
+median of the max relative |Z| error = 0.4077

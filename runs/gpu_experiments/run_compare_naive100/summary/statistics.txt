@@ -1,0 +1,92 @@
+records = 1340
+successes = 929
+failures_or_timeouts = 411
+best_overall = 0.0398494
+runs_compared = 7
+baseline (a) = GPU numpy arm of the baseline run; baseline (b) = CPU ScratchBench run08 (50 x 15, 5 runs, different budget)
+
+--- run_baseline_naive100 ---
+records = 180
+successes = 120
+failures_or_timeouts = 60
+best_overall = 0.0401053
+
+--- run_shared_naive100 ---
+records = 140
+successes = 80
+failures_or_timeouts = 60
+best_overall = 0.0401053
+crossing_records_compared = 60
+crossing_records_identical = 60
+crossing_identical_rate = 1.0000
+benchmark_time_separate_s = 94.457
+benchmark_time_shared_s = 75.331
+benchmark_speedup_shared_over_separate = 1.254
+targets = [0.05, 0.045, 0.04]
+runs = 20
+mismatches = 0
+
+--- run_mixed_naive100 ---
+records = 240
+successes = 160
+failures_or_timeouts = 80
+best_overall = 0.0401053
+max_rel_cost_dev_random_configs = 6.289e-16
+fallback_fraction_random = 0.000e+00
+batch: max_rel_best_minz_dev_mixed_vs_c128 = 3.427e-16 | identical_caps_and_evals_rate = 1.0000
+fast: max_rel_best_minz_dev_mixed_vs_c128 = 3.427e-16 | identical_caps_and_evals_rate = 1.0000
+batch: total_time c128 = 341.11s mixed = 194.63s speedup_mixed_over_c128 = 1.753
+fast: total_time c128 = 95.00s mixed = 95.32s speedup_mixed_over_c128 = 0.997
+
+--- run_incremental_naive100 ---
+records = 300
+successes = 202
+failures_or_timeouts = 98
+best_overall = 0.0398494
+library models that are exact duplicates of another model (identical costs -> exact ties in the baseline) = 1760 of 3348
+total_time woodbury_batch = 342.48s incr_safe = 196.11s speedup_incr_safe_over_woodbury_batch = 1.746
+total_time woodbury_batch = 342.48s incremental = 129.59s speedup_incremental_over_woodbury_batch = 2.643
+total_time wb_cache = 123.96s incr_safe = 196.11s speedup_incr_safe_over_wb_cache = 0.632
+total_time wb_cache = 123.96s incremental = 129.59s speedup_incremental_over_wb_cache = 0.957
+max_rel_cost_dev_incremental_vs_exact_woodbury = 2.929e-13
+eligible_fraction_of_evaluations = 0.1791 (of all swarm evaluations incl. cache hits)
+eligible_fraction_of_computed = 0.3052 (mean over runs; configurations not served by the cache)
+eligible_fraction_after_first_iteration = 0.1893 (mean over runs)
+incremental_vs_woodbury_batch: max_rel_best_minz_dev = 4.507e-02 | identical_evals_and_caps_rate = 0.7667
+incr_safe_vs_woodbury_batch: max_rel_best_minz_dev = 0.000e+00 | identical_evals_and_caps_rate = 1.0000
+
+--- run_gpupso_naive100 ---
+records = 240
+successes = 163
+failures_or_timeouts = 77
+best_overall = 0.0399777
+decode_check_differing_entries = 0 of 216000
+total_time woodbury_batch = 340.68s gpu_rng = 318.05s speedup_gpu_rng_over_woodbury_batch = 1.071
+total_time woodbury_batch = 340.68s gpu_debug = 369.49s speedup_gpu_debug_over_woodbury_batch = 0.922
+total_time fast = 94.38s gpu_rng = 318.05s speedup_gpu_rng_over_fast = 0.297
+total_time fast = 94.38s gpu_debug = 369.49s speedup_gpu_debug_over_fast = 0.255
+gpu_debug trajectory match vs numpy baseline (best_minz, caps_at_target) = 1.0000 (strict incl. n_evals: 1.0000); vs woodbury_batch = 1.0000 (strict 1.0000)
+
+--- run_polish_naive100 ---
+records = 120
+successes = 84
+failures_or_timeouts = 36
+best_overall = 0.0399338
+polish_events = 416
+relaxed: mean rel. improvement over PSO stage best = 0.1132 | max = 0.1599 | fraction of events better than PSO = 1.000
+nearest: mean rel. improvement over PSO stage best = -0.9503 | max = -0.1102 | fraction of events better than PSO = 0.000
+local: mean rel. improvement over PSO stage best = 0.0014 | max = 0.0511 | fraction of events better than PSO = 0.178
+final (best of PSO/nearest/local) mean rel. improvement = 0.0014; worse-than-PSO events (must be 0) = 0
+mean polish time = 0.759s
+success: fast 0.667 polish 0.733
+mean caps_at_target: fast 5.775 polish 6.000
+mean best_minz: fast 0.045135 polish 0.044868
+max |rescored - reported| best_minz (polish) = 1.947e-04
+
+--- run_macro_naive100 ---
+records = 120
+successes = 120
+failures_or_timeouts = 0
+best_overall = 0.788548
+macro: success(own model) = 1.000 | success(exact re-score) = 1.000 | exact_peak mean = 0.82669 | dense/grid peak ratio mean = 1.0000 max = 1.0000
+tab: success(own model) = 1.000 | success(exact re-score) = 1.000 | exact_peak mean = 0.83877 | dense/grid peak ratio mean = 1.0000 max = 1.0000

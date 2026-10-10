@@ -22,3 +22,18 @@ Every run has its own folder: code/ (exact copy), output/ and logs/ (raw, git-ig
 | gpu_experiments/run_macro_full2 | created | 2026-10-09 | Exp 4: vector-fit macromodel on a dense grid, VDDQ_DDR3 ddr21 up to 300 MHz, 6695-model library. | None exp04_rational_macromodel.py |
 | gpu_experiments/run_compare_full2 | created | 2026-10-09 | Cross-experiment comparison tables and plots (GPU numpy baseline a, CPU ScratchBench baseline b). | None exp07_compare.py |
 | gpu_experiments/run_baseline_naive40 | created | 2026-10-09 | GPU baselines: numpy (full inverse, BASELINE a), woodbury_batch, fast. 50x40, warm 0.4/0.0, complex128. | None exp00_baseline.py |
+| gpu_experiments/run_shared_naive40 | created | 2026-10-09 | Exp 1: shared-threshold run at the lowest target vs separate runs (fast engine). | None exp01_shared_threshold.py |
+| gpu_experiments/run_mixed_naive40 | created | 2026-10-09 | Exp 2: complex64 batched solve + complex128 refinement vs complex128. | None exp02_mixed_precision.py |
+| gpu_experiments/run_incremental_naive40 | created | 2026-10-09 | Exp 3: rank-1 incremental inverse updates for model-swap-only moves. | None exp03_incremental.py |
+| gpu_experiments/run_gpupso_naive40 | created | 2026-10-09 | Exp 6: GPU-resident PSO (GPU RNG) + numpy-RNG debug mode. | None exp06_gpu_resident.py |
+| gpu_experiments/run_polish_naive40 | created | 2026-10-09 | Exp 5: gradient polish of the stage best through the exact Woodbury cost. | None exp05_gradient_polish.py |
+| gpu_experiments/run_macro_naive40 | created | 2026-10-09 | Exp 4: vector-fit macromodel on a dense grid, VDDQ_DDR3 ddr21 up to 300 MHz, 6695-model library. | None exp04_rational_macromodel.py |
+| gpu_experiments/run_compare_naive40 | created | 2026-10-09 | Cross-experiment comparison tables and plots (GPU numpy baseline a, CPU ScratchBench baseline b). | None exp07_compare.py |
+| gpu_experiments/run_baseline_naive100 | created | 2026-10-09 | GPU baselines: numpy (full inverse, BASELINE a), woodbury_batch, fast. 50x40, warm 1.0/0.0, complex128. | None exp00_baseline.py |
+| gpu_experiments/run_shared_naive100 | created | 2026-10-09 | Exp 1: shared-threshold run at the lowest target vs separate runs (fast engine). | None exp01_shared_threshold.py |
+| gpu_experiments/run_mixed_naive100 | created | 2026-10-09 | Exp 2: complex64 batched solve + complex128 refinement vs complex128. | None exp02_mixed_precision.py |
+| gpu_experiments/run_incremental_naive100 | created | 2026-10-09 | Exp 3: rank-1 incremental inverse updates for model-swap-only moves. | None exp03_incremental.py |
+| gpu_experiments/run_gpupso_naive100 | created | 2026-10-09 | Exp 6: GPU-resident PSO (GPU RNG) + numpy-RNG debug mode. | None exp06_gpu_resident.py |
+| gpu_experiments/run_polish_naive100 | created | 2026-10-09 | Exp 5: gradient polish of the stage best through the exact Woodbury cost. | None exp05_gradient_polish.py |
+| gpu_experiments/run_macro_naive100 | created | 2026-10-09 | Exp 4: vector-fit macromodel on a dense grid, VDDQ_DDR3 ddr21 up to 300 MHz, 6695-model library. | None exp04_rational_macromodel.py |
+| gpu_experiments/run_compare_naive100 | created | 2026-10-09 | Cross-experiment comparison tables and plots (GPU numpy baseline a, CPU ScratchBench baseline b). | None exp07_compare.py |

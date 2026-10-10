@@ -1,0 +1,11 @@
+PDN vector fit (common poles, 231 unique Z0 elements); error = |fit-data| / max|Z_k| per element
+poles=48 | max_err=0.006984 | rms_err=0.0003702 | z11_max_rel_err=0.1641 | unstable_flips_last=11 | unstable_flips_total=164 | min_real_pole_ratio=1.124e-05 | fit_time_s=89.5
+poles=80 | max_err=0.00707 | rms_err=0.0003726 | z11_max_rel_err=0.1694 | unstable_flips_last=23 | unstable_flips_total=306 | min_real_pole_ratio=2.495e-06 | fit_time_s=135.9
+poles=120 | max_err=0.00697 | rms_err=0.0003331 | z11_max_rel_err=0.1526 | unstable_flips_last=34 | unstable_flips_total=485 | min_real_pole_ratio=7.373e-05 | fit_time_s=228
+poles=160 | max_err=0.006917 | rms_err=0.0003035 | z11_max_rel_err=0.1726 | unstable_flips_last=56 | unstable_flips_total=660 | min_real_pole_ratio=4.342e-05 | fit_time_s=284.2
+chosen poles = 160
+capacitor model: {'pure_rlc_whole_band_median_of_median_rel_err': 0.10186587118399687, 'pure_rlc_whole_band_p90_of_median_rel_err': 0.3425160437653886, 'tail_rlc_top30pct_median_of_median_rel_err': 0.010887120315574738, 'junction_scale_abs_median': 1.015341514712767, 'junction_index': 2087, 'junction_MHz': 99.660735, 'median_tab_vs_macro_|Y|_ratio_above_99.8MHz': 0.9969861959312315}
+random configurations: macro vs exact on the original grid, relative cost deviation: {'median': 0.0034429289179435454, 'max': 0.034338690869411194}
+random configurations: dense-grid peak / original-grid peak (macro): {'median': 1.0, 'max': 1.0, 'min': 1.0}
+bare |Z11| peak: {'tabulated_grid': 1.609540878623331, 'macro_dense': 1.6105728530648276, 'macro_dense_f_MHz': 299.674278}
+grid points: original 2327, dense 9305 (x4); build time 741.0s

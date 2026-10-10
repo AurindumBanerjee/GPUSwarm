@@ -1,0 +1,4 @@
+records = 180
+successes = 120
+failures_or_timeouts = 60
+best_overall = 0.0401053

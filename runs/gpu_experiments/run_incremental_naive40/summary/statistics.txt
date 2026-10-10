@@ -1,0 +1,15 @@
+records = 300
+successes = 223
+failures_or_timeouts = 77
+best_overall = 0.0399726
+library models that are exact duplicates of another model (identical costs -> exact ties in the baseline) = 1760 of 3348
+total_time woodbury_batch = 279.29s incr_safe = 385.76s speedup_incr_safe_over_woodbury_batch = 0.724
+total_time woodbury_batch = 279.29s incremental = 348.36s speedup_incremental_over_woodbury_batch = 0.802
+total_time wb_cache = 226.60s incr_safe = 385.76s speedup_incr_safe_over_wb_cache = 0.587
+total_time wb_cache = 226.60s incremental = 348.36s speedup_incremental_over_wb_cache = 0.650
+max_rel_cost_dev_incremental_vs_exact_woodbury = 2.929e-13
+eligible_fraction_of_evaluations = 0.1102 (of all swarm evaluations incl. cache hits)
+eligible_fraction_of_computed = 0.1346 (mean over runs; configurations not served by the cache)
+eligible_fraction_after_first_iteration = 0.1206 (mean over runs)
+incremental_vs_woodbury_batch: max_rel_best_minz_dev = 4.128e-02 | identical_evals_and_caps_rate = 0.8167
+incr_safe_vs_woodbury_batch: max_rel_best_minz_dev = 0.000e+00 | identical_evals_and_caps_rate = 1.0000

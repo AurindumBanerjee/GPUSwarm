@@ -1,0 +1,13 @@
+records = 140
+successes = 80
+failures_or_timeouts = 60
+best_overall = 0.0401053
+crossing_records_compared = 60
+crossing_records_identical = 60
+crossing_identical_rate = 1.0000
+benchmark_time_separate_s = 94.457
+benchmark_time_shared_s = 75.331
+benchmark_speedup_shared_over_separate = 1.254
+targets = [0.05, 0.045, 0.04]
+runs = 20
+mismatches = 0
