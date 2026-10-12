@@ -1,0 +1,4 @@
+# outputs of decap_classify.py / pdn_poles.py
+decap_classes.json
+poles_*.json
+*.png
