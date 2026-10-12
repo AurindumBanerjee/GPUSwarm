@@ -37,3 +37,4 @@ Every run has its own folder: code/ (exact copy), output/ and logs/ (raw, git-ig
 | gpu_experiments/run_polish_naive100 | created | 2026-10-09 | Exp 5: gradient polish of the stage best through the exact Woodbury cost. | None exp05_gradient_polish.py |
 | gpu_experiments/run_macro_naive100 | created | 2026-10-09 | Exp 4: vector-fit macromodel on a dense grid, VDDQ_DDR3 ddr21 up to 300 MHz, 6695-model library. | None exp04_rational_macromodel.py |
 | gpu_experiments/run_compare_naive100 | created | 2026-10-09 | Cross-experiment comparison tables and plots (GPU numpy baseline a, CPU ScratchBench baseline b). | None exp07_compare.py |
+| vectorfitting/run01_pdn_fits_20261012 | finished | 2026-10-12 | PDN Z11 vector fits (orders 20/24/32, 110 Hz-100 MHz) and decap SRF buckets | commit f1495e3 |

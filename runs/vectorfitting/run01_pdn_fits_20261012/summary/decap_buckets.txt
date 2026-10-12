@@ -1,0 +1,8 @@
+SRF inside the measured band for 6651 of 6695 models; 44 sit at or beyond an edge and their SRF is a bound, not a measurement
+SRF buckets
+        bucket   count      med C    med ESR    med ESL    med Q
+  10kHz-100kHz       3   240.570uF    131.55m   16730.0pH     0.06
+   100kHz-1MHz    1431   100.152uF     40.44m    2373.6pH     0.13
+    1MHz-10MHz    3602     6.398uF    118.83m    2161.9pH     0.14
+  10MHz-100MHz    1615     0.433uF    535.40m    1653.6pH     0.10
+   100MHz-1GHz      44     0.020uF   1393.20m         n/a      n/a   (SRF at the band edge: no inductive decade to fit)

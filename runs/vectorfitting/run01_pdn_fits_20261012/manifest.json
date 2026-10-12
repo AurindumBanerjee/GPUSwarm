@@ -1,0 +1,37 @@
+{
+  "experiment": "vectorfitting",
+  "run_id": "run01_pdn_fits_20261012",
+  "status": "finished",
+  "retrofitted": true,
+  "description": "Vector fits of the PDN Z11 (ddr21, ddr_full, mer1, mer2, pll1v0, pll1v8, mphyvdd, mphy_full) over 110 Hz-100 MHz at order 24, reruns at order 20 (ddr21 reference) and 32 (ddr21, mer1, mer2, pll1v0, mphyvdd), and the SRF bucketing of all 6695 decap models.",
+  "start": "2026-10-12 19:25:15 IST",
+  "end": "2026-10-12 19:27 IST",
+  "host": "eeiitj123.iitj.ac.in",
+  "environment": "conda env work, numpy 2.2.5, scipy 1.15.3, matplotlib 3.10.7, BLAS threads 1; no GPU",
+  "launch": "code/run_sweep_as_executed.sh then code/run_extra_as_executed.sh (replay: run.sh)",
+  "code_commit": "f1495e3",
+  "code": [
+    {
+      "file": "vectorfit.py",
+      "source": "f1495e3:VectorFitting/vectorfit.py",
+      "md5": "b0b75a91a7e08ee6d9d5ba63b7a53656"
+    },
+    {
+      "file": "decap_classify.py",
+      "source": "f1495e3:VectorFitting/decap_classify.py",
+      "md5": "73627d5a3e7142b0f798573d6e93a865"
+    },
+    {
+      "file": "pdn_poles.py",
+      "source": "f1495e3:VectorFitting/pdn_poles.py",
+      "md5": "8ab5850a2758fcc276dac03bb28935de"
+    },
+    {
+      "file": "README.md",
+      "source": "f1495e3:VectorFitting/README.md",
+      "md5": "b07c830efcf575fc3d6deb16a1900d99"
+    }
+  ],
+  "output_files": 15,
+  "plots": 14
+}
