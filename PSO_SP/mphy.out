@@ -1,0 +1,59 @@
+MPHY: library 6695 models x 2588 freqs, 110.9-9.972e+08 Hz
+  extrapolated above 99.83 MHz = 19.3% of grid points
+  methods=['numpy']  rank_band=B50  runs=3  threads=16
+  [selftest] mer1: numpy reference 1.61379 ohm
+  [selftest] mer1: N=16 n_obs=1 pads=15 max_caps=15  OK
+  mer1           N= 16 pads= 15  bare peak B50=1.627  B200=6.529  BFULL=30.69
+  [selftest] mer2: numpy reference 0.715579 ohm
+  [selftest] mer2: N=16 n_obs=1 pads=15 max_caps=15  OK
+  mer2           N= 16 pads= 15  bare peak B50=0.725  B200=2.54  BFULL=15.48
+  [selftest] pll1v0: numpy reference 1.1275 ohm
+  [selftest] pll1v0: N=15 n_obs=1 pads=14 max_caps=14  OK
+  pll1v0         N= 15 pads= 14  bare peak B50=1.663  B200=16.58  BFULL=39.95
+  [selftest] pll1v8: numpy reference 11.6985 ohm
+  [selftest] pll1v8: N=16 n_obs=1 pads=15 max_caps=15  OK
+  pll1v8         N= 16 pads= 15  bare peak B50=12.09  B200=56.9  BFULL=241.7
+  [selftest] mphyvdd: numpy reference 1.24159 ohm
+  [selftest] mphyvdd: N=10 n_obs=1 pads=9 max_caps=9  OK
+  mphyvdd        N= 10 pads=  9  bare peak B50=1.453  B200=33.7  BFULL=33.7
+  [selftest] mphy_full: numpy reference 12.0864 ohm
+  [selftest] mphy_full: N=73 n_obs=5 pads=68 max_caps=68  OK
+  mphy_full      N= 73 pads= 68  bare peak B50=12.09  B200=56.9  BFULL=241.7
+[01:12:15] mer1 numpy run 1/3
+    best 1.58774 ohm @ 5 caps, 108.8s
+[01:14:06] mer1 numpy run 2/3
+    best 1.58774 ohm @ 4 caps, 118.1s
+[01:16:06] mer1 numpy run 3/3
+    best 1.5876 ohm @ 4 caps, 117.6s
+[01:18:05] mer2 numpy run 1/3
+    best 0.710997 ohm @ 13 caps, 117.8s
+[01:20:05] mer2 numpy run 2/3
+    best 0.712111 ohm @ 15 caps, 118.2s
+[01:22:05] mer2 numpy run 3/3
+    best 0.710968 ohm @ 13 caps, 118.4s
+[01:24:05] pll1v0 numpy run 1/3
+    best 1.03299 ohm @ 14 caps, 109.2s
+[01:25:56] pll1v0 numpy run 2/3
+    best 1.03265 ohm @ 14 caps, 109.3s
+[01:27:47] pll1v0 numpy run 3/3
+    best 1.02972 ohm @ 14 caps, 108.7s
+[01:29:37] pll1v8 numpy run 1/3
+    best 11.4676 ohm @ 12 caps, 116.9s
+[01:31:36] pll1v8 numpy run 2/3
+    best 11.4675 ohm @ 7 caps, 114.7s
+[01:33:33] pll1v8 numpy run 3/3
+    best 11.4675 ohm @ 7 caps, 114.6s
+[01:35:29] mphyvdd numpy run 1/3
+    best 1.07829 ohm @ 7 caps, 36.0s
+[01:36:07] mphyvdd numpy run 2/3
+    best 1.07864 ohm @ 6 caps, 36.1s
+[01:36:45] mphyvdd numpy run 3/3
+    best 1.0784 ohm @ 6 caps, 36.6s
+[01:37:23] mphy_full numpy run 1/3
+    best 11.4662 ohm @ 44 caps, 12754.0s
+[05:10:02] mphy_full numpy run 2/3
+    best 11.4657 ohm @ 32 caps, 12761.5s
+[08:42:49] mphy_full numpy run 3/3
+    best 11.4663 ohm @ 39 caps, 12769.2s
+
+Done. Records appended to /DATA/Aurindum/GPUSwarm/PSO_SP/results_mphy/results_long.jsonl

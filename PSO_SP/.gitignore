@@ -1,3 +1,6 @@
-results_*/
+# raw per-run folders are ignored; the machine-readable results of the full-budget run are tracked (small)
+results_*/*
+!results_mphy/results_long.jsonl
+!results_vddq_ddr3/results_long.jsonl
 __pycache__/
 *.pyc

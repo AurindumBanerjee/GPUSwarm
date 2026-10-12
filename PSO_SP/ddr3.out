@@ -1,0 +1,23 @@
+VDDQ_DDR3: library 6695 models x 2588 freqs, 110.9-9.972e+08 Hz
+  extrapolated above 99.83 MHz = 19.3% of grid points
+  methods=['numpy']  rank_band=B50  runs=3  threads=16
+  [selftest] ddr21: numpy reference 0.174976 ohm
+  [selftest] ddr21: N=21 n_obs=1 pads=20 max_caps=20  OK
+  ddr21          N= 21 pads= 20  bare peak B50=0.2507  B200=1.029  BFULL=142.1
+  [selftest] ddr_full: numpy reference 0.174989 ohm
+  [selftest] ddr_full: N=79 n_obs=1 pads=78 max_caps=78  OK
+  ddr_full       N= 79 pads= 78  bare peak B50=0.2507  B200=1.029  BFULL=142.1
+[01:13:25] ddr21 numpy run 1/3
+    best 0.140726 ohm @ 20 caps, 350.5s
+[01:19:18] ddr21 numpy run 2/3
+    best 0.135034 ohm @ 20 caps, 346.0s
+[01:25:06] ddr21 numpy run 3/3
+    best 0.130053 ohm @ 20 caps, 344.9s
+[01:30:53] ddr_full numpy run 1/3
+    best 0.0660804 ohm @ 78 caps, 21087.7s
+[07:22:26] ddr_full numpy run 2/3
+    best 0.0689198 ohm @ 78 caps, 19910.6s
+[12:54:22] ddr_full numpy run 3/3
+    best 0.0690959 ohm @ 75 caps, 13850.8s
+
+Done. Records appended to /DATA/Aurindum/GPUSwarm/PSO_SP/results_vddq_ddr3/results_long.jsonl
