@@ -222,3 +222,9 @@ runs/*/*/output/
 runs/*/*/logs/
 # reference samples are tracked even where a rule above (e.g. *.log) would match
 !reference/output_style/**
+
+# Console logs, editor settings and local scratch files
+*.out
+*.before_*
+.vscode/
+GPUExperiments/finish.py
