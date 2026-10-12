@@ -7,6 +7,7 @@ Code: the committed version f1495e3 (VectorFitting/), copied unchanged into code
 Layout: code/ (copies), output/ (json fits per order + decap_classes.json; git-ignored), logs/ (console logs; git-ignored),
         summary/ (fit_quality.csv, resonances.csv, sampled_maxima.csv, decap_buckets.txt; tracked), plots/ (poles_*.png per order; tracked).
 Replay: bash run.sh  (writes to output/rerun_<timestamp>/, never overwrites).
+output/laptop/: the two fits first made on the laptop before the server run (ddr21 order 20: reproduces the server's order-20 fit to 3e-9 relative in f0 and 6e-14 in RMS; mer1 order 20: 3.23 % RMS, not run on the server). The server replay (run.sh) reproduces all 14 fits and the bucket table.
 
 KEY RESULTS
 * Fit RMS at order 24: ddr21/ddr_full 0.35 %, pll1v8 0.58 %, pll1v0 2.96 %, mer1/mphy_full 3.19 %, mphyvdd 3.25 %, mer2 5.47 % (warning). Order 32 does not
