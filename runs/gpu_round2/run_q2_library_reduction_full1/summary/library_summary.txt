@@ -1,0 +1,13 @@
+library sizes: full=3348, dominance=74, cluster50=50, cluster200=200
+target 0.04 cluster200   (200 parts): success 0/20 | mean evals 40000 | mean time 5.26s | best 0.04158 | caps nan | Fisher p vs full 0.0471
+target 0.04 cluster50    (50 parts): success 0/20 | mean evals 40000 | mean time 5.49s | best 0.04535 | caps nan | Fisher p vs full 0.0471
+target 0.04 dominance    (74 parts): success 20/20 | mean evals 18344 | mean time 1.10s | best 0.03994 | caps 10.00 | Fisher p vs full 7.71e-07
+target 0.04 full         (3348 parts): success 5/20 | mean evals 35345 | mean time 4.37s | best 0.04070 | caps 11.60 | Fisher p vs full nan
+target 0.045 cluster200   (200 parts): success 20/20 | mean evals 13385 | mean time 0.68s | best 0.04465 | caps 7.45 | Fisher p vs full 1
+target 0.045 cluster50    (50 parts): success 4/20 | mean evals 37111 | mean time 4.77s | best 0.04538 | caps 13.50 | Fisher p vs full 1.54e-07
+target 0.045 dominance    (74 parts): success 20/20 | mean evals 10563 | mean time 0.51s | best 0.04483 | caps 6.10 | Fisher p vs full 1
+target 0.045 full         (3348 parts): success 20/20 | mean evals 11410 | mean time 0.58s | best 0.04476 | caps 6.50 | Fisher p vs full nan
+target 0.05 cluster200   (200 parts): success 20/20 | mean evals 10190 | mean time 0.49s | best 0.04946 | caps 5.95 | Fisher p vs full 1
+target 0.05 cluster50    (50 parts): success 20/20 | mean evals 12567 | mean time 0.62s | best 0.04974 | caps 7.10 | Fisher p vs full 1
+target 0.05 dominance    (74 parts): success 20/20 | mean evals 8007 | mean time 0.38s | best 0.04912 | caps 5.00 | Fisher p vs full 1
+target 0.05 full         (3348 parts): success 20/20 | mean evals 8128 | mean time 0.40s | best 0.04942 | caps 5.00 | Fisher p vs full nan

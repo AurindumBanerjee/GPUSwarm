@@ -1,0 +1,9 @@
+target 0.04 fast: total 4.432s/run | decode 18.3% | evaluate 79.7% | other 2.0% | exact match vs fast 1.000
+target 0.04 fast_gpudecode: total 5.250s/run | decode 31.0% | evaluate 67.3% | other 1.7% | exact match vs fast 1.000
+target 0.045 fast: total 0.596s/run | decode 34.7% | evaluate 61.1% | other 4.2% | exact match vs fast 1.000
+target 0.045 fast_gpudecode: total 0.617s/run | decode 37.3% | evaluate 58.5% | other 4.2% | exact match vs fast 1.000
+target 0.05 fast: total 0.423s/run | decode 34.4% | evaluate 61.5% | other 4.1% | exact match vs fast 1.000
+target 0.05 fast_gpudecode: total 0.408s/run | decode 33.7% | evaluate 61.9% | other 4.4% | exact match vs fast 1.000
+target 0.04: fast_gpudecode speed-up over fast = 0.84x
+target 0.045: fast_gpudecode speed-up over fast = 0.97x
+target 0.05: fast_gpudecode speed-up over fast = 1.04x

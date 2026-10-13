@@ -1,0 +1,16 @@
+Part A: one swarm evaluation (N_PARTICLES placements)
+threads=1 k=5: algorithm gain (cpu numpy/cpu woodbury) 12.3x | hardware gain (cpu woodbury/gpu woodbury) 28.4x | gpu numpy/gpu woodbury 58.1x
+threads=1 k=10: algorithm gain (cpu numpy/cpu woodbury) 2.6x | hardware gain (cpu woodbury/gpu woodbury) 23.8x | gpu numpy/gpu woodbury 11.4x
+threads=1 k=20: algorithm gain (cpu numpy/cpu woodbury) 0.7x | hardware gain (cpu woodbury/gpu woodbury) 18.5x | gpu numpy/gpu woodbury 2.6x
+threads=4 k=5: algorithm gain (cpu numpy/cpu woodbury) 23.8x | hardware gain (cpu woodbury/gpu woodbury) 11.1x | gpu numpy/gpu woodbury 58.1x
+threads=4 k=10: algorithm gain (cpu numpy/cpu woodbury) 5.8x | hardware gain (cpu woodbury/gpu woodbury) 8.5x | gpu numpy/gpu woodbury 11.4x
+threads=4 k=20: algorithm gain (cpu numpy/cpu woodbury) 1.6x | hardware gain (cpu woodbury/gpu woodbury) 6.7x | gpu numpy/gpu woodbury 2.6x
+threads=8 k=5: algorithm gain (cpu numpy/cpu woodbury) 25.2x | hardware gain (cpu woodbury/gpu woodbury) 11.1x | gpu numpy/gpu woodbury 58.1x
+threads=8 k=10: algorithm gain (cpu numpy/cpu woodbury) 6.8x | hardware gain (cpu woodbury/gpu woodbury) 8.3x | gpu numpy/gpu woodbury 11.4x
+threads=8 k=20: algorithm gain (cpu numpy/cpu woodbury) 2.3x | hardware gain (cpu woodbury/gpu woodbury) 5.1x | gpu numpy/gpu woodbury 2.6x
+
+Part B: full PSO, mean total time per run on the runs common to all arms (paired)
+target 0.04: cpu_fast 18.879s (22.5x vs cpu numpy) | cpu_numpy 424.952s (1.0x vs cpu numpy) | cpu_woodbury_batch 68.126s (6.2x vs cpu numpy) | gpu_fast 3.791s (112.1x vs cpu numpy) | gpu_numpy 92.379s (4.6x vs cpu numpy) | gpu_woodbury_batch 11.273s (37.7x vs cpu numpy)
+target 0.045: cpu_fast 2.402s (59.1x vs cpu numpy) | cpu_numpy 141.923s (1.0x vs cpu numpy) | cpu_woodbury_batch 3.384s (41.9x vs cpu numpy) | gpu_fast 0.533s (266.1x vs cpu numpy) | gpu_numpy 29.578s (4.8x vs cpu numpy) | gpu_woodbury_batch 0.528s (268.9x vs cpu numpy)
+target 0.05: cpu_fast 1.593s (66.0x vs cpu numpy) | cpu_numpy 105.171s (1.0x vs cpu numpy) | cpu_woodbury_batch 1.835s (57.3x vs cpu numpy) | gpu_fast 0.386s (272.6x vs cpu numpy) | gpu_numpy 21.646s (4.9x vs cpu numpy) | gpu_woodbury_batch 0.318s (330.4x vs cpu numpy)
+trajectory match vs gpu numpy: 1.000

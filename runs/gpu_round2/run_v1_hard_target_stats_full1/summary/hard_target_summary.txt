@@ -1,0 +1,5 @@
+target 0.04: numpy vs fast identical best |Z11| on 20/20 paired runs
+  fast  : success 15/100 = 0.150 (Wilson 95% 0.093-0.233) | caps 10.60 | mean time 4.70s | time per success 31.32s
+  polish: success 53/100 = 0.530 (Wilson 95% 0.433-0.625) | caps 10.57 | mean time 12.09s | time per success 22.80s
+  numpy : mean time 100.67s per run -> time per success 671.12s (success count taken from fast, identical trajectories)
+  Fisher exact p (polish vs fast) = 1.767e-08

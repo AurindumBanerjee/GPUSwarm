@@ -1,0 +1,19 @@
+mer2: 16 ports, 6695 models, 1938 freqs 111-4.99e+07 Hz, bare peak 0.725 ohm @ 3.09e+07 Hz
+  target 0.29 (0.40 x bare): fast success 0/20, caps nan, best 0.7113 | speed-up vs numpy 7.8x (identical on 5/5)
+  target 0.3625 (0.50 x bare): fast success 0/20, caps nan, best 0.7113 | speed-up vs numpy 7.8x (identical on 5/5)
+  target 0.435 (0.60 x bare): fast success 0/20, caps nan, best 0.7113 | speed-up vs numpy 7.8x (identical on 5/5)
+pll1v0: 15 ports, 6695 models, 1938 freqs 111-4.99e+07 Hz, bare peak 1.663 ohm @ 4.99e+07 Hz
+  target 0.6653 (0.40 x bare): fast success 0/20, caps nan, best 1.013 | speed-up vs numpy 7.5x (identical on 5/5)
+  target 0.8316 (0.50 x bare): fast success 0/20, caps nan, best 1.013 | speed-up vs numpy 7.4x (identical on 5/5)
+  target 0.9979 (0.60 x bare): fast success 0/20, caps nan, best 1.013 | speed-up vs numpy 7.4x (identical on 5/5)
+mphyvdd: 10 ports, 6695 models, 1938 freqs 111-4.99e+07 Hz, bare peak 1.453 ohm @ 4.99e+07 Hz
+  target 0.5812 (0.40 x bare): fast success 0/20, caps nan, best 1.078 | speed-up vs numpy 5.1x (identical on 5/5)
+  target 0.7265 (0.50 x bare): fast success 0/20, caps nan, best 1.078 | speed-up vs numpy 5.1x (identical on 5/5)
+  target 0.8718 (0.60 x bare): fast success 0/20, caps nan, best 1.078 | speed-up vs numpy 5.1x (identical on 5/5)
+ddr21: 21 ports, 6695 models, 1938 freqs 111-4.99e+07 Hz, bare peak 0.2507 ohm @ 4.99e+07 Hz
+  target 0.1003 (0.40 x bare): fast success 0/20, caps nan, best 0.1256 | speed-up vs numpy 19.5x (identical on 5/5)
+  target 0.1254 (0.50 x bare): fast success 9/20, caps 10.00, best 0.127 | speed-up vs numpy 22.0x (identical on 5/5)
+  target 0.1504 (0.60 x bare): fast success 20/20, caps 3.00, best 0.1485 | speed-up vs numpy 71.7x (identical on 5/5)
+Part B mer2: bare 0.725 | own caps only (full net) 0.7112 | single-rail run 0.7108 | ALL rails' caps 0.7112 | target 0.435 | still met: False
+Part B pll1v0: bare 1.663 | own caps only (full net) 1.009 | single-rail run 1.009 | ALL rails' caps 1.009 | target 0.9979 | still met: False
+Part B mphyvdd: bare 1.453 | own caps only (full net) 1.077 | single-rail run 1.077 | ALL rails' caps 1.077 | target 0.8718 | still met: False

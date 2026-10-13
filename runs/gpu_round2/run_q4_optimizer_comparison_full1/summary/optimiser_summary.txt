@@ -1,0 +1,12 @@
+target 0.04 de  : success 13/20 | time/success 6.03s | evals 28745 | caps 11.92 | best 0.04004 | Fisher p vs pso 0.0248
+target 0.04 ga  : success 19/20 | time/success 3.58s | evals 21068 | caps 11.11 | best 0.03997 | Fisher p vs pso 1e-05
+target 0.04 pso : success 5/20 | time/success 17.52s | evals 35345 | caps 11.60 | best 0.04070 | Fisher p vs pso nan
+target 0.04 sa  : success 0/20 | time/success infs | evals 40000 | caps nan | best 0.04747 | Fisher p vs pso 0.0471
+target 0.045 de  : success 20/20 | time/success 0.75s | evals 11258 | caps 6.30 | best 0.04481 | Fisher p vs pso 1
+target 0.045 ga  : success 20/20 | time/success 0.97s | evals 10754 | caps 6.25 | best 0.04472 | Fisher p vs pso 1
+target 0.045 pso : success 20/20 | time/success 0.58s | evals 11410 | caps 6.50 | best 0.04476 | Fisher p vs pso nan
+target 0.045 sa  : success 1/20 | time/success 355.32s | evals 38700 | caps 8.00 | best 0.04748 | Fisher p vs pso 3.05e-10
+target 0.05 de  : success 20/20 | time/success 0.54s | evals 8075 | caps 4.85 | best 0.04936 | Fisher p vs pso 1
+target 0.05 ga  : success 20/20 | time/success 0.64s | evals 7615 | caps 4.85 | best 0.04943 | Fisher p vs pso 1
+target 0.05 pso : success 20/20 | time/success 0.42s | evals 8128 | caps 5.00 | best 0.04942 | Fisher p vs pso nan
+target 0.05 sa  : success 20/20 | time/success 2.28s | evals 17641 | caps 9.60 | best 0.04949 | Fisher p vs pso 1

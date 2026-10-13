@@ -38,3 +38,13 @@ Every run has its own folder: code/ (exact copy), output/ and logs/ (raw, git-ig
 | gpu_experiments/run_macro_naive100 | created | 2026-10-09 | Exp 4: vector-fit macromodel on a dense grid, VDDQ_DDR3 ddr21 up to 300 MHz, 6695-model library. | None exp04_rational_macromodel.py |
 | gpu_experiments/run_compare_naive100 | created | 2026-10-09 | Cross-experiment comparison tables and plots (GPU numpy baseline a, CPU ScratchBench baseline b). | None exp07_compare.py |
 | vectorfitting/run01_pdn_fits_20261012 | finished | 2026-10-12 | PDN Z11 vector fits (orders 20/24/32, 110 Hz-100 MHz) and decap SRF buckets | commit f1495e3 |
+| gpu_round2/run_s1_port_scaling_full1 | created | 2026-10-12 | Speed S1: per-evaluation time vs PDN ports (DDR3 reduced to 6..79 ports) + numpy vs fast PSO on ddr21/ddr79. | None s1_port_scaling.py |
+| gpu_round2/run_s2_cpu_vs_gpu_full1 | created | 2026-10-12 | Speed S2: algorithm vs hardware gain -- numpy / woodbury_batch / fast on CPU and GPU. | None s2_cpu_vs_gpu.py |
+| gpu_round2/run_s3_profile_gpu_decode_full1 | created | 2026-10-12 | Speed S3: time breakdown of fast + exact GPU-vectorised decoding. | None s3_profile_gpu_decode.py |
+| gpu_round2/run_s4_batched_seeds_full1 | created | 2026-10-12 | Speed S4: all runs of a threshold in lock-step, one GPU call per capacitor-count group. | None s4_batched_seeds.py |
+| gpu_round2/run_q1_polish_variants_full1 | created | 2026-10-12 | Search Q1: cheaper gradient-polish variants, time per success. | None q1_polish_variants.py |
+| gpu_round2/run_q2_library_reduction_full1 | created | 2026-10-12 | Search Q2: dominance-pruned and clustered capacitor libraries. | None q2_library_reduction.py |
+| gpu_round2/run_q3_warm_start_sweep_full1 | created | 2026-10-12 | Search Q3: warm-start fraction x jitter sweep. | None q3_warm_start_sweep.py |
+| gpu_round2/run_q4_optimizer_comparison_full1 | created | 2026-10-12 | Search Q4: PSO vs DE vs GA vs SA on the same exact fitness and budget. | None q4_optimizer_comparison.py |
+| gpu_round2/run_v1_hard_target_stats_full1 | created | 2026-10-13 | Validation V1: 100 runs at the hard target, Wilson CIs, Fisher tests, time per success. | None v1_hard_target_stats.py |
+| gpu_round2/run_v2_more_pdns_full1 | created | 2026-10-13 | Validation V2: MPHY rails + DDR3 at relative targets (<= 50 MHz) + all MPHY rails combined. | None v2_more_pdns.py |

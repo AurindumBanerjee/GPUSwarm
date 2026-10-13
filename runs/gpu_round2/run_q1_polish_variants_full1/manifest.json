@@ -1,0 +1,95 @@
+{
+  "experiment": "q1_polish_variants",
+  "run_id": "run_q1_polish_variants_full1",
+  "status": "finished",
+  "start": "2026-10-12T22:26:59+0530",
+  "end": "2026-10-12T22:56:34+0530",
+  "host": "eeiitj123.iitj.ac.in",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17",
+  "python": "3.10.18",
+  "numpy": "2.2.6",
+  "torch": "2.6.0+cu124",
+  "cuda": "12.4",
+  "gpu": "NVIDIA RTX A5000",
+  "cpu_count": 64,
+  "timer": "time.perf_counter + cuda synchronize",
+  "code": {
+    "file": "code/q1_polish_variants__run_q1_polish_variants_full1.py",
+    "md5": "15dccf744ba197381d28052a6ddda337",
+    "common_md5": "d15f246d2be5e3506d2d9eb26a6d6504",
+    "git": null
+  },
+  "settings": {
+    "QUICK": false,
+    "NUM_RUNS": 20,
+    "TARGETS": [
+      0.05,
+      0.045,
+      0.04
+    ],
+    "N_PARTICLES": 50,
+    "N_ITERATIONS": 40,
+    "MAX_CAPS": 20,
+    "TARGET_PORT": 0,
+    "W_MAX": 0.9,
+    "W_MIN": 0.4,
+    "C1": 1.5,
+    "C2": 1.5,
+    "WARM_START_FRACTION": 0.4,
+    "WARM_START_JITTER": 0.0,
+    "BASE_SEED": 12345,
+    "DTYPE": "complex128",
+    "STRIDE": 16,
+    "MAX_BATCH_ELEMS": 30000000.0,
+    "Y_PATH": "/DATA/Aurindum/GPUSwarm/Data/Reference/y2.mat",
+    "D_PATH": "/DATA/Aurindum/GPUSwarm/Data/Reference/decaps.mat",
+    "FREQ_PATH": "/DATA/Aurindum/GPUSwarm/Data/Reference/freq2.mat",
+    "BASELINE_JSONL": "",
+    "DATASET": "ref21",
+    "ARMS": [
+      "fast",
+      "polish_default",
+      "polish_short",
+      "polish_tight",
+      "polish_nosweep",
+      "polish_every"
+    ],
+    "VARIANTS": {
+      "polish_default": {},
+      "polish_short": {
+        "POLISH_STEPS": 45
+      },
+      "polish_tight": {
+        "POLISH_RATIO": 1.1
+      },
+      "polish_nosweep": {
+        "SWEEPS": 0
+      },
+      "polish_every": {
+        "POLISH_RATIO": 1000000000.0
+      }
+    },
+    "DEFAULTS": {
+      "POLISH_RATIO": 1.3,
+      "POLISH_STEPS": 180,
+      "SWEEPS": 2,
+      "SNAP_CAND": 8,
+      "POLISH_LR": 0.05
+    }
+  },
+  "blas_threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "affinity": [
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+  ]
+}

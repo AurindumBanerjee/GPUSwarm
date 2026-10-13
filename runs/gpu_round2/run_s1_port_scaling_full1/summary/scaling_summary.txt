@@ -1,0 +1,21 @@
+Part A: swarm-evaluation time vs ports (speed-up = numpy / woodbury_batch)
+ N  k    numpy  woodbury_batch    speedup
+ 6  5 0.019598        0.003103   6.316632
+11  5 0.041255        0.003102  13.297729
+11 10 0.046915        0.017100   2.743589
+21  5 0.173569        0.003119  55.645929
+21 10 0.179831        0.017128  10.499495
+21 20 0.192158        0.080736   2.380070
+41  5 0.767258        0.002976 257.858163
+41 10 0.778156        0.015835  49.140332
+41 20 0.790608        0.075907  10.415474
+79  5 2.883103        0.003096 931.208196
+79 10 2.904038        0.016304 178.121031
+79 20 2.945807        0.077735  37.895501
+
+Part B ddr21 (N=21) target 0.10029: numpy 146.209s, fast 7.533s on the same 2 runs -> speed-up 19.4x; identical best |Z11| in 2/2
+Part B ddr21 (N=21) target 0.12537: numpy 88.445s, fast 3.995s on the same 2 runs -> speed-up 22.1x; identical best |Z11| in 2/2
+Part B ddr21 (N=21) target 0.15044: numpy 13.925s, fast 0.193s on the same 2 runs -> speed-up 72.0x; identical best |Z11| in 2/2
+Part B ddr79 (N=79) target 0.10029: numpy 382.564s, fast 0.306s on the same 2 runs -> speed-up 1248.8x; identical best |Z11| in 2/2
+Part B ddr79 (N=79) target 0.12537: numpy 243.797s, fast 0.196s on the same 2 runs -> speed-up 1244.8x; identical best |Z11| in 2/2
+Part B ddr79 (N=79) target 0.15044: numpy 144.609s, fast 0.113s on the same 2 runs -> speed-up 1280.5x; identical best |Z11| in 2/2

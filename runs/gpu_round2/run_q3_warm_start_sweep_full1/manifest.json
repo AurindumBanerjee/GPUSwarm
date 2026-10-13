@@ -1,0 +1,77 @@
+{
+  "experiment": "q3_warm_start_sweep",
+  "run_id": "run_q3_warm_start_sweep_full1",
+  "status": "finished",
+  "start": "2026-10-12T23:05:05+0530",
+  "end": "2026-10-12T23:44:41+0530",
+  "host": "eeiitj123.iitj.ac.in",
+  "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17",
+  "python": "3.10.18",
+  "numpy": "2.2.6",
+  "torch": "2.6.0+cu124",
+  "cuda": "12.4",
+  "gpu": "NVIDIA RTX A5000",
+  "cpu_count": 64,
+  "timer": "time.perf_counter + cuda synchronize",
+  "code": {
+    "file": "code/q3_warm_start_sweep__run_q3_warm_start_sweep_full1.py",
+    "md5": "a63484037347a30587afbbfcbe25d42f",
+    "common_md5": "d15f246d2be5e3506d2d9eb26a6d6504",
+    "git": null
+  },
+  "settings": {
+    "QUICK": false,
+    "NUM_RUNS": 20,
+    "TARGETS": [
+      0.05,
+      0.045,
+      0.04
+    ],
+    "N_PARTICLES": 50,
+    "N_ITERATIONS": 40,
+    "MAX_CAPS": 20,
+    "TARGET_PORT": 0,
+    "W_MAX": 0.9,
+    "W_MIN": 0.4,
+    "C1": 1.5,
+    "C2": 1.5,
+    "WARM_START_FRACTION": 0.4,
+    "WARM_START_JITTER": 0.0,
+    "BASE_SEED": 12345,
+    "DTYPE": "complex128",
+    "STRIDE": 16,
+    "MAX_BATCH_ELEMS": 30000000.0,
+    "Y_PATH": "/DATA/Aurindum/GPUSwarm/Data/Reference/y2.mat",
+    "D_PATH": "/DATA/Aurindum/GPUSwarm/Data/Reference/decaps.mat",
+    "FREQ_PATH": "/DATA/Aurindum/GPUSwarm/Data/Reference/freq2.mat",
+    "BASELINE_JSONL": "",
+    "DATASET": "ref21",
+    "WARM_FRACS": [
+      0.0,
+      0.2,
+      0.4,
+      0.6,
+      0.8,
+      1.0
+    ],
+    "JITTERS": [
+      0.0,
+      0.02
+    ]
+  },
+  "blas_threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "affinity": [
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+  ]
+}
