@@ -1,0 +1,12 @@
+PROVENANCE of the code that produced CPUTest/SBLine/
+MATCH: EXACT (ROOT_OUT, settings, folder naming and log format match; committed 2026-09-29, runs 2026-09-10..10-06)
+
+Evidence:
+  - SB.py @ 41e0315 has ROOT_OUT = "SBLine", N_ITERATIONS = 15, 50 particles, FOLDER_SEP '__THR__', METHODS = [pure_python] (SB2.py: numpy/solve/sm/iterative); the folder layout matches
+  - the logs carry 'iterations=15 | base_seed=12345 | warm_start=20 | jitter=0.0200', the format string of SB.py @ 41e0315; CPUTest/SB.py at HEAD (19aa90c, 2026-10-08, jitter off by default) is a later revision, so later runs in this folder (to 2026-10-06) predate it
+
+Files copied into code/ (git show <commit>:<path>, bytes unchanged):
+  code/SB.py                  from 41e0315:CPUTest/SB.py  md5 549874001c26c6f45e14368683d5458e  pure_python script as first committed
+  code/SB2.py                 from 41e0315:CPUTest/SB2.py  md5 5f910a7362d7050a27f6ac6786e242a3  library-method variant as first committed
+
+Commits are cited by their current hashes (history rewritten 2026-10-12). GPUBench.py was first committed as 5f20c34 (2026-09-29), CPUTest/SB*.py as 41e0315 (2026-09-29); the runs themselves are 2026-09-02..10-06 and were produced on the server before those commits.

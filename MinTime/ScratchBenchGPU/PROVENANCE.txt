@@ -1,0 +1,10 @@
+PROVENANCE of the code that produced MinTime/ScratchBenchGPU/
+MATCH: CLOSEST (early test of the same GPU script; settings not in git)
+
+Evidence:
+  - 10 logs of numpy at threshold 0.05 on 2026-09-02 (18:19..), 'RUN_START | method=numpy | ... | iterations=15 | device=cuda': an early version of GPUBench.py, before GPUTest1 (same day)
+
+Files copied into code/ (git show <commit>:<path>, bytes unchanged):
+  code/GPUBench.py            from 5f20c34:GPUBench.py  md5 6ba3cf050d915f4d11da68e415d72a8e  GPU benchmark, first committed version
+
+Commits are cited by their current hashes (history rewritten 2026-10-12). GPUBench.py was first committed as 5f20c34 (2026-09-29), CPUTest/SB*.py as 41e0315 (2026-09-29); the runs themselves are 2026-09-02..10-06 and were produced on the server before those commits.

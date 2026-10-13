@@ -1,0 +1,12 @@
+PROVENANCE of the code that produced MinTime/GPUBaseline/
+MATCH: CLOSEST (same script; iterations 15 and FOLDER_SEP '__THR__' were edited afterwards)
+
+Evidence:
+  - config.json: ROOT_OUT MinTime/GPUBaseline, N_ITERATIONS 15, device cuda; runs 2026-09-03; folders <method>__THR__<threshold>
+  - GPUBench.py @ 5f20c34 produces the same file set; the '__THR__' separator appears in CPUTest/SB.py @ 41e0315 (committed later)
+
+Files copied into code/ (git show <commit>:<path>, bytes unchanged):
+  code/GPUBench.py            from 5f20c34:GPUBench.py  md5 6ba3cf050d915f4d11da68e415d72a8e  GPU benchmark, first committed version
+  code/SB.py                  from 41e0315:CPUTest/SB.py  md5 549874001c26c6f45e14368683d5458e  origin of the '__THR__' folder naming
+
+Commits are cited by their current hashes (history rewritten 2026-10-12). GPUBench.py was first committed as 5f20c34 (2026-09-29), CPUTest/SB*.py as 41e0315 (2026-09-29); the runs themselves are 2026-09-02..10-06 and were produced on the server before those commits.

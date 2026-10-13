@@ -1,0 +1,11 @@
+PROVENANCE of the code that produced MinTime/GPUTest1/
+MATCH: CLOSEST (same script; iterations 15 and folder separator '_' were edited afterwards)
+
+Evidence:
+  - config.json: ROOT_OUT MinTime/GPUTest1, N_ITERATIONS 15, device cuda; runs 2026-09-02..03; folders <method>_<threshold> (single underscore)
+  - GPUBench.py @ 5f20c34 writes the same files (config.json, gpu_cpu_verification.json, results_long.*, summary_table.csv) with ROOT_OUT = GPUTest2, N_ITERATIONS = 40, FOLDER_SEP '__'
+
+Files copied into code/ (git show <commit>:<path>, bytes unchanged):
+  code/GPUBench.py            from 5f20c34:GPUBench.py  md5 6ba3cf050d915f4d11da68e415d72a8e  GPU benchmark, first committed version
+
+Commits are cited by their current hashes (history rewritten 2026-10-12). GPUBench.py was first committed as 5f20c34 (2026-09-29), CPUTest/SB*.py as 41e0315 (2026-09-29); the runs themselves are 2026-09-02..10-06 and were produced on the server before those commits.
