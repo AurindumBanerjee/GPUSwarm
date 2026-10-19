@@ -1,0 +1,10 @@
+# input data (733 MB .mat etc.) stays out of git; results_*/ keeps only the machine-readable table
+Data/
+results_*/*
+!results_murata/results_long.jsonl
+ordering_study/orders/
+ordering_study/orders.npz
+ordering_study/results_*/
+time_study/results_*/
+__pycache__/
+*.pyc

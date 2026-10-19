@@ -1,0 +1,3 @@
+{"band": "B3G",
+ "note": "Single objective: peak |Z11| over the whole 100.9 Hz - 2.9986 GHz grid. Bare 234.9 ohm; best of the 3 exploratory runs 117.18 ohm (plateau ~117). Targets are evenly spaced between the two: floor + k/4*(bare-floor), k=1,2,3.",
+ "problems": {"pcb28_netA": {"T1": 146.5, "T2": 176.0, "T3": 205.5, "min_reached_ohm": 117.18, "bare_ohm": 234.9}}}
