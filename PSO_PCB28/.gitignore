@@ -5,6 +5,7 @@ results_*/*
 ordering_study/orders/
 ordering_study/orders.npz
 ordering_study/results_*/
+time_study/results/
 time_study/results_*/
 __pycache__/
 *.pyc
