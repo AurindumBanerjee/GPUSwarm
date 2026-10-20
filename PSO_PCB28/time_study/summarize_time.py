@@ -5,7 +5,7 @@ H = os.path.dirname(os.path.abspath(__file__)); rows = [json.loads(l) for l in o
 G = collections.defaultdict(list)
 for r in rows: G[(r["threshold_level"], r["method"])].append(r)
 print(f"{'target':>6} {'ohm':>7} {'method':10} {'ok':>6} {'time_to_target s (mean)':>24} {'median':>8} {'caps':>6} {'evals':>8} {'speedup vs numpy':>17}")
-for lv in ("T3", "T2", "T1"):
+for lv in ("T4", "T3", "T2", "T1"):
     base = None
     for m in ("numpy", "solve", "sm", "iterative"):
         g = G.get((lv, m))

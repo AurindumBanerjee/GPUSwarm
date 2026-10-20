@@ -9,3 +9,8 @@ time_study/results/
 time_study/results_*/
 __pycache__/
 *.pyc
+# per-run plots stay on the server (one PNG per run); summaries and the top-level plots are tracked
+time_study/pdn_*.png
+ordering_study/pdn_srf_*.png
+*_old_*/
+baseline_pure_python/results*/

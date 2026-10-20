@@ -30,7 +30,7 @@ for k, p in enumerate(P, 1):
     ax[0].loglog(f, z0, "k", lw=2, label=f"bare PDN (peak {z0.max():.1f} ohm)")
     ax[0].loglog(f, z, "C0", lw=1.5, label=f"with {len(p['placement'])} decaps (peak {z.max():.1f} ohm)")
     for pad, nm in p["placement"]: ax[0].axvline(f[np.argmin(np.abs(Y[row[nm]]*0 + 1/np.abs(Y[row[nm]])))], color="C1", alpha=.25, lw=.8)
-    for t in (146.5, 176.0, 205.5): ax[0].axhline(t, color="0.6", ls=":", lw=.8)
+    for t in (120.0, 150.0, 180.0, 200.0): ax[0].axhline(t, color="0.6", ls=":", lw=.8)
     ax[0].set_xlabel("Frequency [Hz]"); ax[0].set_ylabel("|Z11| at port 1 [ohm]"); ax[0].grid(alpha=.3, which="both"); ax[0].legend(fontsize=9)
     ax[0].set_title(f"{p['label']}: |Z11| with vs without decaps (orange lines = each part's SRF, dotted = study targets)", fontsize=10)
     ax[1].axis("off"); pl = sorted(p["placement"])
