@@ -4,3 +4,7 @@ logs/*
 !logs/summary.txt
 __pycache__/
 *.pyc
+study2/results*/
+study2/logs/*
+!study2/logs/summary.txt
+baseline_pure_python/results*/

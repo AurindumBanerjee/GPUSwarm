@@ -1,0 +1,2 @@
+{"note": "Peak |Z11| over 100.9 Hz-3 GHz, ohm. Bare 234.9, best reached 117.18. Whole-number targets above the ~117 plateau; T1 hardest, T4 easiest.",
+ "targets": {"T1": 120.0, "T2": 125.0, "T3": 130.0, "T4": 140.0}}

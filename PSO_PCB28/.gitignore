@@ -14,3 +14,6 @@ time_study/pdn_*.png
 ordering_study/pdn_srf_*.png
 *_old_*/
 baseline_pure_python/results*/
+full28_study/results*/
+full28_study/logs/*
+!full28_study/logs/summary*.txt

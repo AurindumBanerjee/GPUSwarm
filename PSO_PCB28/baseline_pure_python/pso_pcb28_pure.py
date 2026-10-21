@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Baseline: the ORIGINAL pure-Python fitness (SB.py 'pure_python': Gauss-Jordan on plain lists, no numpy in the inversion)
-inside the same PSO, on the 28-port PDN (netA) with the Murata library. 4 runs by default, at EVERY target (200/180/150/120 ohm = T4..T1), round-robin: run 1 of every target, then run 2 of every target, ... The inversion routine is core._gauss_jordan_inverse, taken unchanged
+inside the same PSO, on the 28-port PDN (netA) with the Murata library. 5 runs by default, at EVERY target (targets of full28_study/thresholds.json, easiest first), round-robin: run 1 of every target, then run 2 of every target, ... The inversion routine is core._gauss_jordan_inverse, taken unchanged
 from SB.py; only the library rows are converted to lists lazily (a full 16171x2828 list copy would need ~2 GB).
 
   python pso_pcb28_pure.py --validate        # also times one fitness evaluation and prints an ETA
   NUM_RUNS=4 python pso_pcb28_pure.py
-env: NUM_RUNS (4), LEVELS (T4,T3,T2,T1; comma list of T1..T4 from ../time_study/thresholds.json), N_PARTICLES/N_ITERATIONS
+env: NUM_RUNS (5), LEVELS (all targets, easiest first; comma list of T1..T4 from ../time_study/thresholds.json), N_PARTICLES/N_ITERATIONS
      (default 50/15 = SB.py's values; the numpy runs use 100/40), TIME_LIMIT_S (per run, default 1 week), OUT, PCB_DATA, MURATA_MAT
 A run stops the moment the target is met; a run that hits TIME_LIMIT_S (1 week) is flagged timed_out. Results: results/results_long.jsonl."""
 import os, sys, json, time
@@ -27,8 +27,8 @@ def inv_pure_python(prob, config, f):                          # same math as co
     inv = core._gauss_jordan_inverse(Yeq)
     return [abs(inv[k][k]) for k in range(prob.n_obs)]
 core.inv_pure_python = inv_pure_python
-T = json.load(open(os.path.join(os.path.dirname(H), "time_study", "thresholds.json")))["problems"]["pcb28_netA"]
-LEVELS = os.environ.get("LEVELS", "T4,T3,T2,T1").split(","); NUM_RUNS = int(os.environ.get("NUM_RUNS", 4))
+T = json.load(open(os.environ.get("THRESHOLDS", os.path.join(os.path.dirname(H), "full28_study", "thresholds.json"))))["targets"]   # T1 hardest ... T4 easiest
+LEVELS = os.environ.get("LEVELS", ",".join(sorted(T, key=lambda k: -T[k]))).split(","); NUM_RUNS = int(os.environ.get("NUM_RUNS", 5))
 OUT = os.environ.get("OUT", os.path.join(H, "results"))
 
 if __name__ == "__main__":
