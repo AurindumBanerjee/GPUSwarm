@@ -14,6 +14,8 @@ import numpy as np
 import pso_pcb28 as base
 core = base.core
 core.BANDS.clear(); core.BANDS["B3G"] = None
+core.N_PARTICLES = int(os.environ.get("N_PARTICLES", 50)); core.N_ITERATIONS = int(os.environ.get("N_ITERATIONS", 15))   # SB.py values, same as every baseline
+FLOOR_OHM = 117.18        # lowest peak |Z11| any long run reached on the 28-port PDN (plateau ~117 ohm); targets must lie above it
 T = json.load(open(os.path.join(H, "thresholds.json")))["targets"]
 LEVELS = sorted(T, key=lambda k: -T[k])                              # easiest (highest ohm) first
 MAX_CAPS = int(os.environ.get("MAX_CAPS", 14))
@@ -26,7 +28,7 @@ if __name__ == "__main__":
     assert prob.N == (28 if NET == "full" else 12), f"unexpected matrix size {prob.N} for NET={NET}"
     core.selftest(prob, core.METHODS); bare = float(np.max(core.bare_peaks(prob)["B3G"]))
     print(f"N={prob.N} pads={len(prob.pads)} bare {bare:.5g} ohm | targets " + "  ".join(f"{k}={T[k]:g}" for k in LEVELS))
-    assert all(117.18 < T[k] < bare for k in LEVELS), "a target is outside (floor 117.18, bare)"
+    assert all(FLOOR_OHM < T[k] < bare for k in LEVELS), "a target is outside (floor %.2f, bare)" % FLOOR_OHM + ""
     if "--validate" in sys.argv: print("--validate: OK"); sys.exit(0)
     res = os.path.join(out, "results_long.jsonl"); os.makedirs(out, exist_ok=True)
     pool = ThreadPoolExecutor(core.THREADS) if core.THREADS > 1 else None

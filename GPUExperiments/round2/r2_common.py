@@ -84,9 +84,21 @@ def load_problem(name_or_paths, fmax=None, fmin=None, lib_source=None, label=Non
     return prob, info
 
 
+FLOORS_JSON = os.environ.get("FLOORS_JSON", os.path.join(ROOT, "GPUExperiments", "round2", "floors_full_band.json"))
+
+
 def targets_for(info, default_abs="0.05,0.045,0.04", default_rel="0.6,0.5,0.4"):
-    """TARGET_MODE=abs -> TARGETS (ohm); relative -> TARGET_FRACS x bare peak. Reference set defaults to abs, SP sets to relative."""
+    """TARGET_MODE=abs -> TARGETS (ohm); relative -> TARGET_FRACS x bare peak; floor -> FLOOR_LEVELS x the achievable floor of the PDN
+    read from FLOORS_JSON (written by validation/v3_full_band_floors.py; the band must match: the <=50 MHz floors are used when the run is
+    limited to <= 60 MHz, else the full-band floors). Reference set defaults to abs, SP sets to relative."""
     mode = os.environ.get("TARGET_MODE", "abs" if info["dataset"] == "ref21" else "relative")
+    if mode == "floor":
+        import json
+        fl = json.load(open(FLOORS_JSON))
+        field = "floors_ohm_le50MHz" if (info.get("fmax") or 1e30) <= 60e6 else "floors_ohm"
+        if info["dataset"] in fl.get(field, {}):
+            return [round(m * fl[field][info["dataset"]], 6) for m in env_list("FLOOR_LEVELS", "1.05,1.1,1.25", float)]
+        mode = "abs" if info["dataset"] == "ref21" else "relative"          # no floor known (e.g. ref21): fall back
     if mode == "relative":
         return [round(fr * info["bare_peak"], 6) for fr in env_list("TARGET_FRACS", default_rel, float)]
     return env_list("TARGETS", default_abs, float)

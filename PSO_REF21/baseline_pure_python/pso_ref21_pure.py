@@ -34,7 +34,7 @@ core.inv_pure_python = inv_pure_python
 if __name__ == "__main__":
     base.load(LIB); prob = core.Problem("ref21", os.path.join(base.DATA, "y2.mat"), n_obs=1, obs_labels=["port0"])
     bare = float(np.max(core.bare_peaks(prob)["BFULL"]))
-    assert all(t < bare for t in LEVELS.values()), f"target above bare peak {bare}"
+    assert all(base.FLOOR_OHM < t < bare for t in LEVELS.values()), f"a target is outside (floor {base.FLOOR_OHM}, bare {bare})"
     cfg = [(5, 1), (700, 3), (1500, 7)]
     t0 = time.perf_counter(); zp = core.peaks_all_bands(prob, cfg, "pure_python")["BFULL"].max(); tp = time.perf_counter() - t0
     zn = core.peaks_all_bands(prob, cfg, "numpy")["BFULL"].max()

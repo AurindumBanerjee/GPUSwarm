@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """21-port reference PDN (Data/y2.mat, port 0 = observation, 20 pads, 100.99 Hz - 99.83 MHz): legacy decap library vs the
-new Murata library, time-to-target study with the original 4 thresholds (50, 45, 40, 30 mOhm) + a full-budget 'floor' run.
+new Murata library, time-to-target study with thresholds 60, 50, 45 mOhm (floor 40.5 mOhm: the paper's 40/30 mOhm are unreachable) + a full-budget 'floor' run.
 
   LIB=ref     Data/decaps.mat (3348 legacy models, admittance)           names: ref_<row>
   LIB=murata  Data/murata_decaps_ref21.mat (16171 Murata parts, same grid; series-RLC low-side extrapolation)
@@ -8,7 +8,7 @@ new Murata library, time-to-target study with the original 4 thresholds (50, 45,
 
   python pso_ref21.py --validate
   NUM_RUNS=10 FLOOR_RUNS=3 python pso_ref21.py
-env: LIB, NUM_RUNS (10), FLOOR_RUNS (3; 0 = skip), TARGETS (0.05,0.045,0.04,0.03), METHODS (numpy), STUDY_THREADS (1),
+env: LIB, NUM_RUNS (10), FLOOR_RUNS (3; 0 = skip), TARGETS (0.06,0.05,0.045), FLOOR_OHM (0.0405), METHODS (numpy), STUDY_THREADS (1),
      N_PARTICLES/N_ITERATIONS (default 50/15, SB.py's values), OUT, DATA
 Objective: one band, peak |Z11| over the whole grid."""
 import os, sys, csv, json
@@ -20,7 +20,8 @@ from concurrent.futures import ThreadPoolExecutor
 core.N_PARTICLES = int(os.environ.get("N_PARTICLES", 50)); core.N_ITERATIONS = int(os.environ.get("N_ITERATIONS", 15))   # SB.py values
 core.BANDS.clear(); core.BANDS["BFULL"] = None; core.EXTRAP_START_HZ = 1e9
 DATA = os.environ.get("DATA", os.path.join(H, "Data")); OUT = os.environ.get("OUT", os.path.join(H, "results"))
-TARGETS = [float(x) for x in os.environ.get("TARGETS", "0.05,0.045,0.04,0.03").split(",")]
+FLOOR_OHM = float(os.environ.get("FLOOR_OHM", 0.0405))   # lowest peak |Z11| reached on the 21-port PDN (~40.5 mOhm); targets must lie above it
+TARGETS = [float(x) for x in os.environ.get("TARGETS", "0.06,0.05,0.045").split(",")]
 NUM_RUNS = int(os.environ.get("NUM_RUNS", "10")); FLOOR_RUNS = int(os.environ.get("FLOOR_RUNS", "3"))
 METHODS = os.environ.get("METHODS", "numpy").split(","); LIB = os.environ.get("LIB", "both")
 
@@ -43,7 +44,7 @@ if __name__ == "__main__":
         core.selftest(prob, METHODS); bare = float(np.max(core.bare_peaks(prob)["BFULL"]))
         d = core._lib["d"]
         print(f"[{lib}] library {d.shape}, passive: {bool(d.real.min() >= -1e-12*np.abs(d).max())}, bare peak {bare:.5g} ohm, N={prob.N} pads={len(prob.pads)}")
-        assert all(t < bare for t in TARGETS), f"a target is above the bare peak {bare}"
+        assert all(FLOOR_OHM < t < bare for t in TARGETS), f"a target is outside (floor {FLOOR_OHM}, bare {bare}) -- set FLOOR_OHM to override"
         if validate: continue
         out = os.path.join(OUT, lib); res = os.path.join(out, "results_long.jsonl"); os.makedirs(out, exist_ok=True)
         jobs = [(f"T{i+1}", t, NUM_RUNS) for i, t in enumerate(TARGETS)] + ([("floor", None, FLOOR_RUNS)] if FLOOR_RUNS else [])

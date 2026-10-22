@@ -88,8 +88,10 @@ def main():
     C.init_device_log(run)
     import pandas as pd
     lines, best = [], {}
+    max_caps0 = S["MAX_CAPS"]
     for name in DATASETS:
         prob, info = R.load_problem(name)
+        S["MAX_CAPS"] = min(max_caps0, prob.n - 1)          # never more capacitors than pads (stages beyond would stack parts on one pad)
         run.lg.info("STAGE | %s", info)
         lines.append(f"{name}: {info['ports']} ports, {info['models']} models, {info['n_freq']} freqs "
                      f"{info['f_lo']:.3g}-{info['f_hi']:.3g} Hz, bare peak {info['bare_peak']:.4g} ohm @ {info['bare_peak_f']:.3g} Hz")

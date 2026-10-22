@@ -1,0 +1,97 @@
+PARALLEL STUDY REPORT   methods: 8 single-thread pinned jobs; pure_python: 16 single-thread pinned jobs on disjoint physical cores; BLAS=1
+
+== pcb28full 50x15: hits, time to target (successful runs), speedup vs numpy ==
+   target method          hit     mean s   median s  caps    evals       best  x numpy
+      140 numpy         4/4       613.87     629.11  10.0     7047     135.15    1.00x
+      140 solve         4/4       382.29     392.67  10.0     7047     135.15    1.61x
+      140 sm            4/4      1233.87    1241.28  10.0     7047     135.15    0.50x
+      140 iterative     4/4      1154.22    1158.18   9.2     6480     135.15    0.53x
+      130 numpy         4/4       780.99     798.69  12.5     8955     127.23    1.00x
+      130 solve         4/4       486.45     498.03  12.5     8955     127.23    1.61x
+      130 sm            4/4      1817.21    1856.63  12.5     8955     127.23    0.43x
+      130 iterative     4/4      1478.50    1612.07  11.8     8417     127.67    0.53x
+      125 numpy         3/4       750.41     793.92  12.3     8921     122.33    1.00x
+      125 solve         3/4       485.40     529.64  12.3     8921     122.33    1.55x
+      125 sm            3/4      1752.14    2028.17  12.3     8921     122.33    0.43x
+      125 iterative     3/4      1400.61    1591.63  11.3     8206     121.31    0.54x
+      120 numpy         1/4       615.99     615.99  11.0     7557     119.49    1.00x
+      120 solve         1/4       413.25     413.25  11.0     7557     119.49    1.49x
+      120 sm            1/4      1268.89    1268.89  11.0     7557     119.49    0.49x
+      120 iterative     0/4          nan        nan   nan      nan     120.22        -
+
+== pcb28full 100x40: hits, time to target (successful runs), speedup vs numpy ==
+   target method          hit     mean s   median s  caps    evals       best  x numpy
+      140 numpy         4/4      1445.97    1445.05   4.5    16689     132.52    1.00x
+      140 solve         4/4       871.38     871.68   4.5    16689     132.52    1.66x
+      140 sm            4/4      1716.90    1758.94   4.8    17518     133.38    0.84x
+      140 iterative     4/4      2775.90    2625.39   4.2    15947     132.52    0.52x
+      130 numpy         4/4      2307.39    1766.93   7.0    26450     125.24    1.00x
+      130 solve         4/4      1383.48    1060.69   7.0    26450     125.24    1.67x
+      130 sm            4/4      4204.76    2473.84   7.5    27466     125.24    0.55x
+      130 iterative     4/4      4564.20    3566.73   6.5    23712     122.19    0.51x
+      125 numpy         4/4      2456.62    1842.59   7.8    27530     121.66    1.00x
+      125 solve         4/4      1440.28    1100.46   7.8    27530     121.66    1.71x
+      125 sm            4/4      5323.32    3941.07   8.2    30474     121.66    0.46x
+      125 iterative     4/4      4992.17    4364.20   6.8    24504     122.19    0.49x
+      120 numpy         4/4      3644.22    3700.42  10.0    38214     119.13    1.00x
+      120 solve         4/4      2014.30    2076.60  10.0    38214     119.13    1.81x
+      120 sm            4/4      7830.67    7639.84  10.0    37482     119.13    0.47x
+      120 iterative     4/4      7602.93    8048.19   9.2    36548     119.13    0.48x
+
+== ref21 50x15: hits, time to target (successful runs), speedup vs numpy ==
+   target method          hit     mean s   median s  caps    evals       best  x numpy
+     0.06 numpy         4/4        59.30      63.38   3.2     2062   0.058417    1.00x
+     0.06 solve         4/4        31.91      31.94   3.2     2062   0.058417    1.86x
+     0.06 sm            4/4        31.10      33.50   3.2     2062   0.058417    1.91x
+     0.06 iterative     4/4        65.62      70.34   3.8     2068   0.058702    0.90x
+     0.05 numpy         4/4        96.60      95.63   5.2     3359   0.048877    1.00x
+     0.05 solve         4/4        52.26      48.54   5.2     3359   0.048877    1.85x
+     0.05 sm            4/4        67.01      60.75   5.2     3359   0.048877    1.44x
+     0.05 iterative     4/4       109.30     106.29   5.5     3394   0.048948    0.88x
+    0.045 numpy         4/4       137.11     136.61   7.2     4758   0.044532    1.00x
+    0.045 solve         4/4        74.22      70.66   7.2     4758   0.044532    1.85x
+    0.045 sm            4/4       117.62     114.57   7.2     4758   0.044532    1.17x
+    0.045 iterative     4/4       146.27     148.57   7.2     4723   0.044085    0.94x
+
+== ref21 100x40: hits, time to target (successful runs), speedup vs numpy ==
+   target method          hit     mean s   median s  caps    evals       best  x numpy
+     0.06 numpy         4/4       230.85     229.14   3.0     8212   0.059543    1.00x
+     0.06 solve         4/4       128.55     126.09   3.0     8212   0.059543    1.80x
+     0.06 sm            4/4       118.42     116.77   3.0     8212   0.059543    1.95x
+     0.06 iterative     4/4       308.41     316.23   3.0     9114   0.058788    0.75x
+     0.05 pure_python   2/2     40485.51   40485.51   4.5    15402   0.049231        -
+     0.05 numpy         4/4       467.17     486.77   4.5    15582   0.049231    1.00x
+     0.05 solve         4/4       244.93     247.13   4.5    15582   0.049231    1.91x
+     0.05 sm            4/4       307.41     304.26   4.5    15582   0.049231    1.52x
+     0.05 iterative     4/4       565.60     550.13   5.0    16755   0.048551    0.83x
+    0.045 pure_python   2/2     64083.07   64083.07   7.0    24158   0.044457        -
+    0.045 numpy         4/4       676.21     671.36   7.0    24208   0.044457    1.00x
+    0.045 solve         4/4       380.35     379.52   7.0    24208   0.044457    1.78x
+    0.045 sm            4/4       608.42     625.47   7.0    24208   0.044457    1.11x
+    0.045 iterative     4/4       717.17     701.54   6.8    23106   0.044503    0.94x
+
+== pure_python slowdown: loaded s/eval (pause-adjusted wall / evals; runs that overlapped the method window by >= 90 %) / idle s/eval (short_baseline) ==
+   ref21      loaded 2.643 s/eval (4 of 4 runs)   all runs 2.643   idle nan s/eval   slowdown nanx
+   3B ran concurrently with the methods, so the primary pure_python timings below are LOADED times; the idle-corrected value is loaded time / slowdown.
+
+== pure_python time to target per (pdn, swarm, target): measured vs projected ==
+pdn        swarm     target status     done  pure s (loaded)  projected s  calib err  idle-corr s
+ref21      100x40      0.05 measured   2/2            40486        41189     +1.7 %            -
+ref21      100x40     0.045 measured   2/2            64083        63989     -0.1 %            -
+
+== speedup vs pure_python (measured pure_python time / mean method time-to-target) ==
+pdn        swarm     target      numpy      solve         sm  iterative
+ref21      100x40      0.05        87x       165x       132x        72x
+ref21      100x40     0.045        95x       168x       105x        89x
+
+== speedup vs pure_python (projected pure_python time / mean method time-to-target) ==
+pdn        swarm     target      numpy      solve         sm  iterative
+ref21      100x40      0.05        88x       168x       134x        73x
+ref21      100x40     0.045        95x       168x       105x        89x
+
+== methods: loaded vs idle (easiest target, run 1, same seed; loaded = 8 method + 16 pure jobs, idle = 3B paused) ==
+pdn        swarm   method     evals ==   loaded s     idle s  slowdown  loaded s/eval  idle s/eval
+pcb28full  50x15   numpy          True      553.4      394.3     1.40x         0.0872       0.0621
+pcb28full  50x15   solve          True      344.0      234.8     1.47x         0.0542       0.0370
+
+methods: 8 single-thread pinned jobs; pure_python: 16 single-thread pinned jobs on disjoint physical cores; BLAS=1

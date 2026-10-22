@@ -1,0 +1,224 @@
+{
+ "pool_M": [
+  1,
+  2,
+  3,
+  4,
+  16,
+  17,
+  18,
+  19
+ ],
+ "pool_P": [
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27
+ ],
+ "cores": {
+  "1": {
+   "socket": 0,
+   "core": 1,
+   "siblings": [
+    1,
+    33
+   ]
+  },
+  "2": {
+   "socket": 0,
+   "core": 2,
+   "siblings": [
+    2,
+    34
+   ]
+  },
+  "3": {
+   "socket": 0,
+   "core": 3,
+   "siblings": [
+    3,
+    35
+   ]
+  },
+  "4": {
+   "socket": 0,
+   "core": 4,
+   "siblings": [
+    4,
+    36
+   ]
+  },
+  "16": {
+   "socket": 1,
+   "core": 16,
+   "siblings": [
+    16,
+    48
+   ]
+  },
+  "17": {
+   "socket": 1,
+   "core": 17,
+   "siblings": [
+    17,
+    49
+   ]
+  },
+  "18": {
+   "socket": 1,
+   "core": 18,
+   "siblings": [
+    18,
+    50
+   ]
+  },
+  "19": {
+   "socket": 1,
+   "core": 19,
+   "siblings": [
+    19,
+    51
+   ]
+  },
+  "5": {
+   "socket": 0,
+   "core": 5,
+   "siblings": [
+    5,
+    37
+   ]
+  },
+  "6": {
+   "socket": 0,
+   "core": 6,
+   "siblings": [
+    6,
+    38
+   ]
+  },
+  "7": {
+   "socket": 0,
+   "core": 7,
+   "siblings": [
+    7,
+    39
+   ]
+  },
+  "8": {
+   "socket": 0,
+   "core": 8,
+   "siblings": [
+    8,
+    40
+   ]
+  },
+  "9": {
+   "socket": 0,
+   "core": 9,
+   "siblings": [
+    9,
+    41
+   ]
+  },
+  "10": {
+   "socket": 0,
+   "core": 10,
+   "siblings": [
+    10,
+    42
+   ]
+  },
+  "11": {
+   "socket": 0,
+   "core": 11,
+   "siblings": [
+    11,
+    43
+   ]
+  },
+  "12": {
+   "socket": 0,
+   "core": 12,
+   "siblings": [
+    12,
+    44
+   ]
+  },
+  "20": {
+   "socket": 1,
+   "core": 20,
+   "siblings": [
+    20,
+    52
+   ]
+  },
+  "21": {
+   "socket": 1,
+   "core": 21,
+   "siblings": [
+    21,
+    53
+   ]
+  },
+  "22": {
+   "socket": 1,
+   "core": 22,
+   "siblings": [
+    22,
+    54
+   ]
+  },
+  "23": {
+   "socket": 1,
+   "core": 23,
+   "siblings": [
+    23,
+    55
+   ]
+  },
+  "24": {
+   "socket": 1,
+   "core": 24,
+   "siblings": [
+    24,
+    56
+   ]
+  },
+  "25": {
+   "socket": 1,
+   "core": 25,
+   "siblings": [
+    25,
+    57
+   ]
+  },
+  "26": {
+   "socket": 1,
+   "core": 26,
+   "siblings": [
+    26,
+    58
+   ]
+  },
+  "27": {
+   "socket": 1,
+   "core": 27,
+   "siblings": [
+    27,
+    59
+   ]
+  }
+ }
+}

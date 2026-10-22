@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Baseline: the ORIGINAL pure-Python fitness (SB.py 'pure_python': Gauss-Jordan on plain lists, no numpy in the inversion)
-inside the same PSO, on the 28-port PDN (netA) with the Murata library. 5 runs by default, at EVERY target (targets of full28_study/thresholds.json, easiest first), round-robin: run 1 of every target, then run 2 of every target, ... The inversion routine is core._gauss_jordan_inverse, taken unchanged
+inside the same PSO, on the FULL 28x28 PDN (NET=netA for the 12x12 reduction), max 14 decaps like full28_study, Murata library. 5 runs by default, at EVERY target (targets of full28_study/thresholds.json, easiest first), round-robin: run 1 of every target, then run 2 of every target, ... The inversion routine is core._gauss_jordan_inverse, taken unchanged
 from SB.py; only the library rows are converted to lists lazily (a full 16171x2828 list copy would need ~2 GB).
 
   python pso_pcb28_pure.py --validate        # also times one fitness evaluation and prints an ETA
@@ -16,6 +16,11 @@ import pso_pcb28 as base
 core = base.core
 core.BANDS.clear(); core.BANDS["B3G"] = None
 core.N_PARTICLES = int(os.environ.get("N_PARTICLES", 50)); core.N_ITERATIONS = int(os.environ.get("N_ITERATIONS", 15))
+FLOOR_OHM = 117.18        # lowest peak |Z11| reached on the 28-port PDN; targets must lie above it
+NET = os.environ.get("NET", "full")     # full = 28x28 (same network as the full28_study methods); netA = 12x12 reduction
+MAX_CAPS = int(os.environ.get("MAX_CAPS", 14))
+PROB = (dict(name="pcb28_full", path=os.path.join(base.BOARD, "y_pcb28.mat"), n_obs=1, obs_labels=["port1"]) if NET == "full" else
+        dict(name="pcb28_netA", path=os.path.join(base.BOARD, "y_pcb_netA.mat"), n_obs=1, obs_labels=["port1"]))
 core.TIME_LIMIT_S = float(os.environ.get("TIME_LIMIT_S", 7 * 24 * 3600))
 _rows = {}
 def inv_pure_python(prob, config, f):                          # same math as core.inv_pure_python, lazy library rows
@@ -32,12 +37,14 @@ LEVELS = os.environ.get("LEVELS", ",".join(sorted(T, key=lambda k: -T[k]))).spli
 OUT = os.environ.get("OUT", os.path.join(H, "results"))
 
 if __name__ == "__main__":
-    core.library(); prob = core.Problem(**base.PROBLEMS[0])
+    core.library(); prob = core.Problem(**PROB)
+    assert prob.N == (28 if NET == "full" else 12)
+    bare = float(np.max(core.bare_peaks(prob)["B3G"])); assert all(FLOOR_OHM < T[k] < bare for k in LEVELS), f"a target is outside (floor {FLOOR_OHM}, bare {bare})"
     cfg = [(5, 1), (700, 3), (9000, 7)]
     t0 = time.perf_counter(); zp = core.peaks_all_bands(prob, cfg, "pure_python")["B3G"].max(); tp = time.perf_counter() - t0
     zn = core.peaks_all_bands(prob, cfg, "numpy")["B3G"].max()
     print(f"pure_python vs numpy on one placement: {zp:.9g} vs {zn:.9g} (rel diff {abs(zp-zn)/zn:.2e}); one evaluation {tp:.2f} s")
-    assert abs(zp - zn) / zn < 1e-8
+    assert abs(zp - zn) / zn < 1e-4, "pure_python deviates from numpy by more than 1e-4"   # ~1e-5 on the ill-conditioned 28x28 (list arithmetic), 1e-16 on 12x12/21-port
     ev_stage = core.N_PARTICLES * core.N_ITERATIONS
     print(f"ETA: one PSO stage = {ev_stage} evals = {ev_stage*tp/3600:.1f} h; a run needs >= 1 stage per capacitor (T3 typically 1-2 stages)")
     if "--validate" in sys.argv: sys.exit(0)
@@ -46,6 +53,6 @@ if __name__ == "__main__":
         for lvl in LEVELS:
             print(f"[{time.strftime('%H:%M:%S')}] pure_python {lvl}={T[lvl]:g} run {run}/{NUM_RUNS}", flush=True)
             r = core.run_pso(prob, "pure_python", run, os.path.join(OUT, prob.name, "pure_python", lvl, f"run_{run}"), res,
-                             out_root=OUT, threshold=T[lvl], level=lvl)
+                             out_root=OUT, threshold=T[lvl], level=lvl, max_caps=MAX_CAPS)
             print(f"    best {r['best_peak_ohm']['B3G']:.6g} ohm @ {r['best_n_caps']} caps, {r['total_wall_time_s']:.0f}s, "
                   + (f"hit in {r['time_to_target_s']:.0f}s" if r["success"] else "target not met (timed_out=%s)" % r["timed_out"]), flush=True)
