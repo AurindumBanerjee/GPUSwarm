@@ -57,7 +57,13 @@ N_PARTICLES = 100      # was 50 in SB.py; raised to search harder for the floor
 N_ITERATIONS = 40      # was 15
 W_MAX, W_MIN = 0.9, 0.4
 C1, C2 = 1.5, 1.5
-N_WARM_START = 20
+# Warm start is a PERCENTAGE of the swarm: 20 -> 20 % of N_PARTICLES (100x40: 20 particles, 50x15: 10). Resolved at use time because drivers set N_PARTICLES after import.
+# Legacy absolute override: env N_WARM_START=<count> (takes precedence when set).
+WARM_START_PCT = float(os.environ.get("WARM_START_PCT", 20))
+N_WARM_START_ABS = int(os.environ["N_WARM_START"]) if os.environ.get("N_WARM_START") else None
+def n_warm_count():
+    if N_WARM_START_ABS is not None: return min(N_WARM_START_ABS, N_PARTICLES)
+    return min(int(round(WARM_START_PCT / 100.0 * N_PARTICLES)), N_PARTICLES)
 # Jitter OFF: the warm block carries prev_best verbatim ("naive" warm start).
 # SB.py's FIX 11 added an exact elite plus Gaussian jitter on the carried genes,
 # on the argument that identical carried genes freeze those dimensions. The
@@ -367,7 +373,7 @@ def bare_peaks(prob, method="numpy"):
 # ============================================================
 
 def seed_particles(n_caps, prev_best):
-    n_warm = min(N_WARM_START, N_PARTICLES)
+    n_warm = n_warm_count()
     if prev_best is None or n_caps == 1 or n_warm == 0:
         return np.random.rand(N_PARTICLES, 2 * n_caps)
 
@@ -494,11 +500,11 @@ def run_pso(prob, method, run_id, out_folder, results_path,
     # Effective warm count. If it equals the swarm, there is no random
     # remainder and the carried dimensions cannot move (the failure FIX 11
     # exists to prevent), so refuse rather than run a degenerate swarm.
-    n_warm_eff = min(N_WARM_START, N_PARTICLES)
+    n_warm_eff = n_warm_count()
     if N_PARTICLES > 1 and n_warm_eff >= N_PARTICLES:
         raise ValueError(
-            f"N_WARM_START={N_WARM_START} >= N_PARTICLES={N_PARTICLES}: the whole "
-            f"swarm would be warm with no random remainder. Lower N_WARM_START.")
+            f"warm start {n_warm_eff} ({WARM_START_PCT}%) >= N_PARTICLES={N_PARTICLES}: the whole "
+            f"swarm would be warm with no random remainder. Lower WARM_START_PCT.")
 
     log.info("RUN_START | prob=%s | N=%d n_obs=%d pads=%d | method=%s | run=%d | "
              "particles=%d iters=%d seed=%d warm=%d/%d jitter=%.4f | band=%s | "

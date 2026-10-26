@@ -68,7 +68,7 @@ def plan():
 # ----------------------------------------------------------------------------------------------------------------- worker
 def worker(swarm, method, lvl, run, smoke=False):
     out = os.environ["OUT"]; run = int(run); P, I = (int(x) for x in swarm.split("x"))
-    os.environ.update(N_PARTICLES=str(P), N_ITERATIONS=str(I), METHODS=method, TIME_LIMIT_S=TIME_LIMIT_S, STUDY_THREADS="1", NET="full", MAX_CAPS=str(ALLOW))
+    os.environ.update(N_PARTICLES=str(P), N_ITERATIONS=str(I), METHODS=method, TIME_LIMIT_S=TIME_LIMIT_S, STUDY_THREADS="1", NET="full", MAX_CAPS=str(ALLOW), WARM_START_PCT=("40" if swarm == "50x15" else "20"))   # study 1 used 20 absolute warm particles = 40 % of 50, 20 % of 100
     sys.path.insert(0, os.path.join(ROOT, "PSO_PCB28", "full28_study")); d = __import__("pso_full28"); core = d.core; core.library(); prob = core.Problem(**d.PROB)
     assert prob.N - prob.n_obs == len(prob.pads) == prob.max_caps == ALLOW == prob.N - 1, (prob.N, prob.n_obs, len(prob.pads), prob.max_caps)
     assert core.N_PARTICLES == P and core.N_ITERATIONS == I, (core.N_PARTICLES, core.N_ITERATIONS)

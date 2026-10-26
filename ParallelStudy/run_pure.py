@@ -50,6 +50,7 @@ def worker(pdn, sw, target, run):
     P, I = (int(x) for x in sw.split("x")); out = os.environ["OUT"]; target = float(target); run = int(run)
     os.environ.update(N_PARTICLES=str(P), N_ITERATIONS=str(I), TIME_LIMIT_S=os.environ.get("TIME_LIMIT_S", TIME_LIMIT_S))
     os.environ.update(dict(NET="full", MAX_CAPS="14") if pdn == "pcb28full" else dict(LIB="ref"))       # LIB must NOT be set for the 28-port drivers (default murata)
+    os.environ.setdefault("WARM_START_PCT", "40" if P == 50 else "20")      # study 1 used 20 warm particles at both swarm sizes (40 % of 50, 20 % of 100)
     cfg = PDNS[pdn]; sys.path.insert(0, cfg["dir"]); d = __import__(cfg["mod"]); core = d.core
     os.makedirs(out, exist_ok=True)
     if pdn == "pcb28full":

@@ -8,7 +8,7 @@ Run-major round-robin over thresholds (run 1 of every target, then run 2, ...).
   NUM_RUNS=5 python pso_ref21_pure.py
 env: LIB (ref | murata; default ref), TARGETS (0.06,0.05,0.045 ohm, hardest listed last -> run easiest first), NUM_RUNS (5),
      N_PARTICLES/N_ITERATIONS (50/15), TIME_LIMIT_S (1 week), OUT, DATA
-Warm start: core.N_WARM_START = 20 particles per stage (the rest random), unchanged."""
+Warm start: core.WARM_START_PCT = 20 % of the swarm per stage (the rest random)."""
 import os, sys, json, time
 H = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, os.path.dirname(H))
 os.environ.setdefault("LIB", "ref")
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     print(f"[{LIB}] pure_python vs numpy: {zp:.9g} vs {zn:.9g} (rel {abs(zp-zn)/zn:.2e}); one evaluation {tp:.2f} s; bare {bare:.5g} ohm")
     assert abs(zp - zn) / zn < 1e-8
     ev = core.N_PARTICLES * core.N_ITERATIONS
-    print(f"warm start: {min(core.N_WARM_START, core.N_PARTICLES)} of {core.N_PARTICLES} particles; ETA one stage = {ev} evals = {ev*tp/3600:.2f} h")
+    print(f"warm start: {core.n_warm_count()} of {core.N_PARTICLES} particles; ETA one stage = {ev} evals = {ev*tp/3600:.2f} h")
     if "--validate" in sys.argv: sys.exit(0)
     out = os.path.join(OUT, LIB); res = os.path.join(out, "results_long.jsonl"); os.makedirs(out, exist_ok=True)
     for run in range(1, NUM_RUNS + 1):
