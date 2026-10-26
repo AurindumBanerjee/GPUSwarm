@@ -1,2 +1,19 @@
-runs compared 0 | controls 0: reproduced 0, NOT reproduced 0
-previously missed 0: now hit 0
+runs compared 128 | controls 111: reproduced 111, NOT reproduced 0
+previously missed 17: now hit 12
+  50x15 iterative T1 run 1: s1 120.22 ohm @ 13 caps -> s2 120.13 ohm @ 18 caps, success=False, 3988 s
+  50x15 iterative T1 run 2: s1 127.93 ohm @ 14 caps -> s2 124.23 ohm @ 26 caps, success=False, 3912 s
+  50x15 iterative T1 run 3: s1 122.32 ohm @ 14 caps -> s2 118.16 ohm @ 17 caps, success=True, 2263 s
+  50x15 iterative T1 run 4: s1 121.78 ohm @ 14 caps -> s2 119.72 ohm @ 16 caps, success=True, 2321 s
+  50x15 iterative T2 run 2: s1 127.93 ohm @ 14 caps -> s2 124.50 ohm @ 15 caps, success=True, 2111 s
+  50x15 numpy     T1 run 2: s1 127.93 ohm @ 14 caps -> s2 124.23 ohm @ 26 caps, success=False, 1687 s
+  50x15 numpy     T1 run 3: s1 122.32 ohm @ 14 caps -> s2 118.16 ohm @ 17 caps, success=True, 1002 s
+  50x15 numpy     T1 run 4: s1 121.78 ohm @ 14 caps -> s2 119.72 ohm @ 16 caps, success=True, 951 s
+  50x15 numpy     T2 run 2: s1 127.93 ohm @ 14 caps -> s2 124.50 ohm @ 15 caps, success=True, 892 s
+  50x15 sm        T1 run 2: s1 127.93 ohm @ 14 caps -> s2 124.23 ohm @ 26 caps, success=False, 8571 s
+  50x15 sm        T1 run 3: s1 122.32 ohm @ 14 caps -> s2 118.16 ohm @ 17 caps, success=True, 3253 s
+  50x15 sm        T1 run 4: s1 121.78 ohm @ 14 caps -> s2 119.72 ohm @ 16 caps, success=True, 2858 s
+  50x15 sm        T2 run 2: s1 127.93 ohm @ 14 caps -> s2 124.50 ohm @ 15 caps, success=True, 2598 s
+  50x15 solve     T1 run 2: s1 127.93 ohm @ 14 caps -> s2 124.23 ohm @ 26 caps, success=False, 1015 s
+  50x15 solve     T1 run 3: s1 122.32 ohm @ 14 caps -> s2 118.16 ohm @ 17 caps, success=True, 592 s
+  50x15 solve     T1 run 4: s1 121.78 ohm @ 14 caps -> s2 119.72 ohm @ 16 caps, success=True, 591 s
+  50x15 solve     T2 run 2: s1 127.93 ohm @ 14 caps -> s2 124.50 ohm @ 15 caps, success=True, 527 s
