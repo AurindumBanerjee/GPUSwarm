@@ -1,0 +1,231 @@
+{
+ "_comment": "AllCPU targets. pdn1/pdn2: whole-number targets of the earlier studies (hardest = T1), unchanged. pdn3/pdn4: stored per data configuration <grid>_<library> and per band; floors are FILLED BY floor_pass.py (null = not derived yet; the runners refuse to start on a null). PDN 3/4 levels (levels_mode=frac): level = floor + g x (bare - floor), g = levels_frac (T3 easiest .. T1 hardest) -- always inside (floor, bare); levels_mode=mult would use floor x levels_mult. For pdn3 the objective is the ratio max_k peak_k/floor_k (floor = 1 in ratio units). ref_floor_exp2_b50 = DecapStudy2 floors on the 99.66 MHz set (sanity only, not used).",
+ "levels_mode": "frac",
+ "levels_frac": {
+  "T3": 0.5,
+  "T2": 0.25,
+  "T1": 0.1
+ },
+ "levels_mult": {
+  "T3": 1.5,
+  "T2": 1.25,
+  "T1": 1.1
+ },
+ "pdn1": {
+  "BFULL": {
+   "floor_ohm": 0.0405,
+   "levels_ohm": {
+    "T3": 0.06,
+    "T2": 0.05,
+    "T1": 0.045
+   }
+  }
+ },
+ "pdn2": {
+  "B3G": {
+   "floor_ohm": 117.18,
+   "levels_ohm": {
+    "T4": 140.0,
+    "T3": 130.0,
+    "T2": 125.0,
+    "T1": 120.0
+   }
+  }
+ },
+ "pdn3": {
+  "1g_combined": {
+   "B20": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    }
+   },
+   "B50": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    },
+    "ref_floor_exp2_b50": {
+     "mer1": 1.587955549292058,
+     "mer2": 0.7116035309200393,
+     "pll1v0": 1.0335049464958412,
+     "pll1v8": 11.46782662941879,
+     "mphyvdd": 1.0786993944109011
+    }
+   },
+   "B200": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    }
+   },
+   "B1G": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    }
+   }
+  },
+  "1g_murata": {
+   "B20": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    }
+   },
+   "B50": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    },
+    "ref_floor_exp2_b50": {
+     "mer1": 1.587955549292058,
+     "mer2": 0.7116035309200393,
+     "pll1v0": 1.0335049464958412,
+     "pll1v8": 11.46782662941879,
+     "mphyvdd": 1.0786993944109011
+    }
+   },
+   "B200": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    }
+   },
+   "B1G": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    }
+   }
+  },
+  "5g_murata": {
+   "B20": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    }
+   },
+   "B50": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    },
+    "ref_floor_exp2_b50": {
+     "mer1": 1.587955549292058,
+     "mer2": 0.7116035309200393,
+     "pll1v0": 1.0335049464958412,
+     "pll1v8": 11.46782662941879,
+     "mphyvdd": 1.0786993944109011
+    }
+   },
+   "B200": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    }
+   },
+   "B1G": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    }
+   },
+   "B5G": {
+    "floors_ohm": {
+     "mer1": null,
+     "mer2": null,
+     "pll1v0": null,
+     "pll1v8": null,
+     "mphyvdd": null
+    }
+   }
+  }
+ },
+ "pdn4": {
+  "1g_combined": {
+   "B20": {
+    "floor_ohm": null
+   },
+   "B50": {
+    "floor_ohm": null,
+    "ref_floor_exp2_b50": 0.0703138200395421
+   },
+   "B200": {
+    "floor_ohm": null
+   },
+   "B1G": {
+    "floor_ohm": null
+   }
+  },
+  "1g_murata": {
+   "B20": {
+    "floor_ohm": null
+   },
+   "B50": {
+    "floor_ohm": null,
+    "ref_floor_exp2_b50": 0.0703138200395421
+   },
+   "B200": {
+    "floor_ohm": null
+   },
+   "B1G": {
+    "floor_ohm": null
+   }
+  },
+  "5g_murata": {
+   "B20": {
+    "floor_ohm": null
+   },
+   "B50": {
+    "floor_ohm": null,
+    "ref_floor_exp2_b50": 0.0703138200395421
+   },
+   "B200": {
+    "floor_ohm": null
+   },
+   "B1G": {
+    "floor_ohm": null
+   },
+   "B5G": {
+    "floor_ohm": null
+   }
+  }
+ }
+}
