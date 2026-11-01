@@ -1,0 +1,4 @@
+{"event": "start", "pdn": "pdn1", "swarm": "20x2", "method": "numpy", "cpu": 0, "pid": 12, "start_utc": "2026-10-31T21:29:59Z", "loadavg_start": [0.48, 0.54, 0.32]}
+{"event": "start", "pdn": "pdn1", "swarm": "20x2", "method": "solve", "cpu": 1, "pid": 13, "start_utc": "2026-10-31T21:29:59Z", "loadavg_start": [0.48, 0.54, 0.32]}
+{"event": "end", "pdn": "pdn1", "swarm": "20x2", "method": "numpy", "cpu": 0, "start_utc": "2026-10-31T21:29:59Z", "end_utc": "2026-10-31T21:30:09Z", "exit_code": 0, "loadavg_start": [0.48, 0.54, 0.32], "loadavg_end": [0.55, 0.56, 0.33], "wall_s": 10}
+{"event": "end", "pdn": "pdn1", "swarm": "20x2", "method": "solve", "cpu": 1, "start_utc": "2026-10-31T21:29:59Z", "end_utc": "2026-10-31T21:30:09Z", "exit_code": 0, "loadavg_start": [0.48, 0.54, 0.32], "loadavg_end": [0.55, 0.56, 0.33], "wall_s": 10}

@@ -232,3 +232,4 @@ GPUExperiments/finish.py
 # Plots and per-run logs stay on disk (laptop and server) but are not versioned
 *.png
 logs/
+!reference/output_style/**

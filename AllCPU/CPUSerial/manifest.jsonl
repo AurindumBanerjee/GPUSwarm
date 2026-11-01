@@ -1,0 +1,2 @@
+{"event": "start", "pdn": "pdn1", "swarm": "20x2", "method": "solve", "start_utc": "2026-10-31T21:29:22Z", "loadavg_start": [0.25, 0.51, 0.3]}
+{"event": "end", "pdn": "pdn1", "swarm": "20x2", "method": "solve", "end_utc": "2026-10-31T21:29:46Z", "exit_code": 0, "wall_s": 24}
