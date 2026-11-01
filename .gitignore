@@ -229,7 +229,13 @@ runs/*/*/logs/
 .vscode/
 GPUExperiments/finish.py
 
-# Plots and per-run logs stay on disk (laptop and server) but are not versioned
-*.png
+# Plots and logs (see GIT_POLICY.md). Per-run plots and logs stay on disk (laptop and server) but are not versioned;
+# summary-level plots (plots/, figs/, reference/) are tracked.
 logs/
+run_plot.png
+global_convergence.png
+impedance.png
+placement.png
+!**/plots/**
+!**/figs/**
 !reference/output_style/**
