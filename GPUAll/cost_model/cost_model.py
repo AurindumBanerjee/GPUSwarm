@@ -28,6 +28,23 @@ import argparse
 import itertools
 
 import numpy as np
+try:
+    import tabulate  # noqa: F401  -- DataFrame.to_markdown needs it; the server has no internet to install it, so fall back to a plain pipe-table writer
+except ImportError:
+    import pandas as _pd
+
+    def _to_markdown(self, buf=None, mode="wt", index=True, **kwargs):
+        df = self.reset_index() if index else self
+        cols = [" | ".join(map(str, c)) if isinstance(c, tuple) else str(c) for c in df.columns]
+        fmt = lambda v: format(v, "g") if isinstance(v, float) else str(v)
+        rows = [[fmt(v) for v in r] for r in df.itertuples(index=False, name=None)]
+        w = [max([len(c)] + [len(r[i]) for r in rows]) for i, c in enumerate(cols)]
+        line = lambda cells: "| " + " | ".join(c.ljust(w[i]) for i, c in enumerate(cells)) + " |"
+        out = "\n".join([line(cols), "|" + "|".join("-" * (x + 2) for x in w) + "|"] + [line(r) for r in rows])
+        if buf is None:
+            return out
+        buf.write(out)
+    _pd.DataFrame.to_markdown = _to_markdown
 
 H = os.path.dirname(os.path.abspath(__file__))
 ap = argparse.ArgumentParser()
