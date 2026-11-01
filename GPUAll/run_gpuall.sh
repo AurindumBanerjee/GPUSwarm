@@ -7,6 +7,7 @@ G="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; export GPUSWARM_ROOT="$(dirna
 STEPS=floor,study,greedy,cost,compare; QUICK=0; EXTRA=()
 while [ $# -gt 0 ]; do case $1 in --steps) STEPS=$2; shift 2;; --quick) QUICK=1; shift;; *) EXTRA+=("$1"); shift;; esac; done
 source /DATA/Aurindum/conda/etc/profile.d/conda.sh 2>/dev/null && conda activate gpuwork
+ulimit -n "$(ulimit -Hn)" 2>/dev/null     # the study leaks file handles over thousands of runs (EMFILE at 1024)
 export ALLCPU_GRID=${ALLCPU_GRID:-5g} ALLCPU_LIB=${ALLCPU_LIB:-murata}
 if [ $QUICK = 1 ]; then Q=(--swarms 50x15 --runs 1 --levels T3 --numpy-swarms 50x15); CQ=--quick; else Q=(); CQ=; fi
 echo "GPUAll start $(date) steps=$STEPS cfg=${ALLCPU_GRID}_${ALLCPU_LIB} quick=$QUICK"; nvidia-smi --query-gpu=name,memory.used --format=csv
