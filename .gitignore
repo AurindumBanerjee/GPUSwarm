@@ -228,3 +228,7 @@ runs/*/*/logs/
 *.before_*
 .vscode/
 GPUExperiments/finish.py
+
+# Plots and per-run logs stay on disk (laptop and server) but are not versioned
+*.png
+logs/
