@@ -48,3 +48,4 @@ Every run has its own folder: code/ (exact copy), output/ and logs/ (raw, git-ig
 | gpu_round2/run_q4_optimizer_comparison_full1 | created | 2026-10-12 | Search Q4: PSO vs DE vs GA vs SA on the same exact fitness and budget. | None q4_optimizer_comparison.py |
 | gpu_round2/run_v1_hard_target_stats_full1 | created | 2026-10-13 | Validation V1: 100 runs at the hard target, Wilson CIs, Fisher tests, time per success. | None v1_hard_target_stats.py |
 | gpu_round2/run_v2_more_pdns_full1 | created | 2026-10-13 | Validation V2: MPHY rails + DDR3 at relative targets (<= 50 MHz) + all MPHY rails combined. | None v2_more_pdns.py |
+| gpu_round2/run_v2_more_pdns_full2 | created | 2026-10-13 | Validation V2: MPHY rails + DDR3 at relative targets (<= 50 MHz) + all MPHY rails combined. | None v2_more_pdns.py |
