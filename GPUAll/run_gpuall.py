@@ -176,8 +176,7 @@ def study():
                             pool = G.GpuPool(ev, arm)
                             r = core.run_pso(prob, arm, k, folder, res, pool=pool, out_root=base, threshold=thr, level=lv)
                             with open(os.path.join(base, "pool_stats.jsonl"), "a") as fh:     # cache / pruning counters (AllCPU records lack them)
-                                fh.write(json.dumps({"rank_band": b, "threshold_level": lv, "run_id": k, **pool.stats()}) + "
-")
+                                fh.write(json.dumps({"rank_band": b, "threshold_level": lv, "run_id": k, **pool.stats()}) + "\n")
                         else:
                             r = S.run_search(cell, ev, arm, k, folder, res, threshold=thr, level=lv, polisher=pol, out_root=base)
                         log(f"   {key} {sw} {arm} {b} {lv}={thr:.6g} run {k}: best {r['best_cost']:.6g} @ {r['best_n_caps']} caps, "
