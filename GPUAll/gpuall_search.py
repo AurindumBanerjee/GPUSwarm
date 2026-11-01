@@ -333,4 +333,7 @@ def run_search(cell, ev, arm, run_id, out_folder, results_path, threshold=None, 
     core.plot_convergence(histories, prob, out_folder, threshold)
     if best["config"]:
         core.plot_impedance(prob, best["config"], out_folder)
+    for h in list(log.handlers):                      # close the run log (one leaked handle per run otherwise)
+        h.close()
+        log.removeHandler(h)
     return rec

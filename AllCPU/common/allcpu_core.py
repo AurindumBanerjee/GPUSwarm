@@ -663,6 +663,9 @@ def run_pso(prob, method, run_id, out_folder, results_path,
     plot_convergence(histories, prob, out_folder, threshold)
     if best["config"]:
         plot_impedance(prob, best["config"], out_folder)
+    for h in list(log.handlers):                      # the run log stays open otherwise: one leaked handle per run
+        h.close()
+        log.removeHandler(h)
     return rec
 
 
