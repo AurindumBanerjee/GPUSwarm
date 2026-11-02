@@ -44,3 +44,6 @@ Outputs: `out_<cfg>/<pdn>/<swarm>/<arm>/` (AllCPU layout incl. per-run impedance
 * GPU arms vs AllCPU numpy: max relative difference ~5e-16 on every band.
 * PDN 1, 50x15, T3: woodbury_batch, fast, gpu_numpy and AllCPU's CPU numpy (job_worker.py) identical in best, caps and evaluations;
   3-observation-port ratio objective with pruning identical to numpy.
+
+## Accuracy limits per PDN
+The GPU-vs-CPU verification limit is 1e-8 (PDN 1, 3, 4) and 1e-6 for PDN 2, whose admittance matrix is ill-conditioned; see [PDN2_NOTES.md](PDN2_NOTES.md).

@@ -42,6 +42,10 @@ import allcpu_pdns as R                                         # noqa: E402
 import gpuall_eval as G                                         # noqa: E402
 import gpuall_search as S                                       # noqa: E402
 
+# Limit on the max relative deviation of the GPU arms vs AllCPU numpy. PDN 2's admittance matrix is ill-conditioned (cond up to 1.3e11, two ports
+# 4e-7 ohm apart), so double precision alone gives 1e-7-level differences between CPU LAPACK and cuSOLVER: a looser limit, see PDN2_NOTES.md.
+VERIFY_TOL = {"default": 1e-8, "pdn2": 1e-6}
+
 EXACT_ARMS = ["gpu_numpy", "woodbury_batch", "fast"]
 ALL_ARMS = EXACT_ARMS + list(S.SEARCH_ARMS)
 
@@ -131,7 +135,8 @@ def study():
         worst = G.verify(core, prob, ev)
         log(f"{R.SPEC[key]['label']}: N={prob.N} obs={prob.n_obs} pads={len(prob.pads)} F={prob.F} models={ev.C} device={G.DEV} | "
             f"verify vs CPU numpy (max rel, all bands): " + ", ".join(f"{m} {v:.1e}" for m, v in worst.items()))
-        assert max(worst.values()) < 1e-8, "GPU evaluation disagrees with AllCPU numpy"
+        tol = VERIFY_TOL.get(key, VERIFY_TOL["default"])
+        assert max(worst.values()) < tol, f"GPU evaluation disagrees with AllCPU numpy (limit {tol:g}; see PDN2_NOTES.md)"
         pol = S.Polisher(ev) if any(x.endswith("polish") for x in arms) else None
         if pol is not None:
             log(f"   R-L-C fit of the library: median relative |Z| error {float(pol.fit_err.median()):.3g}")
