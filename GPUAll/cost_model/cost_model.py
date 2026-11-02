@@ -68,6 +68,7 @@ if a.quick:
 else:
     GRID_N, GRID_K, GRID_F, GRID_B = [11, 21, 41, 79, 121], [1, 2, 5, 10, 20, 40], [500, 1500, 3000], [50, 200]
 NOBS = [1, 5]
+SKIPPED = []                                        # measurement cells that do not fit in GPU memory (listed in decision.md)
 
 
 def rand_problem(N, F, C=256, seed=0):
@@ -162,6 +163,12 @@ def measure():
                                 Lr = Z0[:, :no, pp].transpose(2, 0, 1, 3)
                                 (Lr * np.swapaxes(X, -1, -2)).sum(-1)
                         else:
+                            est = 5 * 16 * F * B * k * k                  # gathered M + permuted copy + diag add + LU copy + result
+                            free = torch.cuda.mem_get_info()[0]
+                            if est > 0.8 * free:
+                                SKIPPED.append(f"gpu woodbury N={N} k={k} F={F} B={B} n_obs={no}: needs ~{est / 2**30:.1f} GiB, {free / 2**30:.1f} GiB free")
+                                print("  [skip]", SKIPPED[-1], flush=True)
+                                continue
                             mt = torch.from_numpy(mm).cuda()
                             pt = torch.from_numpy(pp).cuda()
 
@@ -171,7 +178,15 @@ def measure():
                                 X = torch.linalg.solve(M, Rr)
                                 Lr = Z0d[:, :no, pt].permute(2, 0, 1, 3)
                                 (Lr * X.transpose(-1, -2)).sum(-1)
-                        t = time_it(fn, dev, a.reps)
+                        try:
+                            t = time_it(fn, dev, a.reps)
+                        except torch.OutOfMemoryError:
+                            SKIPPED.append(f"gpu woodbury N={N} k={k} F={F} B={B} n_obs={no}: out of memory")
+                            print("  [skip]", SKIPPED[-1], flush=True)
+                            torch.cuda.empty_cache()
+                            continue
+                        if dev == "gpu":
+                            torch.cuda.empty_cache()
                         rows.append(dict(device=dev, method="woodbury", N=N, k=k, F=F, n_obs=no, B=B, t_call=t, t_eval=t / B))
                 print(f"  measured N={N} F={F} dev={dev}", flush=True)
     return rows
@@ -237,6 +252,8 @@ def main():
     P.to_csv(os.path.join(a.out, "predictions.csv"), index=False)
     lines = [f"# Predictive cost model\n\nmeasured on {', '.join(devices)}; grid N={GRID_N} k={GRID_K} F={GRID_F} B={GRID_B} n_obs={NOBS}\n\n",
              "Model: t_eval = c0/B + c1*flops + c2*bytes per (device, method), NNLS with relative weighting.\n\n"]
+    if SKIPPED:
+        lines.append("Measurement cells skipped (too large for the GPU's free memory; the model extrapolates there):\n\n" + "\n".join(f"- {s}" for s in SKIPPED) + "\n\n")
     if cvs is not None:
         lines.append("## Leave-one-N-out validation (relative error of the predicted time per evaluation)\n\n" + cvs.round(3).to_markdown() + "\n\n")
     lines.append("## Decision rule: fastest method per PDN, device and k (swarm 50; numpy/solve are per placement)\n\n")
