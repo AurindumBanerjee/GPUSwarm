@@ -4,11 +4,12 @@
 # Phase 1 (WAIT_FOR_BUSY=1): wait until the GPU is busy (the experiment starts). Without it, an idle GPU would launch us at once.
 #                            Gives up (no launch) after MAX_WAIT_BUSY_H hours without seeing the GPU busy.
 # Phase 2: wait until the GPU has been idle for IDLE_SECS in a row, then exec run_gpuall.sh.
+#   (desktop sessions of other users hold ~0.9 GiB of graphics memory on this GPU, so the memory limit must sit above that)
 #   idle = no compute process, utilisation <= UTIL_MAX %, memory used <= MEM_FREE_MB.   A single busy sample restarts the window.
-# Env: WAIT_FOR_BUSY=1  MAX_WAIT_BUSY_H=72  IDLE_SECS=1800  POLL_S=10  UTIL_MAX=5  GPU_MEM_FREE_MB=500
+# Env: WAIT_FOR_BUSY=1  MAX_WAIT_BUSY_H=72  IDLE_SECS=1800  POLL_S=10  UTIL_MAX=5  GPU_MEM_FREE_MB=2000
 G="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WAIT_BUSY=${WAIT_FOR_BUSY:-1}; MAXH=${MAX_WAIT_BUSY_H:-72}; IDLE=${IDLE_SECS:-1800}; POLL=${POLL_S:-10}
-UMAX=${UTIL_MAX:-5}; MMAX=${GPU_MEM_FREE_MB:-500}
+UMAX=${UTIL_MAX:-5}; MMAX=${GPU_MEM_FREE_MB:-2000}
 ts() { date '+%F %T'; }
 sample() {                     # sets apps util used ; busy=0/1
   apps=$(nvidia-smi --query-compute-apps=pid --format=csv,noheader 2>/dev/null | grep -c .)
